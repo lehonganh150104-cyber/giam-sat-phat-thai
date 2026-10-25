@@ -325,7 +325,7 @@ svg .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
       <li>Hệ số sử dụng công suất, cường độ phát thải, tỷ trọng, biến động: phép tính số học trên dữ liệu gốc.</li>
       <li>Tính phát thải từ số liệu doanh nghiệp: công thức IPCC 2006 bậc 1, nhiên liệu nhân nhiệt trị nhân hệ số, cộng phát thải quá trình.</li>
       <li>Kết luận đối chiếu: quy tắc cố định theo ngưỡng sai lệch và khoảng bất định.</li>
-      <li>Nút Giải thích bằng AI: mô hình ngôn ngữ diễn giải kết quả đã tính, không tính lại số; chỉ chạy khi mở trang trong Claude.</li>
+      <li>Nút Giải thích bằng AI (khi có): mô hình ngôn ngữ diễn giải kết quả đã tính, không tính lại số.</li>
     </ul>
     <h3>Giới hạn cần biết</h3>
     <ul>
@@ -696,15 +696,15 @@ $('btnCmp').onclick=()=>{
    <div class="kp"><div class="k"><div class="l">Kiểm kê, phạm vi 1</div><div class="v">${fmtE(r.inv)}</div></div><div class="k"><div class="l">Vệ tinh</div><div class="v">${fmtE(r.sat)}</div></div><div class="k"><div class="l">Sai lệch</div><div class="v">${r.gap>0?'+':''}${nfx(r.gap*100,1)}%</div></div></div>
    ${bar}<div class="callout ${r.cls}"><div class="t">${r.verdict}</div>${r.act}</div>
    <details style="margin-top:10px"><summary class="note" style="cursor:pointer">Cách tính chi tiết</summary><table style="margin-top:6px"><tbody>${r.parts.map(p=>`<tr><td>${esc(p.l)}</td><td class="n">${nf(p.v,0)} t</td></tr>`).join('')}<tr><td><b>Tổng phạm vi 1</b> (GWP ${r.gwp})</td><td class="n"><b>${nf(r.inv,0)} t</b></td></tr>${r.scope2?`<tr><td>Phạm vi 2 từ điện mua, hệ số ${S.grid}</td><td class="n">${nf(r.scope2,0)} t</td></tr>`:''}</tbody></table></details>`;
-  $('aiBox').hidden=false;$('aiOut').textContent='';
+  $('aiBox').hidden=!aiOK;$('aiOut').textContent='';
 };
 $('btnSaveCmp').onclick=()=>{if(!lastCmp)return;const L=store.get('ct.saved')||[];L.push({id:lastCmp.a.id,n:lastCmp.a.n,y:lastCmp.y,inv:Math.round(lastCmp.inv),sat:Math.round(lastCmp.sat),gap:+(lastCmp.gap*100).toFixed(1),verdict:lastCmp.verdict,when:lastCmp.when});store.set('ct.saved',L);renderSaved();$('btnSaveCmp').disabled=true;};
 function renderSaved(){const L=store.get('ct.saved')||[];$('savedList').innerHTML=L.length?`<div class="tablewrap" style="max-height:none"><table><thead><tr><th>Ngày</th><th>Cơ sở</th><th>Năm</th><th class="n">Kiểm kê, t</th><th class="n">Vệ tinh, t</th><th class="n">Sai lệch</th><th>Kết luận</th></tr></thead><tbody>${L.map(r=>`<tr><td>${r.when}</td><td>${esc(r.n)}</td><td>${r.y}</td><td class="n">${nf(r.inv,0)}</td><td class="n">${nf(r.sat,0)}</td><td class="n">${r.gap>0?'+':''}${nfx(r.gap,1)}%</td><td>${esc(r.verdict)}</td></tr>`).join('')}</tbody></table></div>`:'<p class="note">Chưa có lần đối chiếu nào được lưu.</p>';}
 $('btnSavedCsv').onclick=()=>{const L=store.get('ct.saved')||[];const csv=['ngay,id,co_so,nam,kiem_ke_t,ve_tinh_t,sai_lech_pct,ket_luan'].concat(L.map(r=>[r.when,r.id,r.n,r.y,r.inv,r.sat,r.gap,r.verdict].map(csvQ).join(','))).join('\n');saveFile('doi-chieu.csv',csv,'text/csv');};
 $('btnSavedClear').onclick=()=>{store.del('ct.saved');renderSaved();};
 
-const samplePromise=(window.claude&&window.claude.use)?window.claude.use('sample').catch(()=>null):Promise.resolve(null);
-samplePromise.then(s=>{if(!s){$('btnAI').disabled=true;$('aiNote').textContent='Giải thích bằng AI chỉ dùng được khi mở trang trong Claude.';}});
+const samplePromise=Promise.resolve(null);
+let aiOK=false;samplePromise.then(s=>{aiOK=!!s;});
 let aiAbort=null;
 $('btnAI').onclick=async()=>{
   const sample=await samplePromise;if(!sample||!lastCmp)return;
@@ -752,7 +752,7 @@ $('btnDataReset').onclick=()=>{store.del('ct.data');loadData().then(()=>{$('data
 function renderMethod(){const m=DATA.meta;$('srcInfo').textContent=`Bộ dữ liệu: ${m.source||'Climate TRACE API v6'}, lấy ngày ${m.fetched||'không rõ'}; ${DATA.assets.length} cơ sở; năm gốc ${BASE()}, chuỗi ${years()[0]} đến ${LAST()}. Bản trên GitHub tự tải lại dữ liệu mỗi sáng thứ Hai bằng scripts/update_climatetrace.py.`;}
 
 async function saveFile(name,data,type){
-  try{if(window.claude&&window.claude.use){const d=await window.claude.use('downloads');if(d){await d.save({filename:name,data});return;}}}catch(e){if(e&&e.code==='declined')return;}
+  try{}catch(e){if(e&&e.code==='declined')return;}
   try{const url=URL.createObjectURL(new Blob([data],{type}));const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);}catch(e){}
 }
 
