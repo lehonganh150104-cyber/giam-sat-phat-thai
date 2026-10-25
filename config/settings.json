@@ -98,5 +98,10 @@
     "eafElec": 0.45,
     "ckFuel": 3.3,
     "ckMeal": 1.55
+  },
+  "carbon": {
+    "usd": 10,
+    "fx": 26300,
+    "free": 90
   }
 }
