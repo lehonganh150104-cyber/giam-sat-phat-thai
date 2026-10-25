@@ -2,6 +2,10 @@
 
 Trang web tĩnh hiển thị phát thải khí nhà kính của 127 nhà máy điện, thép và xi măng tại Việt Nam theo ước tính vệ tinh của Climate TRACE, kèm công cụ đối chiếu với số liệu kiểm kê của doanh nghiệp. Không cần máy chủ, không cần cơ sở dữ liệu.
 
+## Song ngữ và các tiện ích
+
+Trang có hai ngôn ngữ Việt và Anh (nút VI, EN góc trên), ba đơn vị tiền VND, USD, EUR với tỷ giá sửa được ở Cài đặt. Các mục chia ba nhóm: Khám phá (Tổng quan, Phân tích, Doanh nghiệp, Danh sách nhà máy), Công cụ (Kiểm kê theo tháng, Đối chiếu nhanh, Chi phí CBAM), Tra cứu (thuật ngữ, quy đổi đơn vị và tiền, bảng hệ số, phương pháp; Lưu trữ; Cài đặt). Bấm Ctrl K hoặc phím / để tìm nhanh nhà máy, thuật ngữ, mục. Nhà máy gắn sao, ghi chú, bản kiểm kê được lưu trên trình duyệt và có thể tải bản sao lưu ở tab Lưu trữ.
+
 ## Trong thư mục có gì
 
 | Đường dẫn | Dùng để làm gì |
