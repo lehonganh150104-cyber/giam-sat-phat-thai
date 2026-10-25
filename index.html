@@ -274,7 +274,7 @@ svg .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
   <div class="toolbar" style="margin-bottom:12px">
     <input type="search" id="q" placeholder="Tìm tên cơ sở hoặc chủ sở hữu" style="flex:1 1 240px">
     <select id="fSec"><option value="">Mọi ngành</option></select>
-    <select id="fType"><option value="">Mọi công nghệ</option></select>
+    <select id="fType"><option value="">Mọi loại hình</option></select>
     <select id="fConf"><option value="">Mọi độ tin cậy</option></select>
     <button class="btn" id="btnCsv">Xuất CSV</button>
   </div>
@@ -369,6 +369,8 @@ svg .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
     <ul>
       <li>Đây là ước tính độc lập, không phải số liệu chính thức; chưa được cơ quan quản lý Việt Nam công nhận cho kiểm kê, thẩm định hay tính thuế carbon.</li>
       <li>Phát thải của Climate TRACE là phạm vi 1 tại cơ sở, nên phép đối chiếu chỉ so phạm vi 1; điện mua vào tính riêng.</li>
+      <li>Cột Loại hình theo phân loại của Climate TRACE: nhà máy điện xếp theo nhiên liệu (than, khí, dầu), chưa có thông tin công nghệ lò hơi như cận tới hạn hay siêu tới hạn; thép xếp theo tuyến luyện; xi măng là nhà máy có lò nung clinker.</li>
+      <li>Năm nào Climate TRACE ghi 0 được hiển thị là chưa ghi nhận, không phải phát thải bằng 0; thường do nhà máy chưa vận hành hoặc đang dừng.</li>
       <li>Tên cơ sở, chủ sở hữu giữ nguyên theo Climate TRACE; vài cơ sở không có chủ sở hữu trong dữ liệu. Các nút phóng vùng trên bản đồ chỉ để xem gần, không phải ranh giới hành chính.</li>
       <li>Biểu đồ NO2 Sentinel-5P chỉ hiện khi bản trên GitHub đã chạy script kết nối Copernicus.</li>
       <li>Ngưỡng khớp 20% và độ bất định theo mức tin cậy là giả định cần chuyên gia xác nhận.</li>
@@ -394,8 +396,9 @@ const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){retu
 const SECTORS={'electricity-generation':{vi:'Nhiệt điện',short:'Điện',col:'var(--elec)'},'iron-and-steel':{vi:'Thép',short:'Thép',col:'var(--steel)'},'cement':{vi:'Xi măng',short:'Xi măng',col:'var(--cement)'}};
 const CONF_VI={'very high':'rất cao','high':'cao','medium':'trung bình','low':'thấp','very low':'rất thấp','':'chưa có'};
 const CONF_EXPLAIN={'high':'Đầu vào và mô hình được kiểm chứng tốt.','medium':'Mô hình kiểm chứng ở cấp ngành; sai số từng nhà máy có thể đáng kể.','low':'Dựa nhiều vào giả định công suất và hệ số mặc định.','very low':'Rất ít dữ liệu quan sát; chỉ nên dùng để định hướng.','':'Chưa có đánh giá.'};
-const TYPE_VI={'coal':'than','gas':'khí','oil':'dầu','biomass':'sinh khối','integrated dry':'lò quay khô','BF/BOF':'lò cao, lò thổi','EAF':'lò điện hồ quang','IF':'lò cảm ứng','IF,EAF':'lò cảm ứng, hồ quang','EAF,BF/BOF':'hồ quang, lò cao','gas, other_fossil':'khí, nhiên liệu khác','gas, oil':'khí, dầu','gas, oil, other_fossil':'khí, dầu, khác','coal, gas, other_fossil':'than, khí, khác'};
+const TYPE_VI={'coal':'nhiệt điện than','gas':'nhiệt điện khí','oil':'nhiệt điện dầu','biomass':'điện sinh khối','integrated dry':'sản xuất clinker, phương pháp khô','BF/BOF':'lò cao, lò thổi oxy','EAF':'lò điện hồ quang','IF':'lò cảm ứng','IF,EAF':'lò cảm ứng và hồ quang','EAF,BF/BOF':'hồ quang và lò cao','gas, other_fossil':'nhiệt điện khí, kèm nhiên liệu khác','gas, oil':'nhiệt điện khí và dầu','gas, oil, other_fossil':'nhiệt điện khí, dầu và nhiên liệu khác','coal, gas, other_fossil':'nhiệt điện than kèm khí'};
 const tv=t=>TYPE_VI[t]||t||'chưa rõ';
+const kind=a=>{const t=tv(a.t);return a.s==='electricity-generation'?t.charAt(0).toUpperCase()+t.slice(1):SECTORS[a.s].vi+', '+t;};
 const fold=x=>String(x||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d');
 
 const DEFAULTS={match:20,unit:'Mt',gwp:'AR5',grid:0.6592,theme:'',
@@ -415,11 +418,12 @@ function normalize(raw){return {assets:raw.assets.filter(a=>SECTORS[a.s]&&isFini
 const BASE=()=>DATA.meta.baseYear||2024;
 const years=()=>{const ys=new Set([BASE()]);Object.values(DATA.yearly).forEach(o=>Object.keys(o).forEach(y=>ys.add(+y)));return [...ys].sort();};
 const LAST=()=>years().at(-1);
-const emis=(a,y)=>{if(y==null||y==BASE())return a.e;const o=DATA.yearly[a.id];return o&&o[y]!=null?o[y]:null;};
+const emis=(a,y)=>{if(y==null||y==BASE())return a.e>0?a.e:null;const o=DATA.yearly[a.id];return o&&o[y]>0?o[y]:null;};
+const zeroYears=a=>Object.entries(DATA.yearly[a.id]||{}).filter(([y,v])=>v===0).map(([y])=>y).sort();
 const UNIT={t:{d:1,l:'t CO2e'},kt:{d:1e3,l:'nghìn t CO2e'},Mt:{d:1e6,l:'triệu t CO2e'}};
 const nf=(v,d=1)=>v==null||!isFinite(v)?'không có':v.toLocaleString('vi-VN',{maximumFractionDigits:d,minimumFractionDigits:0});
 const nfx=(v,d)=>v==null||!isFinite(v)?'không có':v.toLocaleString('vi-VN',{maximumFractionDigits:d,minimumFractionDigits:d});
-const fmtE=(v,d)=>{if(v==null)return 'không có';const u=UNIT[S.unit];const dd=d??(S.unit==='t'?0:S.unit==='kt'?1:2);return nfx(v/u.d,dd);};
+const fmtE=(v,d)=>{if(v==null)return 'chưa ghi nhận';const u=UNIT[S.unit];const x=v/u.d;const dd=d??(S.unit==='t'?0:S.unit==='kt'?1:2);if(x>0&&x<Math.pow(10,-dd)*5)return x.toLocaleString('vi-VN',{maximumSignificantDigits:2});return nfx(x,dd);};
 const uL=()=>UNIT[S.unit].l;
 const pct=(a,b)=>b?((a-b)/b*100):null;
 const sgn=v=>v==null?'':(v>0?'+':'')+nfx(v,1)+'%';
@@ -496,7 +500,7 @@ function drawMap(list){
   const refs=[1e6,5e6,20e6];
   $('mapLegend').innerHTML=Object.entries(SECTORS).filter(([k])=>curSec.has(k)).map(([k,v])=>`<span><span class="sw" style="background:${v.col}"></span>${v.vi}</span>`).join('')+`<span style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap">Cỡ vòng ${refs.map(v=>`<svg width="${2*rr(v)+4}" height="${2*rr(v)+4}" style="vertical-align:middle"><circle cx="${rr(v)+2}" cy="${rr(v)+2}" r="${rr(v)}" fill="none" stroke="var(--muted)"/></svg>${nf(v/1e6,0)} triệu t`).join(' ')}</span><span>◆ thành phố tham chiếu</span>`;
   const svg=$('mapbox').querySelector('svg'),tip=$('tip');
-  svg.addEventListener('mousemove',e=>{const c=e.target.closest('circle[data-id]');if(!c){tip.hidden=true;return;}const a=byId(c.dataset.id);const b=$('mapbox').getBoundingClientRect();tip.hidden=false;tip.style.left=Math.min(Math.max(e.clientX-b.left,130),b.width-130)+'px';tip.style.top=(e.clientY-b.top)+'px';const v=emis(a,curYear),vp=emis(a,curYear-1);tip.innerHTML=`<b>${esc(a.n)}</b><br>${SECTORS[a.s].vi}, ${esc(tv(a.t))}<br>${fmtE(v)} ${uL()} năm ${curYear}${vp?`, ${sgn(pct(v,vp))}`:''}`;});
+  svg.addEventListener('mousemove',e=>{const c=e.target.closest('circle[data-id]');if(!c){tip.hidden=true;return;}const a=byId(c.dataset.id);const b=$('mapbox').getBoundingClientRect();tip.hidden=false;tip.style.left=Math.min(Math.max(e.clientX-b.left,130),b.width-130)+'px';tip.style.top=(e.clientY-b.top)+'px';const v=emis(a,curYear),vp=emis(a,curYear-1);tip.innerHTML=`<b>${esc(a.n)}</b><br>${esc(kind(a))}<br>${fmtE(v)} ${uL()} năm ${curYear}${vp?`, ${sgn(pct(v,vp))}`:''}`;});
   svg.addEventListener('mouseleave',()=>tip.hidden=true);
   svg.addEventListener('click',e=>{const c=e.target.closest('circle[data-id]');if(c)openDetail(c.dataset.id);});
 }
@@ -589,7 +593,7 @@ function renderAnalysis(){
 
 const COLS=[
   {k:'n',l:'Cơ sở',f:a=>`<div class="nmcell"><span class="dot" style="background:${SECTORS[a.s].col};margin-top:6px"></span><div>${esc(a.n)}<div class="sub">${esc(a.o||'chủ sở hữu chưa rõ')}</div></div></div>`},
-  {k:'t',l:'Công nghệ',f:a=>esc(tv(a.t))},
+  {k:'t',l:'Loại hình',f:a=>esc(tv(a.t))},
   {k:'cap',l:'Công suất',n:1,f:a=>a.s==='electricity-generation'?nf(a.cap,0)+' MW':nfx(a.cap/1e6,2)+' tr t'},
   {k:'cf',l:'Sử dụng CS',n:1,f:a=>a.cf==null?'':nf(a.cf*100,0)+'%'},
   {k:'ef',l:'Cường độ',n:1,f:a=>a.ef==null?'':nfx(a.ef,3)},
@@ -608,7 +612,7 @@ function listRows(){
 function renderList(){
   if(!$('fSec').dataset.ok){
     $('fSec').innerHTML='<option value="">Mọi ngành</option>'+Object.entries(SECTORS).map(([k,v])=>`<option value="${k}">${v.vi}</option>`).join('');
-    $('fType').innerHTML='<option value="">Mọi công nghệ</option>'+[...new Set(DATA.assets.map(a=>a.t))].sort().map(t=>`<option value="${esc(t)}">${esc(tv(t))}</option>`).join('');
+    $('fType').innerHTML='<option value="">Mọi loại hình</option>'+[...new Set(DATA.assets.map(a=>a.t))].sort().map(t=>`<option value="${esc(t)}">${esc(tv(t))}</option>`).join('');
     $('fConf').innerHTML='<option value="">Mọi độ tin cậy</option>'+['high','medium','low','very low'].map(c=>`<option value="${c}">${CONF_VI[c]}</option>`).join('');
     $('fSec').dataset.ok=1;
   }
@@ -642,16 +646,16 @@ function openDetail(id){
   const loc=`<svg viewBox="0 0 ${g.W} ${g.H}" width="110" style="flex:none;border-radius:10px;background:var(--sea);border:1px solid var(--line2)" role="img" aria-label="Vị trí trên bản đồ"><path d="${g.vn}" fill="var(--land)" stroke="var(--faint)" stroke-width="1.5"/><circle cx="${px}" cy="${py}" r="18" fill="${SECTORS[a.s].col}" fill-opacity=".25"/><circle cx="${px}" cy="${py}" r="8" fill="${SECTORS[a.s].col}"/></svg>`;
   const efNote=med&&a.ef?(a.ef>med*1.05?`cao hơn trung vị ${nf((a.ef/med-1)*100,0)}%`:a.ef<med*0.95?`thấp hơn trung vị ${nf((1-a.ef/med)*100,0)}%`:'gần trung vị'):'';
   const checks=isP?['Lượng than tiêu thụ theo từng loại và nhiệt trị thực đo','Sản lượng điện phát và điện tự dùng','Số giờ vận hành, thời gian dừng bảo dưỡng']:a.s==='cement'?['Sản lượng clinker và tỷ lệ clinker trong xi măng','Nhiên liệu đốt lò và nhiên liệu thay thế','Lượng bụi lò (CKD) thải bỏ']:['Sản lượng thép theo công nghệ (lò cao, lò điện)','Than cốc, quặng, vôi đưa vào lò','Điện tiêu thụ của lò điện hồ quang'];
-  const no2=(DATA.no2||{})[a.id];
+  const zy=zeroYears(a);const no2=(DATA.no2||{})[a.id];
   $('drawerHost').innerHTML=`<div class="scrim" id="scrim"></div><aside class="drawer" role="dialog" aria-label="Hồ sơ cơ sở"><button class="close" id="dClose" aria-label="Đóng">×</button>
-  <div style="display:flex;gap:14px;align-items:flex-start">${loc}<div style="min-width:0"><div class="note" style="display:flex;align-items:center"><span class="dot" style="background:${SECTORS[a.s].col}"></span>${SECTORS[a.s].vi}, ${esc(tv(a.t))}</div><h3>${esc(a.n)}</h3><div class="note">${esc(a.o||'Chủ sở hữu chưa rõ')}</div><div class="note" style="font-family:var(--mono);font-size:11.5px">${nfx(a.lat,4)}° B, ${nfx(a.lon,4)}° Đ · mã ${a.id}</div></div></div>
+  <div style="display:flex;gap:14px;align-items:flex-start">${loc}<div style="min-width:0"><div class="note" style="display:flex;align-items:center"><span class="dot" style="background:${SECTORS[a.s].col}"></span>${esc(kind(a))}</div><h3>${esc(a.n)}</h3><div class="note">${esc(a.o||'Chủ sở hữu chưa rõ')}</div><div class="note" style="font-family:var(--mono);font-size:11.5px">${nfx(a.lat,4)}° B, ${nfx(a.lon,4)}° Đ · mã ${a.id}</div></div></div>
   <div class="mini">
     <div class="m"><div class="l">Phát thải ${L}</div><div class="v">${fmtE(emis(a,L))}</div><div class="h">${uL()}</div></div>
     <div class="m"><div class="l">So với ${P}</div><div class="v"><span class="delta ${dcls(dY)}" style="font-size:18px">${dY==null?'không có':sgn(dY)}</span></div><div class="h">${emis(a,P)?((emis(a,L)-emis(a,P))>0?'thêm ':'bớt ')+fmtE(Math.abs(emis(a,L)-emis(a,P)))+' '+uL():''}</div></div>
     <div class="m"><div class="l">Xếp hạng trong ngành</div><div class="v">${rank||'không có'}${rank?'/'+same.length:''}</div><div class="h">${nfx(share,1)}% phát thải ngành</div></div>
   </div>
   <h4>Đầu vào và đầu ra năm 2024</h4>${ioBlock(a)}
-  ${chart?`<h4>Diễn biến ${ys[0]} đến ${L}</h4>${chart}`:'<p class="note">Chưa có chuỗi nhiều năm.</p>'}
+  ${chart?`<h4>Diễn biến ${ys[0]} đến ${L}</h4>${chart}`:'<p class="note">Chưa có chuỗi nhiều năm.</p>'}${zy.length?`<div class="callout warn" style="margin-top:8px"><div class="t">Năm ${zy.join(', ')}: không ghi nhận phát thải</div>Climate TRACE ghi 0 cho năm này, thường do nhà máy chưa vận hành, đang dừng hoặc vệ tinh không ghi nhận hoạt động. Trang không coi đây là phát thải bằng 0 và bỏ năm đó khỏi biểu đồ; cần xác minh với doanh nghiệp.</div>`:''}
   <h4>Thông số vận hành 2024</h4>
   <dl class="kv">
     <dt>Công suất</dt><dd>${isP?nf(a.cap,0)+' MW':nf(a.cap,0)+' '+esc(a.cu)+'/năm'}</dd>
