@@ -76,3 +76,7 @@ Script này viết theo tài liệu Statistical API của Copernicus nhưng chư
 - Số liệu là ước tính độc lập của Climate TRACE, không phải số liệu chính thức, chưa được cơ quan quản lý Việt Nam công nhận cho kiểm kê, thẩm định hay tính thuế carbon.
 - Ngưỡng khớp 20% và độ bất định theo mức tin cậy là giả định, cần chuyên gia kiểm kê xác nhận.
 - Dữ liệu Climate TRACE theo giấy phép CC BY 4.0: giữ dòng ghi nguồn ở chân trang khi dùng lại.
+
+## Bản quyền
+
+© 2026 Lê Hồng Anh. Bảo lưu mọi quyền. Mã nguồn, giao diện và các công cụ trong kho này không được sao chép, chỉnh sửa, phân phối hay dùng cho mục đích thương mại khi chưa có sự đồng ý bằng văn bản của chủ sở hữu. Kho được để công khai chỉ để vận hành trang web. Xem chi tiết và các thành phần của bên thứ ba trong file LICENSE.

@@ -1,0 +1,29 @@
+BẢN QUYỀN VÀ ĐIỀU KHOẢN SỬ DỤNG
+Copyright (c) 2026 Lê Hồng Anh (Le Hong Anh). Bảo lưu mọi quyền. All rights reserved.
+
+1. Phạm vi
+Phần mềm "Giám sát phát thải vệ tinh" (Emissions Monitor) trong kho mã này, gồm mã nguồn, giao diện, thiết kế, cách tổ chức và trình bày dữ liệu, văn bản giải thích, công cụ kiểm kê, đối chiếu, tính chi phí carbon và CBAM, là tài sản thuộc quyền sở hữu của Lê Hồng Anh.
+
+2. Những việc không được làm khi chưa có sự đồng ý bằng văn bản của chủ sở hữu
+a) Sao chép, tải về để dùng lại, nhân bản toàn bộ hay một phần mã nguồn hoặc giao diện;
+b) Chỉnh sửa, dịch, chuyển thể hoặc tạo sản phẩm phái sinh;
+c) Phân phối, đăng tải lại, cho thuê, bán, cấp phép lại;
+d) Sử dụng cho mục đích thương mại, dịch vụ tư vấn, kiểm kê hoặc thẩm định;
+e) Gỡ bỏ hoặc sửa đổi thông báo bản quyền này.
+Việc kho mã được để công khai trên GitHub chỉ nhằm vận hành trang web, không phải là cấp phép sử dụng.
+
+3. Được phép
+Xem trang web tại địa chỉ chính thức để tham khảo cá nhân. Trích dẫn ngắn có ghi rõ nguồn "Giám sát phát thải vệ tinh, Lê Hồng Anh, 2026" cho mục đích học tập, nghiên cứu phi thương mại.
+
+4. Thành phần của bên thứ ba (không thuộc quyền sở hữu của Lê Hồng Anh)
+- Dữ liệu phát thải: Climate TRACE (climatetrace.org), giấy phép Creative Commons Attribution 4.0 (CC BY 4.0).
+- Dữ liệu Sentinel-5P: Copernicus, Liên minh châu Âu, theo điều khoản dữ liệu Copernicus.
+- Bản đồ nền: Natural Earth, phạm vi công cộng.
+- Phông chữ Be Vietnam Pro và IBM Plex Mono: SIL Open Font License 1.1.
+Các thành phần này tuân theo giấy phép riêng của chúng.
+
+5. Liên hệ xin phép sử dụng
+Email: lehonganh150104@gmail.com
+
+ENGLISH SUMMARY
+This software, including its source code, interface, design, data presentation, text and calculation tools, is the property of Le Hong Anh. No copying, modification, distribution, sublicensing or commercial use is permitted without the owner's prior written consent. Public visibility of this repository does not grant any license. Third-party data and fonts listed above remain under their own licenses.
