@@ -370,6 +370,32 @@ textarea.note-in{width:100%;min-height:72px;font-family:inherit;font-size:13px}
 @media (max-height:700px) and (max-width:860px){.wglobe{max-width:min(60vw,250px)}.wbox p{display:none}}
 @media (prefers-reduced-motion:reduce){.welcome *,.splash .stage{animation:none!important}}
 .wcopy{text-align:center;font-size:11.5px;color:#a9c4ba;margin-top:10px;opacity:.85}
+
+/* ---- trust ---- */
+.grade{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;font-weight:800;font-size:16px;flex:none}
+.grade.sm{width:22px;height:22px;font-size:12px;border-radius:6px;vertical-align:middle}
+.gA,.grade.gA{background:var(--ok-soft);color:var(--ok)}.gB,.grade.gB{background:var(--accent-soft);color:var(--accent)}.gC,.grade.gC{background:var(--warn-soft);color:var(--warn)}.gD,.grade.gD{background:var(--bad-soft);color:var(--bad)}
+.trustbox{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:12px;background:var(--panel)}
+.trustbox .tb-h{display:flex;gap:10px;align-items:center}.trustbox .sp{flex:1}
+.trustbox ul{margin:10px 0 0;padding-left:18px;font-size:13px;display:grid;gap:3px}
+.trustbox li.bad{color:var(--bad)}.trustbox li.warn{color:var(--warn)}.trustbox li.info,.trustbox li.ok{color:var(--muted)}
+.gbar{display:flex;height:38px;border-radius:10px;overflow:hidden;margin-top:6px;gap:2px}
+.gbar>div{display:flex;align-items:center;justify-content:center;gap:4px;font-size:12.5px;min-width:0;overflow:hidden;white-space:nowrap}
+.glegend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:12px;color:var(--muted)}
+.glegend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.prilist{margin:4px 0 8px;padding-left:22px;display:grid;gap:2px}
+.prilist li{cursor:pointer;padding:6px 4px;border-bottom:1px solid var(--line2)}
+.prilist li{display:list-item}.prilist li>*{vertical-align:middle}
+.prilist .m{display:inline-flex;flex-direction:column;width:calc(100% - 70px)}.prilist .mono{font-family:var(--mono);font-size:12px;margin-left:6px}
+.prilist li:hover{background:var(--panel2)}
+.chip{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:999px;margin:2px 4px 2px 0;background:var(--panel2);border:1px solid var(--line2)}
+.chip.bad{background:var(--bad-soft);color:var(--bad);border-color:transparent}.chip.warn{background:var(--warn-soft);color:var(--warn);border-color:transparent}.chip.ok{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+td.iss{min-width:260px;white-space:normal}
+.vtab td.yes{color:var(--ok);font-weight:600}.vtab td.no{color:var(--faint)}
+.vtab td,.vtab th{white-space:normal}
+.evbar{display:flex;height:26px;border-radius:8px;overflow:hidden;gap:2px;margin-top:12px}
+.evbar>div{display:grid;place-items:center;font-size:12px;font-weight:600;color:#fff}
+.etp{background:var(--ok)}.etn{background:#5aa98a}.efp{background:var(--bad)}.efn{background:var(--warn)}.einc{background:var(--faint)}
 </style></head><body><header class="hero">
   <svg class="orbit" viewBox="0 0 620 620" aria-hidden="true"><g fill="none" stroke="#7fdcc0" stroke-opacity=".35"><ellipse cx="310" cy="310" rx="300" ry="120" transform="rotate(-24 310 310)"/><ellipse cx="310" cy="310" rx="240" ry="90" transform="rotate(-24 310 310)" stroke-dasharray="3 6"/><circle cx="310" cy="310" r="150" stroke-opacity=".18"/></g><circle cx="560" cy="200" r="4" fill="#9ee6cf"/><circle cx="120" cy="420" r="3" fill="#9ee6cf" fill-opacity=".6"/></svg>
   <div class="in">
@@ -396,9 +422,11 @@ textarea.note-in{width:100%;min-height:72px;font-family:inherit;font-size:13px}
   <section id="v-analysis" class="view" hidden></section>
   <section id="v-owners" class="view" hidden></section>
   <section id="v-list" class="view" hidden></section>
+  <section id="v-trust" class="view" hidden></section>
   <section id="v-inventory" class="view" hidden></section>
   <section id="v-check" class="view" hidden></section>
   <section id="v-cbam" class="view" hidden></section>
+  <section id="v-evidence" class="view" hidden></section>
   <section id="v-lookup" class="view" hidden></section>
   <section id="v-storage" class="view" hidden></section>
   <section id="v-settings" class="view" hidden></section>
@@ -442,6 +470,45 @@ const T={
 "w.plants":["nhà máy theo dõi","plants tracked"],"w.years":["năm dữ liệu","years of data"],
 "w.chips":["Climate TRACE|Copernicus Sentinel-5P|IPCC 2006|Nhiệt điện|Gang thép|Xi măng|Kiểm kê theo tháng|Đối chiếu vệ tinh|Chi phí CBAM|Song ngữ Việt, Anh","Climate TRACE|Copernicus Sentinel-5P|IPCC 2006|Thermal power|Iron and steel|Cement|Monthly inventory|Satellite cross-check|CBAM cost|Vietnamese and English"],
 "w.go":["Tiếp tục","Continue"],"w.kb":["hoặc nhấn Enter","or press Enter"],
+"nav.trust":["Độ tin cậy và rủi ro","Trust and risk"],"nav.trust.d":["Chấm điểm độ tin cậy số liệu từng nhà máy, chỉ ra giá trị mặc định và nơi cần kiểm chứng","Scores how far each plant's figure can be trusted and where to verify first"],
+"nav.evidence":["Sổ kiểm chứng vệ tinh","Satellite evidence log"],"nav.evidence.d":["Ghi từng lần đối chiếu tín hiệu vệ tinh với thực tế, tính tỷ lệ báo động sai","Log each satellite signal against reality and track the false alarm rate"],
+"tr.D":["Các nguồn gốc cho một con số; trang này cho biết con số đó đáng tin đến đâu. Điểm 0 đến 100 tính bằng quy tắc minh bạch từ năm phần: độ tin cậy nguồn, số liệu riêng hay mặc định, hợp lý vật lý, chuỗi thời gian và kiểm chứng bằng số liệu doanh nghiệp.","Sources give a number; this page tells you how far to trust it. A 0 to 100 score from five transparent parts: source confidence, plant-specific or default values, physical plausibility, time series and verification with company data."],
+"tr.score":["Điểm tin cậy","Trust score"],"tr.gA":["Đáng tin","Reliable"],"tr.gB":["Dùng được, nên kiểm tra","Usable, worth checking"],"tr.gC":["Cần kiểm chứng","Needs verification"],"tr.gD":["Chỉ tham khảo","Indicative only"],
+"tr.k1":["Điểm trung bình theo phát thải","Emission-weighted score"],"tr.k1n":["Tối đa 85 khi chưa có số liệu doanh nghiệp","Capped at 85 without company data"],
+"tr.k2":["Phát thải dựa trên giá trị mặc định","Emissions on default values"],"tr.k2n":["Sản lượng hoặc hệ số dùng chung với ≥ 3 nhà máy","Output or factor shared with ≥ 3 plants"],
+"tr.k3":["Nhà máy có hệ số bất hợp lý","Plants with implausible factors"],"tr.k3n":["Ngoài khoảng tham khảo theo công nghệ","Outside the reference range for the technology"],
+"tr.mixT":["Bao nhiêu phát thải đang đáng tin?","How much of the emissions can be trusted?"],"tr.mixC":["Tỷ trọng phát thải năm {y} theo hạng tin cậy.","Share of {y} emissions by trust grade."],
+"tr.mapT":["Bản đồ ưu tiên kiểm chứng","Verification priority map"],"tr.mapC":["Góc trên bên trái: phát thải lớn nhưng số liệu kém tin cậy, nơi kiểm kê thực tạo giá trị nhiều nhất. Bấm chấm để xem nhà máy.","Top left: large emitters with weak data, where real inventory adds most value. Tap a dot to open the plant."],
+"tr.qHi":["Ưu tiên kiểm chứng","Verify first"],"tr.qOk":["Lớn, khá tin cậy","Large, fairly reliable"],"tr.xAx":["Điểm tin cậy (0 đến 100)","Trust score (0 to 100)"],"tr.yAx":["t CO2e (thang log)","t CO2e (log scale)"],
+"tr.priT":["10 nhà máy nên kiểm chứng trước","10 plants to verify first"],"tr.priC":["Xếp theo phát thải × (1 trừ điểm tin cậy): lượng phát thải đang thiếu bằng chứng.","Ranked by emissions × (1 minus trust): the volume lacking evidence."],
+"tr.priN":["Đây cũng là danh sách khách hàng tiềm năng cho dịch vụ kiểm kê và đối chiếu.","This is also a lead list for inventory and verification services."],
+"tr.tblT":["Điểm từng nhà máy","Score by plant"],"tr.allG":["Mọi hạng","All grades"],"tr.issues":["Vấn đề phát hiện","Issues found"],"tr.none":["Không có cảnh báo","No warnings"],
+"tr.valT":["Giá trị cộng thêm so với từng nguồn","Added value versus each source"],"tr.valC":["Nền tảng không thay nguồn gốc mà ghép chúng lại và kiểm tra chéo.","The platform does not replace the sources; it joins and cross-checks them."],
+"tr.v0":["Chức năng","Capability"],"tr.v1":["Climate TRACE riêng","Climate TRACE alone"],"tr.v2":["Báo cáo doanh nghiệp tự lập","Company self-report"],"tr.v3":["Nền tảng này","This platform"],
+"tr.r1":["Phạm vi nhà máy","Plant coverage"],"tr.r1a":["✓ Toàn cầu","✓ Global"],"tr.r1b":["Chỉ nhà máy của mình","Own plants only"],"tr.r1c":["127 cơ sở Việt Nam, 3 ngành","127 Vietnamese sites, 3 sectors"],
+"tr.r2":["Số liệu vận hành thực","Real operating data"],"tr.r2a":["✗ Ước tính mô hình","✗ Model estimate"],"tr.r2b":["✓ Sổ sách nhà máy","✓ Plant records"],"tr.r2c":["✓ Nhập theo tháng, có kiểm tra","✓ Monthly entry with checks"],
+"tr.r3":["Kiểm tra chéo giữa các nguồn","Cross-check between sources"],"tr.r3a":["✗ Không","✗ No"],"tr.r3b":["✗ Không","✗ No"],"tr.r3c":["✓ Vệ tinh đối chiếu kiểm kê","✓ Satellite versus inventory"],
+"tr.r4":["Chỉ ra số mặc định, bất hợp lý","Flags default or implausible values"],"tr.r4a":["Một phần: có mức tin cậy","Partly: confidence level"],"tr.r4b":["✗ Không","✗ No"],"tr.r4c":["✓ Điểm tin cậy và cờ cảnh báo","✓ Trust score and flags"],
+"tr.r5":["Nhật ký truy vết","Audit trail"],"tr.r5a":["✗ Không","✗ No"],"tr.r5b":["Tùy doanh nghiệp","Depends on the company"],"tr.r5c":["✓ Mọi thay đổi được ghi","✓ Every change recorded"],
+"tr.r6":["Chi phí carbon, CBAM","Carbon cost, CBAM"],"tr.r6a":["✗ Không","✗ No"],"tr.r6b":["Tùy doanh nghiệp","Depends on the company"],"tr.r6c":["✓ Có công cụ tính","✓ Built-in calculators"],
+"tr.r7":["Ngôn ngữ và bối cảnh Việt Nam","Vietnamese language and context"],"tr.r7a":["Chủ yếu tiếng Anh","Mostly English"],"tr.r7b":["✓ Tiếng Việt","✓ Vietnamese"],"tr.r7c":["✓ Song ngữ Việt, Anh","✓ Vietnamese and English"],
+"tr.valN":["So sánh theo chức năng hiện có trên trang ngày 25/10/2026. Climate TRACE vẫn là nguồn dữ liệu gốc; điểm tin cậy là quy tắc của nền tảng, khoảng tham khảo cần chuyên gia xác nhận.","Compared by features on the page as of 25/10/2026. Climate TRACE remains the source data; the trust score is the platform's own rule set and its reference ranges need expert review."],
+"tf.conf":["Độ tin cậy nguồn: {c}","Source confidence: {c}"],"tf.defAct":["Sản lượng là giá trị mặc định: {v}% công suất, giống {n} nhà máy","Output is a default: {v}% of capacity, same as {n} plants"],"tf.defEf":["Hệ số phát thải dùng chung với {n} nhà máy","Emission factor shared by {n} plants"],
+"tf.efRange":["Hệ số {v} ngoài khoảng tham khảo {lo} đến {hi}","Factor {v} outside the {lo} to {hi} reference range"],"tf.util":["Mức sử dụng công suất {v}% bất thường","Unusual utilisation of {v}%"],
+"tf.gap":["Thiếu số liệu {n} năm","{n} years missing"],"tf.jump":["Biến động {p} năm {y}","{p} change in {y}"],
+"tf.invOk":["Đã kiểm chứng bằng kiểm kê doanh nghiệp năm {y}: khớp","Verified with company inventory {y}: matches"],"tf.invGap":["Có kiểm kê năm {y} nhưng lệch vệ tinh","Inventory {y} exists but differs from satellite"],"tf.noInv":["Chưa có số liệu doanh nghiệp để kiểm chứng","No company data to verify yet"],
+"g.trust.t":["Điểm tin cậy dữ liệu","Data trust score"],"g.trust.d":["Điểm 0 đến 100 cho biết con số phát thải của một nhà máy đáng tin đến đâu: độ tin cậy nguồn 30, số liệu riêng thay vì mặc định 25, hợp lý vật lý 20, chuỗi thời gian 15, kiểm chứng bằng số liệu doanh nghiệp 10.","A 0 to 100 score for how far a plant's emissions figure can be trusted: source confidence 30, plant-specific rather than default values 25, physical plausibility 20, time series 15, verification with company data 10."],
+"ev.D":["Bằng chứng cho giả thuyết H2: mỗi lần đối chiếu tín hiệu vệ tinh với thực tế được ghi lại, kể cả báo động sai và trường hợp không kết luận được.","Evidence for hypothesis H2: every comparison of a satellite signal with reality is recorded, including false alarms and inconclusive cases."],
+"ev.addT":["Ghi một lần đối chiếu","Record a comparison"],"ev.per":["Kỳ","Period"],"ev.perPh":["ví dụ: Q2/2024 hoặc 06/2024","e.g. Q2/2024 or 06/2024"],"ev.src":["Nguồn tín hiệu","Signal source"],"ev.other":["Khác","Other"],
+"ev.sig":["Vệ tinh cho thấy","Satellite shows"],"ev.truth":["Thực tế (sổ sách)","Reality (records)"],"ev.note":["Ghi chú","Note"],"ev.notePh":["ví dụ: tổ máy 2 dừng bảo dưỡng 3 tuần; nhiều mây","e.g. unit 2 maintenance 3 weeks; heavy cloud"],
+"ev.s.up":["Tăng","Up"],"ev.s.down":["Giảm","Down"],"ev.s.flat":["Không đổi","No change"],"ev.s.na":["Không có số liệu","No data"],
+"ev.add":["Lưu vào sổ","Save to log"],"ev.needPer":["Nhập kỳ đối chiếu","Enter the period"],"ev.rule":["Phân loại tự động: cùng chiều thay đổi là cảnh báo đúng; vệ tinh báo thay đổi mà thực tế không đổi hoặc ngược chiều là báo động sai; thực tế thay đổi mà vệ tinh không thấy là bỏ sót; thiếu một bên là không kết luận.","Auto classification: same direction of change is a true alert; satellite change with no or opposite real change is a false alarm; real change unseen by satellite is a miss; missing either side is inconclusive."],
+"ev.statT":["Kết quả kiểm chứng","Verification results"],"ev.statC":["Đo theo ngưỡng H2: báo động sai không quá 20%.","Measured against H2: false alarms at most 20%."],
+"ev.m1":["Cảnh báo đúng","True alerts"],"ev.m2":["Báo động sai","False alarms"],"ev.m3":["Bỏ sót","Misses"],
+"ev.c.tp":["Cảnh báo đúng","True alert"],"ev.c.tn":["Đúng, không đổi","Correct, no change"],"ev.c.fp":["Báo động sai","False alarm"],"ev.c.fn":["Bỏ sót","Missed"],"ev.c.inc":["Không kết luận","Inconclusive"],
+"ev.h2ok":["Tỷ lệ báo động sai {p}% trên {n} lần ghi: đang đạt ngưỡng H2.","False alarm rate {p}% over {n} records: meets the H2 threshold."],"ev.h2no":["Tỷ lệ báo động sai {p}% trên {n} lần ghi: chưa đạt ngưỡng H2.","False alarm rate {p}% over {n} records: below the H2 threshold."],"ev.h2na":["Chưa có cảnh báo nào để tính tỷ lệ.","No alerts yet to compute a rate."],
+"ev.small":["Mẫu còn nhỏ, cần ít nhất 30 lần ghi để kết luận.","Sample still small; at least 30 records are needed to conclude."],
+"ev.logT":["Sổ kiểm chứng","Evidence log"],"ev.empty":["Chưa có lần đối chiếu nào.","No comparisons recorded yet."],"ev.out":["Kết quả","Outcome"],
 // ---- nav ----
 "grp.explore":["Khám phá","Explore"],"grp.tools":["Công cụ","Tools"],"grp.ref":["Tra cứu","Reference"],
 "nav.home":["Tổng quan","Overview"],"nav.home.d":["Bản đồ, số liệu chính, nhận định nhanh","Map, key figures, quick insights"],
@@ -826,9 +893,11 @@ const VIEWS=[
   {id:'analysis',g:'explore',k:'nav.analysis',ico:'M3 17V9M8 17V4M13 17v-6M18 17V7'},
   {id:'owners',g:'explore',k:'nav.owners',ico:'M3 17V7l7-4 7 4v10M7 17v-4h6v4'},
   {id:'list',g:'explore',k:'nav.list',ico:'M4 5h12M4 10h12M4 15h12'},
+  {id:'trust',g:'explore',k:'nav.trust',ico:'M10 2l6 3v5c0 4-3 7-6 8-3-1-6-4-6-8V5zM7 10l2 2 4-4'},
   {id:'inventory',g:'tools',k:'nav.inventory',ico:'M5 3h10v14H5zM8 7h4M8 10h4M8 13h2'},
   {id:'check',g:'tools',k:'nav.check',ico:'M4 10l4 4 8-9'},
   {id:'cbam',g:'tools',k:'nav.cbam',ico:'M10 3v14M5 7h7a3 3 0 010 6H6'},
+  {id:'evidence',g:'tools',k:'nav.evidence',ico:'M4 3h12v14H4zM7 7h6M7 10h6M7 13l1.5 1.5L11 12'},
   {id:'lookup',g:'ref',k:'nav.lookup',ico:'M4 4h9l3 3v9H4zM7 9h6M7 12h6'},
   {id:'storage',g:'ref',k:'nav.storage',ico:'M4 6h12v10H4zM4 6l2-3h8l2 3M8 10h4'},
   {id:'settings',g:'ref',k:'nav.settings',ico:'M10 7a3 3 0 100 6 3 3 0 000-6zM10 2v2M10 16v2M2 10h2M16 10h2M4.2 4.2l1.4 1.4M14.4 14.4l1.4 1.4M4.2 15.8l1.4-1.4M14.4 5.6l1.4-1.4'}];
@@ -837,7 +906,7 @@ const icon=(d,s=18)=>`<svg width="${s}" height="${s}" viewBox="0 0 20 20" aria-h
 function buildNav(){
   let last='';$('tabs').innerHTML=VIEWS.map(v=>{let h='';if(v.g!==last){h=`<span class="grp-l">${t('grp.'+v.g)}</span>`;last=v.g;}return h+`<button role="tab" data-v="${v.id}" aria-selected="${v.id===CUR}">${t(v.k)}</button>`;}).join('');
   const bn=[['home','nav.home'],['list','nav.listS'],['inventory','nav.toolsS'],['lookup','nav.lookup'],['more','nav.more']];
-  $('bnav').innerHTML=bn.map(([id,k])=>{const v=VIEWS.find(x=>x.id===id);const cur=id===CUR||(id==='inventory'&&['inventory','check','cbam'].includes(CUR))||(id==='more'&&['analysis','owners','storage','settings'].includes(CUR));return `<button data-v="${id}" aria-current="${cur}">${icon(v?v.ico:'M4 6h12M4 10h12M4 14h12',20)}<span>${t(k)}</span></button>`;}).join('');
+  $('bnav').innerHTML=bn.map(([id,k])=>{const v=VIEWS.find(x=>x.id===id);const cur=id===CUR||(id==='inventory'&&['inventory','check','cbam','evidence'].includes(CUR))||(id==='more'&&['analysis','owners','trust','storage','settings'].includes(CUR));return `<button data-v="${id}" aria-current="${cur}">${icon(v?v.ico:'M4 6h12M4 10h12M4 14h12',20)}<span>${t(k)}</span></button>`;}).join('');
   $('hambLbl').textContent=t('catalog');$('homeLbl').textContent=t('sp.btn');$('palLbl').textContent=t('search');
   document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===LANG));
   $('curSel').value=S.cur;
@@ -1141,7 +1210,7 @@ function openDetail(id){
   const zy=zeroYears(a);const no2=(DATA.no2||{})[a.id];const starOn=WS.stars.has(a.id);const note=(WS.notes[a.id]||{}).txt||'';
   $('drawerHost').innerHTML=`<div class="scrim" id="scrim"></div><aside class="drawer" role="dialog" aria-label="${esc(a.n)}"><button class="close" id="dClose" aria-label="${esc(t('close'))}">×</button>
   <div style="display:flex;gap:14px;align-items:flex-start">${loc}<div style="min-width:0;flex:1"><div class="note" style="display:flex;align-items:center"><span class="dot" style="background:${SECTORS[a.s].col}"></span>${esc(kind(a))}</div><h3>${esc(a.n)}</h3><div class="note">${esc(a.o||t('ownerUnknown'))} · ${esc(grpOf(a.o))}</div><div class="note" style="font-family:var(--mono);font-size:11.5px">${nfx(a.lat,4)}° N, ${nfx(a.lon,4)}° E · ID ${a.id}</div></div><button class="star" id="dStar" aria-pressed="${starOn}" aria-label="${esc(t('star'))}" title="${esc(t('star'))}">${starOn?'★':'☆'}</button></div>
-  <div class="sumbox"><div class="k">${t('d.sumK')}</div>${smartSummary(a)}</div>
+  <div class="sumbox"><div class="k">${t('d.sumK')}</div>${smartSummary(a)}</div>${trustBlock(a)}
   <div class="mini"><div class="m"><div class="l">${t('emisY',{y:L})}</div><div class="v">${fmtE(emis(a,L))}</div><div class="h">${uL()}</div></div><div class="m"><div class="l">${t('vsY',{y:P})}</div><div class="v"><span class="delta ${dcls(dY)}" style="font-size:18px">${dY==null?t('na'):sgn(dY)}</span></div><div class="h">${emis(a,P)&&emis(a,L)?((emis(a,L)-emis(a,P))>0?t('more_'):t('less_'))+' '+fmtE(Math.abs(emis(a,L)-emis(a,P)))+' '+uL():''}</div></div><div class="m"><div class="l">${t('d.rank')}</div><div class="v">${rank||t('na')}${rank?'/'+same.length:''}</div><div class="h">${t('d.shareSec',{p:nfx(share,1)})}</div></div></div>
   <h4>${t('d.io',{y:BASE()})} ${qi('io')}</h4>${ioBlock(a)}
   ${chart?`<h4>${t('d.trend',{a:ys[0],b:L})}</h4>${chart}`:`<p class="note">${t('d.noSeries')}</p>`}${zy.length?`<div class="callout warn" style="margin-top:8px"><div class="t">${t('d.zeroT',{y:zy.join(', ')})}</div>${t('d.zeroD')}</div>`:''}
@@ -1366,6 +1435,112 @@ function bCompute(){const a=byId(CB.fac);const vol=CB.vol||0;const dir=parseFloa
   $('bChart').innerHTML=sv+`</svg><p class="note">${t('cb.chartN',{u:S.cur==='VND'?(LANG==='en'?'billion VND':'tỷ đồng'):(LANG==='en'?'million '+S.cur:'triệu '+S.cur),m:nf(c.mark,0)})}</p>`;
   $('bTbl').innerHTML=`<thead><tr><th>${t('year')}</th><th class="n">${t('cb.h1')}</th><th class="n">${t('cb.h2')}</th><th class="n">${t('cb.h3')}</th><th class="n">${t('cb.h4',{c:S.cur})}</th><th class="n">EUR/t</th><th class="n">${t('cb.h5')}</th></tr></thead><tbody>${rows.map(r=>`<tr style="cursor:default"><td>${r.y}</td><td class="n">${nfx(r.p,1)}%</td><td class="n">${nf(r.cert,0)}</td><td class="n">${nf(r.eur,0)}</td><td class="n">${money(r.vnd)}</td><td class="n">${nfx(r.perT,2)}</td><td class="n">${money(r.def*S.fx.eur)}</td></tr>`).join('')}</tbody>`;}
 
+// ---------- TRUST SCORE & RISK ----------
+// Reference ranges are assumptions for plausibility screening (t CO2e per MWh or per t product); expert review needed.
+const EF_RANGE={'electricity-generation|coal':[0.8,1.3],'electricity-generation|gas':[0.33,0.8],'electricity-generation|gas, other_fossil':[0.33,0.8],'electricity-generation|gas, oil':[0.33,0.9],'electricity-generation|gas, oil, other_fossil':[0.33,0.9],'electricity-generation|oil':[0.6,1.1],'electricity-generation|coal, gas, other_fossil':[0.33,1.3],
+  'cement|integrated dry':[0.45,1.0],'iron-and-steel|BF/BOF':[1.5,2.5],'iron-and-steel|EAF':[0.03,0.6],'iron-and-steel|IF':[0.03,0.6],'iron-and-steel|IF,EAF':[0.03,0.6],'iron-and-steel|EAF,BF/BOF':[0.03,2.5]};
+const CONF_PTS={'very high':30,'high':25,'medium':17,'low':9,'very low':4,'':6};
+const utilOf=a=>a.s==='electricity-generation'?a.cf:(a.cap>0&&a.act!=null?a.act/a.cap:null);
+let TRUST=null;
+function trustAll(){
+  const near=(a,f,tol,same)=>{const v=f(a);if(v==null)return 0;return DATA.assets.filter(b=>same(a,b)&&f(b)!=null&&Math.abs(f(b)-v)<=tol).length;};
+  const sameS=(a,b)=>a.s===b.s,sameT=(a,b)=>a.s===b.s&&a.t===b.t;
+  const kk=WS.kk;const ys=years();const out={};
+  DATA.assets.forEach(a=>{const fl=[];let sc=0;
+    // A. source confidence
+    const cp=CONF_PTS[a.c||'']??6;sc+=cp;fl.push({k:'conf',lv:cp>=25?'ok':cp>=17?'warn':'bad',p:{c:confN(a.c)}});
+    // B. plant-specific vs model default
+    const u=utilOf(a);const nU=near(a,utilOf,0.003,sameS);const nE=near(a,b=>b.ef,0.0005,sameT);let b=25;
+    if(nU>=3){b-=10;fl.push({k:'defAct',lv:'warn',p:{v:nfx(u*100,1),n:nU}});}
+    if(nE>=3){b-=10;fl.push({k:'defEf',lv:'warn',p:{n:nE}});}
+    sc+=b;
+    // C. physical plausibility
+    const rg=EF_RANGE[a.s+'|'+a.t];let c=20;
+    if(rg&&a.ef!=null&&(a.ef<rg[0]||a.ef>rg[1])){c=5;fl.push({k:'efRange',lv:'bad',p:{v:nfx(a.ef,3),lo:rg[0],hi:rg[1]}});}
+    if(u!=null&&(u>1||u<0.05)){c=Math.min(c,10);fl.push({k:'util',lv:u>1?'bad':'warn',p:{v:nf(u*100,1)}});}
+    sc+=c;
+    // D. time series
+    const vals=ys.map(y=>emis(a,y));const n=vals.filter(v=>v!=null).length;let d=Math.round(15*n/ys.length);
+    if(n<ys.length)fl.push({k:'gap',lv:'warn',p:{n:ys.length-n}});
+    for(let i=1;i<ys.length;i++){const p0=vals.at(i-1),p1=vals.at(i);if(p0&&p1&&Math.abs(p1/p0-1)>0.6){d=Math.max(0,d-5);fl.push({k:'jump',lv:'warn',p:{p:sgn((p1/p0-1)*100),y:ys.at(i)}});}}
+    sc+=d;
+    // E. independent check from company inventory
+    let e=0,inv=null;Object.entries(kk).forEach(([key,v])=>{const [id,y]=key.split('|');if(id!==a.id||!(v&&v.s1>0&&v.n>0))return;const s=emis(a,+y);const ok=s?Math.abs(v.s1/s-1)<=S.match/100:false;if(!inv||ok)inv={y,ok,full:v.n>=12};});
+    if(inv){e=inv.ok?(inv.full?10:7):5;fl.push({k:inv.ok?'invOk':'invGap',lv:inv.ok?'ok':'warn',p:{y:inv.y}});}else fl.push({k:'noInv',lv:'info',p:{}});
+    sc+=e;
+    const g=sc>=75?'A':sc>=55?'B':sc>=35?'C':'D';
+    out[a.id]={sc,g,fl,inv:!!inv};});
+  TRUST=out;return out;}
+const gradeCls=g=>({A:'ok',B:'ok',C:'warn',D:'bad'})[g];
+const flagTxt=f=>t('tf.'+f.k,f.p);
+function trustBlock(a){const T0=(TRUST||trustAll())[a.id];if(!T0)return '';
+  return `<div class="trustbox"><div class="tb-h"><span class="grade g${T0.g}">${T0.g}</span><div><b>${t('tr.score')}: ${T0.sc}/100</b><div class="note">${t('tr.g'+T0.g)}</div></div><span class="sp"></span>${qi('trust')}</div><ul>${T0.fl.filter(f=>f.lv!=='ok'||f.k.startsWith('inv')).map(f=>`<li class="${f.lv}">${esc(flagTxt(f))}</li>`).join('')}</ul></div>`;}
+
+const TR={sec:'',g:'',q:''};
+RENDER.trust=function(){
+  trustAll();const L=LAST();const list=DATA.assets.filter(a=>(emis(a,L)||a.e)>0);const E=a=>emis(a,L)||a.e;const tot=list.reduce((s,a)=>s+E(a),0);
+  const byG=g=>list.filter(a=>TRUST[a.id].g===g).reduce((s,a)=>s+E(a),0);
+  const wavg=list.reduce((s,a)=>s+TRUST[a.id].sc*E(a),0)/tot;
+  const defE=list.filter(a=>TRUST[a.id].fl.some(f=>f.k==='defAct'||f.k==='defEf')).reduce((s,a)=>s+E(a),0);
+  const implaus=list.filter(a=>TRUST[a.id].fl.some(f=>f.k==='efRange')).length;
+  const pri=list.map(a=>({a,v:E(a)*(1-TRUST[a.id].sc/100)})).sort((x,y)=>y.v-x.v);
+  const gb=['A','B','C','D'].map(g=>[g,byG(g)]);
+  $('v-trust').innerHTML=vhead(t('grp.explore'),t('nav.trust'),t('tr.D'))+`
+  <div class="kp" style="margin-bottom:16px"><div class="k"><div class="l">${t('tr.k1')} ${qi('trust')}</div><div class="v">${nf(wavg,0)}/100</div><div class="note">${t('tr.k1n')}</div></div><div class="k"><div class="l">${t('tr.k2')}</div><div class="v">${nf(defE/tot*100,0)}%</div><div class="note">${t('tr.k2n')}</div></div><div class="k"><div class="l">${t('tr.k3')}</div><div class="v">${implaus}</div><div class="note">${t('tr.k3n')}</div></div></div>
+  <div class="card"><h2>${t('tr.mixT')}</h2><p class="cap">${t('tr.mixC',{y:L})}</p><div class="gbar">${gb.map(([g,v])=>v>0?`<div class="g${g}" style="flex:${v}" title="${g}: ${nf(v/tot*100,1)}%"><b>${g}</b> ${nf(v/tot*100,0)}%</div>`:'').join('')}</div><div class="glegend">${['A','B','C','D'].map(g=>`<span><i class="g${g}"></i>${g}: ${t('tr.g'+g)}</span>`).join('')}</div></div>
+  <div class="row2" style="margin-top:16px"><div class="card"><h2>${t('tr.mapT')}</h2><p class="cap">${t('tr.mapC')}</p><div id="trMap"></div></div>
+   <div class="card"><h2>${t('tr.priT')}</h2><p class="cap">${t('tr.priC')}</p><ol class="prilist">${pri.slice(0,10).map(({a,v})=>`<li data-id="${a.id}"><div class="m"><b>${esc(shortName(a.n))}</b><span class="note">${esc(kind(a))} · ${fmtE(E(a))} ${uL()}</span></div><span class="grade sm g${TRUST[a.id].g}">${TRUST[a.id].g}</span><span class="mono">${TRUST[a.id].sc}</span></li>`).join('')}</ol><p class="note">${t('tr.priN')}</p></div></div>
+  <div class="card" style="margin-top:16px"><div class="chead"><h2>${t('tr.tblT')}</h2><div class="toolbar"><input type="search" id="trQ" placeholder="${esc(t('findPlant'))}" value="${esc(TR.q)}"><select id="trSec"><option value="">${t('allSec')}</option>${Object.keys(SECTORS).map(k=>`<option value="${k}" ${TR.sec===k?'selected':''}>${secN(k)}</option>`).join('')}</select><select id="trG"><option value="">${t('tr.allG')}</option>${['A','B','C','D'].map(g=>`<option ${TR.g===g?'selected':''}>${g}</option>`).join('')}</select><button class="btn" id="trCsv">${t('exportCsv')}</button></div></div><div class="tablewrap" style="margin-top:10px"><table id="trTbl"></table></div></div>
+  <div class="card" style="margin-top:16px"><h2>${t('tr.valT')}</h2><p class="cap">${t('tr.valC')}</p><div class="tablewrap" style="max-height:none"><table class="vtab"><thead><tr><th>${t('tr.v0')}</th><th>${t('tr.v1')}</th><th>${t('tr.v2')}</th><th>${t('tr.v3')}</th></tr></thead><tbody>${[1,2,3,4,5,6,7].map(i=>`<tr style="cursor:default"><td>${t('tr.r'+i)}</td>${['a','b','c'].map(c=>{const v=t('tr.r'+i+c);return `<td class="${v.startsWith('✓')?'yes':v.startsWith('✗')?'no':''}">${esc(v)}</td>`;}).join('')}</tr>`).join('')}</tbody></table></div><p class="note" style="margin-top:8px">${t('tr.valN')}</p></div>`;
+  trMap(list,E);trTable();
+  $('v-trust').querySelector('.prilist').onclick=e=>{const li=e.target.closest('li[data-id]');if(li)openDetail(li.dataset.id);};
+  $('trQ').oninput=e=>{TR.q=e.target.value;trTable();};$('trSec').onchange=e=>{TR.sec=e.target.value;trTable();};$('trG').onchange=e=>{TR.g=e.target.value;trTable();};
+  $('trCsv').onclick=()=>{const rows=DATA.assets.filter(a=>a.e>0);saveFile('trust-scores.csv',['id,facility,sector,type,trust_score,grade,flags'].concat(rows.map(a=>[a.id,csvQ(a.n),a.s,csvQ(a.t),TRUST[a.id].sc,TRUST[a.id].g,csvQ(TRUST[a.id].fl.filter(f=>f.lv!=='ok').map(flagTxt).join('; '))].join(','))).join('\n'),'text/csv');};
+};
+function trMap(list,E){const W=560,H=360,Lp=48,R=16,T=16,B=40;const mx=Math.max(...list.map(E)),mn=Math.max(1e3,Math.min(...list.map(E)));const ly=v=>Math.log10(v);
+  const x=s=>Lp+(W-Lp-R)*s/100,y=v=>T+(H-T-B)*(1-(ly(v)-ly(mn))/(ly(mx)-ly(mn)));const x55=x(55),y1=y(1e6);
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(t('tr.mapT'))}"><rect x="${Lp}" y="${T}" width="${x55-Lp}" height="${y1-T}" fill="var(--bad)" fill-opacity=".07"/>`;
+  [1e4,1e5,1e6,1e7].filter(v=>v>=mn&&v<=mx).forEach(v=>{s+=`<line x1="${Lp}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${Lp-6}" y="${y(v)+4}" font-size="10.5" text-anchor="end" fill="var(--muted)" class="mono">${v>=1e6?nf(v/1e6,0)+'M':nf(v/1e3,0)+'k'}</text>`;});
+  [0,25,55,75,100].forEach(v=>{s+=`<line x1="${x(v)}" x2="${x(v)}" y1="${T}" y2="${H-B}" stroke="var(--grid)"/><text x="${x(v)}" y="${H-B+16}" font-size="10.5" text-anchor="middle" fill="var(--muted)" class="mono">${v}</text>`;});
+  s+=`<line x1="${x55}" x2="${x55}" y1="${T}" y2="${H-B}" stroke="var(--muted)" stroke-dasharray="4 4"/><line x1="${Lp}" x2="${W-R}" y1="${y1}" y2="${y1}" stroke="var(--muted)" stroke-dasharray="4 4"/>`;
+  s+=`<text x="${Lp+8}" y="${T+16}" font-size="11.5" font-weight="600" fill="var(--bad)">${t('tr.qHi')}</text><text x="${W-R-8}" y="${T+16}" font-size="11.5" text-anchor="end" fill="var(--muted)">${t('tr.qOk')}</text>`;
+  list.forEach(a=>{const sc=TRUST[a.id].sc,v=E(a);s+=`<circle data-id="${a.id}" cx="${x(sc).toFixed(1)}" cy="${y(Math.max(v,mn)).toFixed(1)}" r="5" fill="${SECTORS[a.s].col}" fill-opacity=".7" stroke="var(--panel)" style="cursor:pointer"><title>${esc(a.n)}: ${sc}/100, ${fmtE(v)} ${uL()}</title></circle>`;});
+  s+=`<text x="${(W+Lp)/2}" y="${H-6}" font-size="11" text-anchor="middle" fill="var(--muted)">${t('tr.xAx')}</text><text x="${Lp}" y="${T-4}" font-size="11" fill="var(--muted)">${t('tr.yAx')}</text></svg>`;
+  $('trMap').innerHTML=s+`<div class="glegend">${Object.keys(SECTORS).map(k=>`<span><i style="background:${SECTORS[k].col}"></i>${secS(k)}</span>`).join('')}</div>`;
+  $('trMap').onclick=e=>{const c=e.target.closest('circle[data-id]');if(c)openDetail(c.dataset.id);};}
+function trTable(){const q=fold(TR.q.trim());const L=LAST();const rows=DATA.assets.filter(a=>a.e>0&&(!TR.sec||a.s===TR.sec)&&(!TR.g||TRUST[a.id].g===TR.g)&&(!q||fold(a.n+' '+(a.o||'')).includes(q))).sort((a,b)=>TRUST[a.id].sc-TRUST[b.id].sc||b.e-a.e);
+  $('trTbl').innerHTML=`<thead><tr><th>${t('facility')}</th><th>${t('type')}</th><th class="n">${t('emisY',{y:L})}</th><th class="n">${t('tr.score')}</th><th>${t('tr.issues')}</th></tr></thead><tbody>${rows.map(a=>{const T0=TRUST[a.id];return `<tr data-id="${a.id}"><td><b>${esc(a.n)}</b></td><td>${esc(kind(a))}</td><td class="n">${fmtE(emis(a,L))}</td><td class="n"><span class="grade sm g${T0.g}">${T0.g}</span> ${T0.sc}</td><td class="iss">${T0.fl.filter(f=>f.lv==='bad'||f.lv==='warn').map(f=>`<span class="chip ${f.lv}">${esc(flagTxt(f))}</span>`).join('')||`<span class="note">${t('tr.none')}</span>`}</td></tr>`;}).join('')}</tbody>`;
+  $('trTbl').onclick=e=>{const r=e.target.closest('tr[data-id]');if(r)openDetail(r.dataset.id);};}
+
+// ---------- EVIDENCE LOG (satellite verification, H2) ----------
+const EV={fac:null};
+const EV_SIG=['up','down','flat','na'];
+function evClass(r){if(r.sig==='na'||r.truth==='na')return 'inc';const ch=x=>x!=='flat';if(ch(r.sig)&&r.sig===r.truth)return 'tp';if(ch(r.sig)&&!ch(r.truth))return 'fp';if(ch(r.sig)&&ch(r.truth)&&r.sig!==r.truth)return 'fp';if(!ch(r.sig)&&ch(r.truth))return 'fn';return 'tn';}
+RENDER.evidence=function(){
+  const coal=DATA.assets.filter(a=>a.e>0);if(EV.fac==null)EV.fac=DATA.assets.filter(a=>/coal/.test(a.t)).sort((a,b)=>b.e-a.e)[0].id;
+  const opt=k=>EV_SIG.map(s=>`<option value="${s}">${t('ev.s.'+s)}</option>`).join('');
+  $('v-evidence').innerHTML=vhead(t('grp.tools'),t('nav.evidence'),t('ev.D'))+`<div class="row2"><div class="card"><h2>${t('ev.addT')}</h2><div class="form">
+   <label style="grid-column:1/-1">${t('facility')}<select id="evFac">${facOptions(null,EV.fac)}</select></label>
+   <label>${t('ev.per')}<input id="evPer" placeholder="${esc(t('ev.perPh'))}"></label>
+   <label>${t('ev.src')}<select id="evSrc"><option value="no2">NO2 Sentinel-5P</option><option value="ct">Climate TRACE</option><option value="other">${t('ev.other')}</option></select></label>
+   <label>${t('ev.sig')}<select id="evSig">${opt()}</select></label><label>${t('ev.truth')}<select id="evTruth">${opt()}</select></label>
+   <label style="grid-column:1/-1">${t('ev.note')}<input id="evNote" placeholder="${esc(t('ev.notePh'))}"></label></div>
+   <div class="toolbar" style="margin-top:12px"><button class="btn pri" id="evAdd">${t('ev.add')}</button><button class="btn" id="evCsv">${t('exportCsv')}</button><span class="note" id="evMsg"></span></div><p class="note">${t('ev.rule')}</p></div>
+   <div class="card"><h2>${t('ev.statT')}</h2><p class="cap">${t('ev.statC')}</p><div id="evStat"></div></div></div>
+   <div class="card" style="margin-top:16px"><h2>${t('ev.logT')}</h2><div id="evLog"></div></div>`;
+  evDraw();
+  $('evFac').onchange=e=>{EV.fac=e.target.value;};
+  $('evAdd').onclick=()=>{const per=$('evPer').value.trim();if(!per){$('evMsg').textContent=t('ev.needPer');return;}const L=store.get('ct.ev')||[];const a=byId(EV.fac);L.unshift({id:a.id,n:a.n,per,src:$('evSrc').value,sig:$('evSig').value,truth:$('evTruth').value,note:$('evNote').value.trim(),t:new Date().toISOString()});store.set('ct.ev',L.slice(0,1000));$('evPer').value='';$('evNote').value='';$('evMsg').textContent=t('saved');evDraw();};
+  $('evCsv').onclick=()=>{const L=store.get('ct.ev')||[];if(!L.length)return toast(t('ev.empty'));saveFile('satellite-evidence-log.csv',['recorded,facility_id,facility,period,source,satellite_signal,ground_truth,outcome,note'].concat(L.map(r=>[r.t,r.id,csvQ(r.n),csvQ(r.per),r.src,r.sig,r.truth,evClass(r),csvQ(r.note)].join(','))).join('\n'),'text/csv');};
+  $('evLog').onclick=e=>{const b=e.target.closest('[data-del]');if(!b)return;const L=store.get('ct.ev')||[];L.splice(+b.dataset.del,1);store.set('ct.ev',L);evDraw();};
+};
+function evDraw(){const L=store.get('ct.ev')||[];const c={tp:0,fp:0,fn:0,tn:0,inc:0};L.forEach(r=>c[evClass(r)]++);const n=L.length;const det=c.tp+c.fp;const pos=c.tp+c.fn;
+  const pct2=(a,b)=>b?nf(a/b*100,0)+'%':t('na');const far=det?c.fp/det:null;
+  $('evStat').innerHTML=n?`<div class="kp"><div class="k"><div class="l">${t('ev.m1')}</div><div class="v">${pct2(c.tp,det)}</div></div><div class="k"><div class="l">${t('ev.m2')}</div><div class="v">${pct2(c.fp,det)}</div></div><div class="k"><div class="l">${t('ev.m3')}</div><div class="v">${pct2(c.fn,pos)}</div></div></div>
+   <div class="evbar">${['tp','tn','fp','fn','inc'].map(k=>c[k]?`<div class="e${k}" style="flex:${c[k]}" title="${esc(t('ev.c.'+k))}: ${c[k]}">${c[k]}</div>`:'').join('')}</div><div class="glegend">${['tp','tn','fp','fn','inc'].map(k=>`<span><i class="e${k}"></i>${t('ev.c.'+k)}</span>`).join('')}</div>
+   <div class="callout ${far==null?'':far<=0.2?'ok':'warn'}" style="margin-top:10px">${far==null?t('ev.h2na'):far<=0.2?t('ev.h2ok',{p:nf(far*100,0),n}):t('ev.h2no',{p:nf(far*100,0),n})}${n<30?' '+t('ev.small'):''}</div>`:`<div class="empty">${t('ev.empty')}</div>`;
+  $('evLog').innerHTML=n?`<div class="tablewrap" style="max-height:420px"><table><thead><tr><th>${t('facility')}</th><th>${t('ev.per')}</th><th>${t('ev.src')}</th><th>${t('ev.sig')}</th><th>${t('ev.truth')}</th><th>${t('ev.out')}</th><th>${t('ev.note')}</th><th></th></tr></thead><tbody>${L.map((r,i)=>{const k=evClass(r);return `<tr style="cursor:default"><td>${esc(shortName(r.n))}</td><td>${esc(r.per)}</td><td>${r.src==='no2'?'NO2':r.src==='ct'?'Climate TRACE':esc(t('ev.other'))}</td><td>${t('ev.s.'+r.sig)}</td><td>${t('ev.s.'+r.truth)}</td><td><span class="chip ${k==='tp'||k==='tn'?'ok':k==='inc'?'':'bad'}">${t('ev.c.'+k)}</span></td><td>${esc(r.note)}</td><td><button class="mini-btn" data-del="${i}">×</button></td></tr>`;}).join('')}</tbody></table></div>`:`<div class="empty">${t('ev.empty')}</div>`;}
+
 // ---------- splash launcher ----------
 function openSplash(step){
   if(step==='welcome')return openWelcome();stopGlobe();
@@ -1480,7 +1655,7 @@ function startGlobe(still){
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&SPLASH_STEP==='welcome'&&$('splash')&&document.activeElement.id!=='wGo'){e.preventDefault();openSplash();SPLASH_STEP='menu';}});
 
 // ---------- LOOKUP ----------
-const GLOSS=['co2e','s1','s2','ef','intensity','gwp','ncv','tier1','grid','cf','hr','clinker','ckd','bof','eaf','conf','unc','cbam','ets','free','ccost','mrv','io','no2'];
+const GLOSS=['trust','co2e','s1','s2','ef','intensity','gwp','ncv','tier1','grid','cf','hr','clinker','ckd','bof','eaf','conf','unc','cbam','ets','free','ccost','mrv','io','no2'];
 const LOOK={tab:'gloss',q:'',conv:'energy',cv:{energy:{v:1000,u:'MWh'},mass:{v:1,u:'kt'},fuel:{v:1000,k:'bituminous'},elec:{v:1000,u:'MWh'},money:{v:1000000000,u:'VND'},price:{v:10,u:'USD'}}};
 const EN_U={TJ:1000,GJ:1,MJ:0.001,MWh:3.6,kWh:0.0036,toe:41.868,Gcal:4.1868,MMBtu:1.055056};
 const MA_U={kg:0.001,t:1,kt:1000,Mt:1e6,lb:0.00045359237,'short ton':0.90718474};
@@ -1535,7 +1710,7 @@ function lkFactors(){const g=GWP[S.gwp];
 function lkMethod(){const m=DATA.meta;$('lkBody').innerHTML=`<div class="card prose">${t('meth.html')}<h3>${t('meth.own')}</h3><p>${esc(t('meth.ownD'))}</p><h3>${t('meth.upd')}</h3><p>${esc(t('meth.src',{s:m.source||'Climate TRACE API v6',f:m.fetched||t('unknown'),n:DATA.assets.length,b:BASE(),y0:years()[0],y1:LAST()}))}</p></div>`;}
 
 // ---------- STORAGE ----------
-const CT_KEYS=['ct.stars','ct.notes','ct.kk','ct.saved','ct.cmps','ct.settings','ct.lang','ct.view','ct.data'];
+const CT_KEYS=['ct.stars','ct.notes','ct.kk','ct.saved','ct.cmps','ct.ev','ct.settings','ct.lang','ct.view','ct.data'];
 RENDER.storage=function(){
   const stars=[...WS.stars].map(byId).filter(Boolean),notes=WS.notes,kk=WS.kk,saved=WS.saved,cmps=WS.cmps;
   const size=CT_KEYS.reduce((s,k)=>{try{return s+(localStorage.getItem(k)||'').length;}catch(e){return s;}},0);
@@ -1562,7 +1737,7 @@ RENDER.storage=function(){
   $('stExp').onclick=()=>{const o={app:'emissions-monitor',v:3,exported:new Date().toISOString(),data:{}};CT_KEYS.filter(k=>k!=='ct.data').forEach(k=>{const v=store.get(k);if(v!=null)o.data[k]=v;});saveFile('backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(o,null,1),'application/json');};
   $('stImp').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const o=JSON.parse(rd.result);if(!o||!o.data)throw 0;let n=0;Object.entries(o.data).forEach(([k,v])=>{if(CT_KEYS.includes(k)&&k!=='ct.data'){store.set(k,v);n++;}});S=mergeS(store.get('ct.settings'));const L=store.get('ct.lang');if(L==='vi'||L==='en')LANG=L;applyTheme();refreshAll();toast(t('st.impOk',{n}));}catch(err){$('stMsg').textContent=t('st.impErr');}};rd.readAsText(f);};
   $('stClr').onclick=()=>{$('stConfirm').innerHTML=`<div class="callout bad" style="margin-top:12px"><div class="t">${t('st.clrQ')}</div>${t('st.clrD')}<div class="toolbar" style="margin-top:10px"><button class="btn pri" id="stClrYes">${t('st.clrYes')}</button><button class="btn" id="stClrNo">${t('cancel')}</button></div></div>`;
-    $('stClrNo').onclick=()=>{$('stConfirm').innerHTML='';};$('stClrYes').onclick=()=>{['ct.stars','ct.notes','ct.kk','ct.saved','ct.cmps'].forEach(k=>store.del(k));toast(t('st.cleared'));RENDER.storage();};};
+    $('stClrNo').onclick=()=>{$('stConfirm').innerHTML='';};$('stClrYes').onclick=()=>{['ct.stars','ct.notes','ct.kk','ct.saved','ct.cmps','ct.ev'].forEach(k=>store.del(k));toast(t('st.cleared'));RENDER.storage();};};
 };
 
 // ---------- SETTINGS ----------
