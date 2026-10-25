@@ -15,5 +15,5 @@
   ],
   "proc": {"clinker": 0.52, "ckd": 1.02, "bof": 1.46, "eaf": 0.08},
   "data": {"country": "VNM", "subsectors": ["electricity-generation", "iron-and-steel", "cement"], "baseYear": 2024, "years": [2021, 2022, 2023, 2024, 2025]},
-  "no2": {"top": 15, "months": 24, "boxDeg": 0.1}
+  "no2": {"top": 1, "months": 24, "boxDeg": 0.1}
 }
