@@ -327,6 +327,24 @@ textarea.note-in{width:100%;min-height:72px;font-family:inherit;font-size:13px}
 .splash .sfoot{margin-top:auto;font-size:12px;color:var(--heromuted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 @media (max-width:760px){.splash .sst{grid-template-columns:repeat(2,minmax(0,1fr))}.splash .tile.main{grid-column:auto}.splash .orbit{width:420px;right:-180px}}
 .hbtn.homebtn{gap:6px}
+/* ---- welcome ---- */
+.welcome{display:grid;place-items:center;text-align:center;min-height:100%;padding-top:calc(24px + env(safe-area-inset-top,0px));padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));box-sizing:border-box;position:relative}
+.welcome .wl{position:absolute;top:calc(18px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px))}
+.welcome .wbox{max-width:640px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.welcome .globe{width:120px;height:120px}
+.welcome .globe .sat{transform-origin:60px 60px;animation:orbitSpin 9s linear infinite}
+@keyframes orbitSpin{to{transform:rotate(360deg)}}
+.welcome .hi{font-family:var(--mono);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:#9ee6cf;opacity:0;animation:wUp .6s .1s ease forwards}
+.welcome h1{font-size:clamp(30px,5.4vw,54px);line-height:1.1;letter-spacing:-.02em;margin:0;text-wrap:balance;opacity:0;animation:wUp .7s .25s ease forwards}
+.welcome h1 em{font-style:normal;color:#7fe3c4}
+.welcome p{color:var(--heromuted);font-size:15.5px;max-width:52ch;margin:0;opacity:0;animation:wUp .7s .45s ease forwards}
+.welcome .cta{opacity:0;animation:wUp .7s .65s ease forwards;display:inline-flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:14px 28px;font:inherit;font-size:16px;font-weight:700;background:#5fe0b8;color:#08201d;cursor:pointer;box-shadow:0 10px 30px rgba(95,224,184,.25);transition:transform .15s,box-shadow .15s}
+.welcome .cta:hover,.welcome .cta:focus-visible{transform:translateY(-2px);box-shadow:0 14px 36px rgba(95,224,184,.35);outline:none}
+.welcome .cta svg{transition:transform .15s}.welcome .cta:hover svg{transform:translateX(3px)}
+.welcome .kb{font-size:12px;color:var(--heromuted);opacity:0;animation:wUp .7s .8s ease forwards}
+@keyframes wUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.splash .stage{animation:wUp .45s ease}
+@media (prefers-reduced-motion:reduce){.welcome *,.splash .stage{animation:none!important;opacity:1!important}}
 </style></head><body><header class="hero">
   <svg class="orbit" viewBox="0 0 620 620" aria-hidden="true"><g fill="none" stroke="#7fdcc0" stroke-opacity=".35"><ellipse cx="310" cy="310" rx="300" ry="120" transform="rotate(-24 310 310)"/><ellipse cx="310" cy="310" rx="240" ry="90" transform="rotate(-24 310 310)" stroke-dasharray="3 6"/><circle cx="310" cy="310" r="150" stroke-opacity=".18"/></g><circle cx="560" cy="200" r="4" fill="#9ee6cf"/><circle cx="120" cy="420" r="3" fill="#9ee6cf" fill-opacity=".6"/></svg>
   <div class="in">
@@ -392,6 +410,10 @@ const T={
 "sp.lede":["Chọn một mục bên dưới để bắt đầu. Bạn có thể quay lại màn hình này bất cứ lúc nào bằng nút Màn hình chính ở góc trên.","Pick a section below to start. You can come back here any time with the Home screen button at the top."],
 "sp.sec":["Ngành","Sectors"],"sp.yrs":["Số năm dữ liệu","Years of data"],"sp.pick":["Bạn muốn làm gì?","What would you like to do?"],
 "sp.hint":["Mẹo: bấm Ctrl K để tìm nhanh","Tip: press Ctrl K to search"],"sp.btn":["Màn hình chính","Home screen"],
+"w.hi":["Xin chào","Hello"],
+"w.title":["Chào mừng bạn đến với <em>Giám sát phát thải</em>","Welcome to <em>Emissions Monitor</em>"],
+"w.lede":["Nền tảng theo dõi phát thải khí nhà kính của nhà máy điện, thép, xi măng Việt Nam bằng dữ liệu vệ tinh, kèm công cụ kiểm kê, đối chiếu và tính chi phí carbon.","A platform tracking greenhouse gas emissions from Vietnam's power, steel and cement plants with satellite data, plus tools for inventory, cross-checking and carbon costs."],
+"w.go":["Tiếp tục","Continue"],"w.kb":["hoặc nhấn Enter","or press Enter"],
 // ---- nav ----
 "grp.explore":["Khám phá","Explore"],"grp.tools":["Công cụ","Tools"],"grp.ref":["Tra cứu","Reference"],
 "nav.home":["Tổng quan","Overview"],"nav.home.d":["Bản đồ, số liệu chính, nhận định nhanh","Map, key figures, quick insights"],
@@ -1300,12 +1322,13 @@ function bCompute(){const a=byId(CB.fac);const vol=CB.vol||0;const dir=parseFloa
   $('bTbl').innerHTML=`<thead><tr><th>${t('year')}</th><th class="n">${t('cb.h1')}</th><th class="n">${t('cb.h2')}</th><th class="n">${t('cb.h3')}</th><th class="n">${t('cb.h4',{c:S.cur})}</th><th class="n">EUR/t</th><th class="n">${t('cb.h5')}</th></tr></thead><tbody>${rows.map(r=>`<tr style="cursor:default"><td>${r.y}</td><td class="n">${nfx(r.p,1)}%</td><td class="n">${nf(r.cert,0)}</td><td class="n">${nf(r.eur,0)}</td><td class="n">${money(r.vnd)}</td><td class="n">${nfx(r.perT,2)}</td><td class="n">${money(r.def*S.fx.eur)}</td></tr>`).join('')}</tbody>`;}
 
 // ---------- splash launcher ----------
-function openSplash(){
+function openSplash(step){
+  if(step==='welcome')return openWelcome();
   const L=LAST();const tot=Object.keys(SECTORS).reduce((s,k)=>s+bySecTot(k,L),0);const n=DATA.assets.filter(a=>(emis(a,L)||0)>0).length;
   const grp=g=>VIEWS.filter(v=>v.g===g).map(v=>`<button class="tile${v.id==='home'?' main':''}" data-v="${v.id}"><span class="ic">${icon(v.ico,20)}</span><span style="min-width:0"><b>${t(v.k)}</b><small>${t(v.k+'.d')}</small></span></button>`).join('');
   $('splashHost').innerHTML=`<div class="splash" id="splash" role="dialog" aria-modal="true" aria-label="${esc(t('brand'))}">
    <svg class="orbit" viewBox="0 0 620 620" aria-hidden="true"><g fill="none" stroke="#7fdcc0" stroke-opacity=".35"><ellipse cx="310" cy="310" rx="300" ry="120" transform="rotate(-24 310 310)"/><ellipse cx="310" cy="310" rx="240" ry="90" transform="rotate(-24 310 310)" stroke-dasharray="3 6"/><circle cx="310" cy="310" r="150" stroke-opacity=".18"/></g><circle cx="560" cy="200" r="4" fill="#9ee6cf"/></svg>
-   <div class="spw">
+   <div class="spw stage">
     <div class="stop"><div class="brand"><span class="logo"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="3.2" fill="#5fe0b8"/><ellipse cx="9" cy="9" rx="8" ry="3.4" fill="none" stroke="#9ee6cf" stroke-width="1.2" transform="rotate(-25 9 9)"/></svg></span><span>${t('brand')}</span></div>
      <div class="lang" role="group" aria-label="Language" id="spLang"><button data-lang="vi" aria-pressed="${LANG==='vi'}">VI</button><button data-lang="en" aria-pressed="${LANG==='en'}">EN</button></div></div>
     <div><div class="eyebrow"><span class="live">${t('eyeLive')}</span><span>Climate TRACE · ${years()[0]}${LANG==='en'?' to ':' đến '}${L}</span></div><h1>${t('heroTitle')}</h1><p class="lede">${t('sp.lede')}</p></div>
@@ -1318,11 +1341,28 @@ function openSplash(){
   const sp=$('splash');
   sp.addEventListener('click',e=>{const b=e.target.closest('.tile');if(b)closeSplash(b.dataset.v);});
   $('spLang').onclick=e=>{const b=e.target.closest('button[data-lang]');if(!b||b.dataset.lang===LANG)return;LANG=b.dataset.lang;store.set('ct.lang',LANG);applyTheme();refreshAll();openSplash();};
+  SPLASH_STEP='menu';
   setTimeout(()=>{const f=sp.querySelector('.tile.main');if(f)f.focus({preventScroll:true});},50);
 }
-function closeSplash(v){const sp=$('splash');if(!sp)return;document.documentElement.style.overflow='';show(v||'home');window.scrollTo(0,0);sp.classList.add('out');setTimeout(()=>{$('splashHost').innerHTML='';},360);}
+function closeSplash(v){SPLASH_STEP=null;const sp=$('splash');if(!sp)return;document.documentElement.style.overflow='';show(v||'home');window.scrollTo(0,0);sp.classList.add('out');setTimeout(()=>{$('splashHost').innerHTML='';},360);}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('splash'))closeSplash(CUR);});
 $('homeBtn').onclick=openSplash;
+
+let SPLASH_STEP=null;
+const LOGO=`<svg class="globe" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="26" fill="#5fe0b8" fill-opacity=".9"/><circle cx="60" cy="60" r="38" fill="none" stroke="#9ee6cf" stroke-opacity=".25"/><g class="sat"><ellipse cx="60" cy="60" rx="54" ry="22" fill="none" stroke="#9ee6cf" stroke-width="1.6" transform="rotate(-25 60 60)"/><circle cx="109" cy="38" r="5" fill="#eef6f2"/></g></svg>`;
+function openWelcome(){
+  SPLASH_STEP='welcome';
+  $('splashHost').innerHTML=`<div class="splash" id="splash" role="dialog" aria-modal="true" aria-label="${esc(t('brand'))}"><div class="welcome">
+   <div class="lang wl" role="group" aria-label="Language" id="wLang"><button data-lang="vi" aria-pressed="${LANG==='vi'}">VI</button><button data-lang="en" aria-pressed="${LANG==='en'}">EN</button></div>
+   <div class="wbox">${LOGO}<div class="hi">${t('w.hi')}</div><h1>${t('w.title')}</h1><p>${t('w.lede')}</p>
+    <button class="cta" id="wGo">${t('w.go')}<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h11M10 4.5L14.5 9 10 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="kb">${t('w.kb')}</div></div></div></div>`;
+  document.documentElement.style.overflow='hidden';
+  $('wGo').onclick=()=>{openSplash();SPLASH_STEP='menu';};
+  $('wLang').onclick=e=>{const b=e.target.closest('button[data-lang]');if(!b||b.dataset.lang===LANG)return;LANG=b.dataset.lang;store.set('ct.lang',LANG);applyTheme();refreshAll();openWelcome();};
+  setTimeout(()=>{const g=$('wGo');if(g)g.focus({preventScroll:true});},60);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&SPLASH_STEP==='welcome'&&$('splash')&&document.activeElement.id!=='wGo'){e.preventDefault();openSplash();SPLASH_STEP='menu';}});
 
 // ---------- LOOKUP ----------
 const GLOSS=['co2e','s1','s2','ef','intensity','gwp','ncv','tier1','grid','cf','hr','clinker','ckd','bof','eaf','conf','unc','cbam','ets','free','ccost','mrv','io','no2'];
@@ -1459,7 +1499,7 @@ async function loadData(){
   CFG=cfg;if(cfg&&!store.get('ct.settings')){S=mergeS(cfg);applyTheme();}
   DATA=normalize(raw);DATA.no2=(no2&&no2.series)||{};
   renderStatic();renderHero();
-  let v=(location.hash||'').slice(1);const direct=!!VIEWS.find(x=>x.id===v);if(!direct)v='home';show(v,{noScroll:true});renderCmpBar();if(!direct)openSplash();
+  let v=(location.hash||'').slice(1);const direct=!!VIEWS.find(x=>x.id===v);if(!direct)v='home';show(v,{noScroll:true});renderCmpBar();if(!direct)openWelcome();
 }
 loadData();
 
