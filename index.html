@@ -608,6 +608,11 @@ const T={
 "fl.mom":["{m}: phát thải {de}% nhưng sản lượng {dp}% so với tháng trước.","{m}: emissions {de}% but output {dp}% versus the previous month."],
 "fl.hr":["{m}: suất hao nhiệt {v} kJ/kWh nằm ngoài khoảng thường gặp 8.000 đến 13.500.","{m}: heat rate {v} kJ/kWh is outside the usual 8,000 to 13,500 range."],
 "fl.ck":["{m}: tỷ lệ clinker {v}% nằm ngoài khoảng 50 đến 100%.","{m}: clinker ratio {v}% is outside 50 to 100%."],
+"lg.T":["Nhật ký truy vết","Audit trail"],"lg.C":["Mọi thay đổi số liệu được ghi lại: lúc nào, thao tác gì, ô nào, giá trị cũ và mới. Dùng để giải trình với đơn vị thẩm định.","Every data change is recorded: when, what action, which cell, old and new value. Use it to explain figures to a verifier."],
+"lg.time":["Thời gian","Time"],"lg.act":["Thao tác","Action"],"lg.what":["Ô số liệu","Cell"],"lg.old":["Cũ","Old"],"lg.new":["Mới","New"],
+"lg.manual":["Nhập tay","Manual entry"],"lg.sample":["Điền số mẫu","Sample data"],"lg.paste":["Dán, tải file","Paste or file"],"lg.clear":["Xoá bảng","Table cleared"],
+"lg.cnt":["{n} ô thay đổi","{n} cells changed"],"lg.empty":["Chưa có thay đổi nào được ghi.","No changes recorded yet."],
+"lg.note":["{n} lần ghi. Nhật ký lưu cùng bản kiểm kê trên trình duyệt này và nằm trong file sao lưu.","{n} entries. The log is stored with this inventory in this browser and included in backups."],
 "rp.title":["Báo cáo kiểm kê","Inventory report"],"rp.head":["Báo cáo kiểm kê khí nhà kính sơ bộ","Preliminary greenhouse gas inventory"],
 "rp.s1":["Kết quả","Results"],"rp.s2":["Số liệu hoạt động theo tháng","Monthly activity data"],"rp.s3":["Hệ số sử dụng","Factors used"],"rp.s4":["Kiểm tra dữ liệu","Data checks"],"rp.s5":["Đối chiếu vệ tinh","Satellite cross-check"],"rp.s6":["Giới hạn","Limitations"],
 "rp.fuel":["Từ đốt nhiên liệu","From fuel combustion"],"rp.proc":["Từ quá trình sản xuất","From processes"],"rp.months":["Số tháng có số liệu","Months with data"],
@@ -1203,8 +1208,18 @@ const KCOLS={'electricity-generation':[['bituminous','kc.bit','fuel'],['anthraci
   'iron-and-steel':[['bof','kc.bof','bof'],['eaf','kc.eaf','eaf'],['bituminous','kc.coal','fuel'],['gas','kc.gas','fuel'],['buy','kc.buy','elec']]};
 const INV={fac:null,year:null,last:null};
 const kKey=()=>INV.fac+'|'+INV.year;
-function kRows(){const d=WS.kk[kKey()];return d&&d.rows?d.rows:Array.from({length:12},()=>({}));}
-function kSave(rows){const all=WS.kk;const R=kCalc(byId(INV.fac),rows);all[kKey()]={rows,saved:new Date().toISOString().slice(0,10),s1:Math.round(R.s1),s2:Math.round(R.s2),n:R.filled};store.set('ct.kk',all);}
+function kRows(){const d=WS.kk[kKey()];return d&&d.rows&&d.rows.length?d.rows:Array.from({length:12},()=>({}));}
+const kLog=()=>{const d=WS.kk[kKey()];return (d&&d.log)||[];};
+function kSave(rows,src,meta){const all=WS.kk;const prev=all[kKey()]||{};const old=prev.rows||[];const log=(prev.log||[]).slice();const now=new Date();const ts=now.toISOString();
+  const diffs=[];for(let i=0;i<12;i++){const a=old[i]||{},b=rows[i]||{};new Set([...Object.keys(a),...Object.keys(b)]).forEach(k=>{const o=a[k]??null,n=b[k]??null;if(o!==n)diffs.push({m:i,c:k,o,n});});}
+  if(src==='manual'){diffs.forEach(d=>{const last=log.at(-1);if(last&&last.src==='manual'&&last.m===d.m&&last.c===d.c&&now-Date.parse(last.t)<90000){last.n=d.n;last.t=ts;}else log.push({t:ts,src,m:d.m,c:d.c,o:d.o,n:d.n});});}
+  else if(diffs.length||src==='clear')log.push({t:ts,src,cnt:diffs.length,note:meta||''});
+  const R=kCalc(byId(INV.fac),rows);all[kKey()]={rows,saved:ts.slice(0,10),s1:Math.round(R.s1),s2:Math.round(R.s2),n:R.filled,log:log.slice(-500)};store.set('ct.kk',all);}
+function kLogHtml(){const L=kLog();const a=byId(INV.fac);const cols=Object.fromEntries(KCOLS[a.s].map(c=>[c[0],t(c[1])]));const MN=MONTHS();
+  if(!L.length)return `<div class="empty">${t('lg.empty')}</div>`;
+  const when=x=>new Date(x).toLocaleString(LOC(),{dateStyle:'short',timeStyle:'short'});
+  return `<div class="tablewrap" style="max-height:340px"><table><thead><tr><th>${t('lg.time')}</th><th>${t('lg.act')}</th><th>${t('lg.what')}</th><th class="n">${t('lg.old')}</th><th class="n">${t('lg.new')}</th></tr></thead><tbody>${L.slice().reverse().slice(0,200).map(e=>e.src==='manual'?`<tr style="cursor:default"><td>${when(e.t)}</td><td>${t('lg.manual')}</td><td>${MN[e.m]}, ${esc(cols[e.c]||e.c)}</td><td class="n">${e.o==null?'·':nf(e.o,2)}</td><td class="n">${e.n==null?'·':nf(e.n,2)}</td></tr>`:`<tr style="cursor:default"><td>${when(e.t)}</td><td>${t('lg.'+e.src)}</td><td colspan="3">${t('lg.cnt',{n:e.cnt||0})}${e.note?' · '+esc(e.note):''}</td></tr>`).join('')}</tbody></table></div><p class="note" style="margin-top:6px">${t('lg.note',{n:L.length})}</p>`;}
+function kLogDraw(){const el=$('kLog');if(el)el.innerHTML=kLogHtml();}
 function kCalc(a,rows){const cols=KCOLS[a.s];
   const months=rows.map((r,i)=>{let fuel=0,proc=0,TJ=0;cols.forEach(([k,,type])=>{const v=r&&r[k];if(!(v>0))return;
       if(type==='fuel'){const f=FU(k);const tj=v/1000*f.ncv;TJ+=tj;fuel+=tj*tPerTJ(f);}else if(type==='clk')proc+=v*S.proc.clinker*S.proc.ckd;else if(type==='bof')proc+=v*S.proc.bof;else if(type==='eaf')proc+=v*S.proc.eaf;});
@@ -1227,12 +1242,14 @@ RENDER.inventory=function(){
   <div id="kPasteBox" hidden style="margin-top:10px"><textarea id="kPaste" rows="6" placeholder="${esc(t('inv.pastePh'))}"></textarea><div class="toolbar" style="margin-top:6px"><button class="btn pri" id="kPasteGo">${t('inv.pasteGo')}</button></div></div>
   <div class="tablewrap" style="margin-top:12px;max-height:none"><table id="kTbl"></table></div><p class="note" id="kHint" style="margin-top:6px"></p></div>
   <div class="row2" style="margin-top:16px"><div class="card"><h2 id="kResT">${t('inv.res')}</h2><p class="cap" id="kResC"></p><div id="kKpi"></div><div id="kChart"></div></div><div class="card"><h2>${t('inv.flags')}</h2><p class="cap">${t('inv.flagsC')}</p><div id="kFlags"></div></div></div>
-  <div class="card" style="margin-top:16px"><h2>${t('inv.cmpT')}</h2><div id="kCmp"></div><div class="toolbar" style="margin-top:12px"><button class="btn pri" id="kReport">${t('inv.report')}</button><button class="btn" id="kCsv">${t('inv.csv')}</button><button class="btn" id="kToCbam">${t('inv.toCbam')}</button></div></div>`;
+  <div class="card" style="margin-top:16px"><h2>${t('inv.cmpT')}</h2><div id="kCmp"></div><div class="toolbar" style="margin-top:12px"><button class="btn pri" id="kReport">${t('inv.report')}</button><button class="btn" id="kCsv">${t('inv.csv')}</button><button class="btn" id="kToCbam">${t('inv.toCbam')}</button></div></div>
+  <div class="card" style="margin-top:16px"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><h2>${t('lg.T')}</h2><button class="mini-btn" id="kLogCsv">CSV</button></div><p class="cap">${t('lg.C')}</p><div id="kLog">${kLogHtml()}</div>`;
   kTable();kCompute();
-  $('kFac').onchange=e=>{INV.fac=e.target.value;CHK.fac=INV.fac;kTable();kCompute();};
-  $('kYear').onchange=e=>{INV.year=+e.target.value;kTable();kCompute();};
-  $('kTbl').oninput=e=>{const x=e.target;if(!x.dataset.c)return;const rows=kRows();const v=x.value===''?null:parseFloat(x.value);rows[+x.dataset.m]=rows[+x.dataset.m]||{};rows[+x.dataset.m][x.dataset.c]=isFinite(v)?v:null;kSave(rows);kCompute();};
-  $('kSample').onclick=kSample;$('kClear').onclick=()=>{const all=WS.kk;delete all[kKey()];store.set('ct.kk',all);kTable();kCompute();$('kMsg').textContent='';};
+  $('kFac').onchange=e=>{INV.fac=e.target.value;CHK.fac=INV.fac;kTable();kCompute();kLogDraw();};
+  $('kYear').onchange=e=>{INV.year=+e.target.value;kTable();kCompute();kLogDraw();};
+  $('kTbl').oninput=e=>{const x=e.target;if(!x.dataset.c)return;const rows=kRows();const v=x.value===''?null:parseFloat(x.value);rows[+x.dataset.m]=rows[+x.dataset.m]||{};rows[+x.dataset.m][x.dataset.c]=isFinite(v)?v:null;kSave(rows,'manual');kCompute();kLogDraw();};
+  $('kSample').onclick=kSample;$('kClear').onclick=()=>{kSave(Array.from({length:12},()=>({})),'clear');kTable();kCompute();kLogDraw();$('kMsg').textContent='';};
+  $('kLogCsv').onclick=()=>{const L=kLog();if(!L.length)return toast(t('lg.empty'));saveFile('audit-log-'+slug(shortName(byId(INV.fac).n))+'-'+INV.year+'.csv',['time,action,month,field,old,new,cells,note'].concat(L.map(e=>[e.t,e.src,e.m!=null?e.m+1:'',e.c||'',e.o??'',e.n??'',e.cnt??'',csvQ(e.note||'')].join(','))).join('\n'),'text/csv');};
   $('kPasteBtn').onclick=()=>{$('kPasteBox').hidden=!$('kPasteBox').hidden;};$('kPasteGo').onclick=()=>kIngest($('kPaste').value);
   $('kFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>kIngest(String(rd.result));rd.readAsText(f);};
   $('kCsv').onclick=kCsv;$('kReport').onclick=kReport;
@@ -1263,11 +1280,11 @@ function kSample(){const a=byId(INV.fac),y=INV.year;const E=emis(a,y)||a.e;const
     else if(a.s==='cement'){const cem=P*f;const ck=cem*Math.min(0.95,(a.ef||0.58)/0.844);r.cem=Math.round(cem);r.clinker=Math.round(ck*j);r.bituminous=Math.round(ck*S.io.ckFuel/FU('bituminous').ncv);r.fo=Math.round(ck*0.002);r.buy=Math.round(cem*0.09);}
     else{const bf=/BF\/BOF/.test(a.t);const st=P*f;if(bf)r.bof=Math.round(st*j);else r.eaf=Math.round(st*j);r.bituminous=Math.round(E*f*(bf?0.22:0.15)/per('bituminous'));r.buy=Math.round(st*(bf?0.12:0.45));}return r;});
   const k=a.s==='cement'?'bituminous':KCOLS[a.s].find(c=>c[2]==='fuel'&&rows[0][c[0]]>0)[0];rows[3][k]=Math.round(rows[3][k]*1.45);rows[8][k]=Math.round(rows[8][k]/1000);
-  kSave(rows);kTable();kCompute();$('kMsg').textContent=t('inv.sampleMsg');}
+  kSave(rows,'sample');kTable();kCompute();kLogDraw();$('kMsg').textContent=t('inv.sampleMsg');}
 function kIngest(txt){const a=byId(INV.fac),cols=KCOLS[a.s];const lines=txt.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);const out=[];
   lines.forEach(l=>{const c=l.split(/\t|;|,(?=\s*[\d-])/).map(x=>x.trim());const nums=c.map(x=>{const s=x.replace(/\s/g,'');if(/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(s))return parseFloat(s.replace(/\./g,'').replace(',','.'));return parseFloat(s.replace(',','.'));});
     if(nums.every(n=>!isFinite(n)))return;const vals=c.length>cols.length?nums.slice(c.length-cols.length):nums;const r={};cols.forEach(([k],i)=>{if(isFinite(vals[i]))r[k]=vals[i];});out.push(r);});
-  if(!out.length){$('kMsg').textContent=t('inv.pasteErr');return;}kSave(Array.from({length:12},(_,i)=>out[i]||{}));kTable();kCompute();$('kMsg').textContent=t('inv.pasteOk',{n:Math.min(out.length,12)});}
+  if(!out.length){$('kMsg').textContent=t('inv.pasteErr');return;}kSave(Array.from({length:12},(_,i)=>out[i]||{}),'paste');kTable();kCompute();kLogDraw();$('kMsg').textContent=t('inv.pasteOk',{n:Math.min(out.length,12)});}
 function kCsv(){const L2=INV.last;if(!L2)return toast(t('inv.noData'));const {a,R,rows}=L2;const cols=KCOLS[a.s];const MN=MONTHS();const csv=[['month',...cols.map(c=>c[0]),'scope1_t','scope2_t','production'].join(',')].concat(R.months.map(m=>[MN[m.i],...cols.map(([k])=>rows[m.i]&&rows[m.i][k]!=null?rows[m.i][k]:''),Math.round(m.s1),Math.round(m.s2),Math.round(m.prod)].join(','))).join('\n');saveFile('inventory-'+slug(shortName(a.n))+'-'+L2.y+'.csv',csv,'text/csv');}
 function kReport(){const L2=INV.last;if(!L2)return toast(t('inv.noData'));const {a,y,R,fl,rows,sat,v}=L2;const cols=KCOLS[a.s];const isP=a.s==='electricity-generation';const MN=MONTHS();const tr=(k,x)=>`<tr><th>${k}</th><td>${x}</td></tr>`;const usedF=cols.filter(c=>c[2]==='fuel').map(c=>FU(c[0]));
   const html=`<!doctype html><html lang="${LANG}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(t('rp.title'))}: ${esc(a.n)} ${y}</title><style>body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;max-width:900px;margin:32px auto;padding:0 18px;color:#141c18;line-height:1.5}h1{font-size:23px;margin:0 0 4px}h2{font-size:16px;margin:26px 0 8px;border-bottom:2px solid #0d6a55;padding-bottom:4px}table{border-collapse:collapse;width:100%;font-size:13.5px}th,td{border-bottom:1px solid #dde3dc;padding:6px 8px;text-align:left;vertical-align:top}td.n,th.n{text-align:right;font-family:ui-monospace,Menlo,monospace}.m{color:#56645c;font-size:13px}.box{border:1px solid #dde3dc;border-radius:10px;padding:10px 12px;margin:6px 0}.bad{border-color:#b3261e;background:#f9e0dc}.warn{border-color:#a05e00;background:#fbedd5}.ok{border-color:#1d7a4a;background:#dff0e4}</style></head><body>
@@ -1277,7 +1294,7 @@ function kReport(){const L2=INV.last;if(!L2)return toast(t('inv.noData'));const 
 <h2>3. ${t('rp.s3')}</h2><table><thead><tr><th>${t('fuel')}</th><th class="n">NCV TJ/kt</th><th class="n">CO2 kg/TJ</th><th class="n">CH4 kg/TJ</th><th class="n">N2O kg/TJ</th></tr></thead><tbody>${usedF.map(f=>`<tr><td>${fuelN(f.k)}</td><td class="n">${f.ncv}</td><td class="n">${f.co2}</td><td class="n">${f.ch4}</td><td class="n">${f.n2o}</td></tr>`).join('')}</tbody></table><p class="m">GWP ${S.gwp} (CH4 ${GWP[S.gwp].ch4}, N2O ${GWP[S.gwp].n2o}). ${t('rp.grid',{g:S.grid})}${a.s==='cement'?` Clinker ${S.proc.clinker} t CO2/t, CKD ${S.proc.ckd}.`:''}${a.s==='iron-and-steel'?` BOF ${S.proc.bof}, EAF ${S.proc.eaf} t CO2/t.`:''}</p>
 <h2>4. ${t('rp.s4')}</h2>${fl.length?fl.map(([c,x])=>`<div class="box ${c}">${x}</div>`).join(''):`<div class="box ok">${t('inv.noFlag')}</div>`}
 <h2>5. ${t('rp.s5')}</h2>${sat&&v?`<table>${tr('Climate TRACE '+y,nf(sat,0)+' t CO2e ('+t('conf')+': '+confN(a.c)+')')}${tr(t('gap'),(v.gap>0?'+':'')+nfx(v.gap*100,1)+'%')}${tr(t('unc'),'±'+v.unc+'%')}</table><div class="box ${v.cls}"><b>${v.v}.</b> ${v.x}</div>`:`<p class="m">${t('inv.noSat',{y})}</p>`}
-<h2>6. ${t('rp.s6')}</h2><p class="m">${t('rp.lim')}</p></body></html>`;
+<h2>6. ${t('lg.T')}</h2>${kLogHtml().replace(/<p class="note"[^>]*>/,'<p class="m">').replace('max-height:340px','')}<h2>7. ${t('rp.s6')}</h2><p class="m">${t('rp.lim')}</p></body></html>`;
   saveFile('inventory-report-'+slug(shortName(a.n))+'-'+y+'.html',html,'text/html');}
 
 // ---------- QUICK CHECK ----------
