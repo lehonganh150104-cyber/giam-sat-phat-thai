@@ -221,7 +221,9 @@ svg .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
   <button role="tab" data-v="phan-tich">Phân tích</button>
   <button role="tab" data-v="doanh-nghiep">Doanh nghiệp</button>
   <button role="tab" data-v="co-so">Danh sách cơ sở</button>
-  <button role="tab" data-v="doi-chieu">Đối chiếu kiểm kê</button>
+  <button role="tab" data-v="doi-chieu">Đối chiếu nhanh</button>
+  <button role="tab" data-v="kiem-ke">Kiểm kê theo tháng</button>
+  <button role="tab" data-v="cbam">Công cụ CBAM</button>
   <button role="tab" data-v="cai-dat">Cài đặt</button>
   <button role="tab" data-v="phuong-phap">Nguồn và phương pháp</button>
 </div></div></nav>
@@ -340,6 +342,61 @@ svg .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
   </div>
 </section>
 
+<section id="v-kiem-ke" hidden>
+  <div class="card">
+    <div class="chead"><div><h2>Kiểm kê phát thải theo tháng</h2><p class="cap">Nhập số liệu vận hành 12 tháng của một cơ sở. Web tính phạm vi 1 và 2 theo IPCC 2006 bậc 1, gắn cờ số liệu bất thường, đối chiếu với ước tính vệ tinh và xuất báo cáo kiểm kê sơ bộ.</p></div></div>
+    <div class="form">
+      <label style="grid-column:span 2">Cơ sở<select id="kFac"></select></label>
+      <label>Năm kiểm kê<select id="kYear"></select></label>
+    </div>
+    <div class="toolbar" style="margin-top:12px">
+      <button class="btn" id="kSample">Điền dữ liệu mẫu</button>
+      <button class="btn" id="kPasteBtn">Dán từ Excel</button>
+      <label class="btn">Tải file CSV<input type="file" id="kFile" accept=".csv,.txt" hidden></label>
+      <button class="btn ghost" id="kClear">Xóa bảng</button>
+      <span class="note" id="kMsg"></span>
+    </div>
+    <div id="kPasteBox" hidden style="margin-top:10px"><textarea id="kPaste" rows="6" placeholder="Dán 12 dòng, mỗi dòng là một tháng, các cột theo đúng thứ tự trong bảng bên dưới (có thể kèm cột tháng ở đầu). Dấu phân cách: tab, dấu phẩy hoặc chấm phẩy."></textarea><div class="toolbar" style="margin-top:6px"><button class="btn pri" id="kPasteGo">Đưa vào bảng</button></div></div>
+    <div class="tablewrap" style="margin-top:12px;max-height:none"><table id="kTbl"></table></div>
+    <p class="note" id="kHint" style="margin-top:6px"></p>
+  </div>
+  <div class="row2" style="margin-top:16px">
+    <div class="card"><h2 id="kResT">Kết quả kiểm kê</h2><p class="cap" id="kResC">Nhập số liệu để xem kết quả.</p><div id="kKpi"></div><div id="kChart"></div></div>
+    <div class="card"><h2>Cờ kiểm tra số liệu</h2><p class="cap">Quy tắc cố định, không dùng AI; mỗi cờ là một việc cần hỏi lại doanh nghiệp.</p><div id="kFlags"><p class="note">Chưa có số liệu.</p></div></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h2>Đối chiếu với ước tính vệ tinh và xuất kết quả</h2>
+    <div id="kCmp"><p class="note">Chưa có số liệu.</p></div>
+    <div class="toolbar" style="margin-top:12px"><button class="btn pri" id="kReport">Xuất báo cáo kiểm kê sơ bộ</button><button class="btn" id="kCsv">Xuất bảng tính CSV</button><button class="btn" id="kToCbam">Dùng cường độ này cho CBAM</button></div>
+  </div>
+</section>
+
+<section id="v-cbam" hidden>
+  <div class="row2">
+    <div class="card">
+      <h2>Ước tính chi phí CBAM khi xuất khẩu sang EU</h2>
+      <p class="cap">Dành cho nhà máy thép và xi măng. Chi phí = phát thải gắn với hàng xuất khẩu × tỷ lệ phải nộp theo lộ trình × giá chứng chỉ, trừ giá carbon đã trả ở Việt Nam.</p>
+      <div class="form">
+        <label style="grid-column:1/-1">Cơ sở<select id="bFac"></select></label>
+        <label>Sản lượng xuất sang EU, t/năm<input type="number" min="0" step="any" id="bVol"></label>
+        <label>Phát thải trực tiếp, t CO2e/t sản phẩm<input type="number" min="0" step="any" id="bDir"></label>
+        <label id="bElecL">Điện tiêu thụ, MWh/t sản phẩm<input type="number" min="0" step="any" id="bElec"></label>
+        <label>Giá chứng chỉ CBAM, EUR/t CO2e<input type="number" min="0" step="any" id="bEur"></label>
+        <label>Tỷ giá, đồng/EUR<input type="number" min="0" step="1" id="bFx"></label>
+        <label>Giá carbon đã trả ở Việt Nam, đồng/t CO2e<input type="number" min="0" step="any" id="bVn"></label>
+        <label>Mức cộng thêm nếu dùng giá trị mặc định của EU, %<input type="number" min="0" step="any" id="bMark"></label>
+      </div>
+      <div class="toolbar" style="margin-top:12px"><button class="btn" id="bSample">Điền ví dụ</button><button class="btn" id="bCsv">Xuất bảng CSV</button><span class="note" id="bSrc"></span></div>
+    </div>
+    <div class="card"><h2 id="bT">Chi phí theo lộ trình 2026 đến 2034</h2><p class="cap" id="bC"></p><div id="bKpi"></div><div id="bChart"></div></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h2>Bảng chi tiết</h2>
+    <div class="tablewrap" style="max-height:none;margin-top:8px"><table id="bTbl"></table></div>
+    <p class="note" style="margin-top:8px">Lộ trình tỷ lệ phải nộp theo việc EU cắt dần hạn ngạch miễn phí: 2,5% năm 2026, 5% năm 2027, 10% năm 2028, 22,5% năm 2029, 48,5% năm 2030, 61% năm 2031, 73,5% năm 2032, 86% năm 2033 và 100% từ 2034. Với xi măng, CBAM tính cả phát thải gián tiếp từ điện; với thép, chỉ tính phát thải trực tiếp. Từ 2026, nhà nhập khẩu dưới 50 tấn hàng mỗi năm được miễn với một số nhóm hàng; mua và nộp chứng chỉ bắt đầu từ tháng 2/2027. Giá chứng chỉ, tỷ giá và mức cộng thêm là giả định; cần đối chiếu quy định EU hiện hành và đề xuất sửa đổi năm 2026 (nếu được thông qua có thể làm chậm lộ trình).</p>
+  </div>
+</section>
+
 <section id="v-cai-dat" hidden>
   <div class="card set">
     <h2>Cài đặt</h2>
@@ -393,6 +450,8 @@ svg .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
       <li>Hệ số sử dụng công suất, cường độ phát thải, tỷ trọng, biến động: phép tính số học trên dữ liệu gốc.</li>
       <li>Tính phát thải từ số liệu doanh nghiệp: công thức IPCC 2006 bậc 1, nhiên liệu nhân nhiệt trị nhân hệ số, cộng phát thải quá trình.</li>
       <li>Kết luận đối chiếu: quy tắc cố định theo ngưỡng sai lệch và khoảng bất định.</li>
+      <li>Kiểm kê theo tháng: công thức IPCC 2006 bậc 1; cờ kiểm tra là quy tắc cố định (gấp hoặc bằng 1/5 trung vị, điểm z hiệu chỉnh trên 3,5, nhiên liệu và sản lượng lệch nhau quá 30%, suất hao nhiệt ngoài 8.000 đến 13.500 kJ/kWh, tỷ lệ clinker ngoài 50 đến 100%).</li>
+      <li>Công cụ CBAM: phát thải gắn với hàng nhân tỷ lệ phải nộp theo lộ trình cắt giảm hạn ngạch miễn phí của EU và giá chứng chỉ giả định.</li>
       <li>Nút Giải thích bằng AI (khi có): mô hình ngôn ngữ diễn giải kết quả đã tính, không tính lại số.</li>
     </ul>
     <h3>Giới hạn cần biết</h3>
@@ -436,10 +495,11 @@ const DEFAULTS={match:20,unit:'Mt',gwp:'AR5',grid:0.6592,theme:'',
   fuels:[{k:'anthracite',vi:'Than antraxit',ncv:26.7,co2:98300,ch4:1,n2o:1.5},{k:'bituminous',vi:'Than bitum khác',ncv:25.8,co2:94600,ch4:1,n2o:1.5},{k:'subbit',vi:'Than á bitum',ncv:18.9,co2:96100,ch4:1,n2o:1.5},{k:'diesel',vi:'Dầu diesel',ncv:43.0,co2:74100,ch4:3,n2o:0.6},{k:'fo',vi:'Dầu nhiên liệu (FO)',ncv:40.4,co2:77400,ch4:3,n2o:0.6},{k:'gas',vi:'Khí thiên nhiên',ncv:48.0,co2:56100,ch4:1,n2o:0.1}],
   proc:{clinker:0.52,ckd:1.02,bof:1.46,eaf:0.08},
   carbon:{usd:10,fx:26300,free:90},
+  cbam:{eur:75,fx:30500,vn:0,mark:30},
   io:{bfOre:1.37,bfCoal:0.78,bfLime:0.27,bfScrap:0.125,eafScrap:1.1,eafElec:0.45,ckFuel:3.3,ckMeal:1.55}};
 const GWP={AR5:{ch4:28,n2o:265},AR6:{ch4:27.9,n2o:273},AR4:{ch4:25,n2o:298}};
 let CFG=null;
-let S=Object.assign(structuredClone(DEFAULTS),store.get('ct.settings')||{});S.io=Object.assign({},DEFAULTS.io,S.io||{});S.carbon=Object.assign({},DEFAULTS.carbon,S.carbon||{});
+let S=Object.assign(structuredClone(DEFAULTS),store.get('ct.settings')||{});S.io=Object.assign({},DEFAULTS.io,S.io||{});S.carbon=Object.assign({},DEFAULTS.carbon,S.carbon||{});S.cbam=Object.assign({},DEFAULTS.cbam,S.cbam||{});
 const saveS=()=>{store.set('ct.settings',S);applyTheme();};
 function applyTheme(){const r=document.documentElement;if(S.theme)r.setAttribute('data-theme',S.theme);else r.removeAttribute('data-theme');}
 applyTheme();
@@ -465,9 +525,9 @@ let curSec=new Set(Object.keys(SECTORS));
 let curYear=null,zoom='all',moveSec='all';
 let sortKey='e',sortDir=-1;
 
-const VIEWS=['tong-quan','phan-tich','doanh-nghiep','co-so','doi-chieu','cai-dat','phuong-phap'];
+const VIEWS=['tong-quan','phan-tich','doanh-nghiep','co-so','doi-chieu','kiem-ke','cbam','cai-dat','phuong-phap'];
 function show(v){if(!VIEWS.includes(v))v='tong-quan';VIEWS.forEach(x=>{$('v-'+x).hidden=x!==v;});document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===v));store.set('ct.view',v);try{history.replaceState(null,'','#'+v)}catch(e){}
-  ({'tong-quan':renderOverview,'phan-tich':renderAnalysis,'doanh-nghiep':renderOwners,'co-so':renderList,'doi-chieu':renderCmpSetup,'cai-dat':renderSettings,'phuong-phap':renderMethod})[v]();}
+  ({'tong-quan':renderOverview,'phan-tich':renderAnalysis,'doanh-nghiep':renderOwners,'co-so':renderList,'doi-chieu':renderCmpSetup,'kiem-ke':renderKk,'cbam':renderCbam,'cai-dat':renderSettings,'phuong-phap':renderMethod})[v]();}
 $('tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b){show(b.dataset.v);const n=document.querySelector('nav.tabs');if(window.scrollY>n.offsetTop)window.scrollTo({top:n.offsetTop,behavior:'smooth'});}});
 
 function renderHero(){
@@ -703,7 +763,7 @@ function openDetail(id){
   <ul class="note" style="margin:4px 0 0;padding-left:18px">${checks.map(c=>`<li>${c}</li>`).join('')}</ul>
   <h4>Cơ sở cùng ngành có quy mô gần nhất</h4>
   <div class="bars" id="nearBars">${near.map(b=>`<div class="row" data-id="${b.id}"><div class="rk">·</div><div style="min-width:0"><div class="nm">${esc(b.n)}</div><div class="track"><div class="fill" style="width:${Math.min(100,b.e/Math.max(a.e,...near.map(z=>z.e))*100).toFixed(0)}%;background:${SECTORS[b.s].col}"></div></div></div><div class="val">${fmtE(b.e)}</div></div>`).join('')}</div>
-  <div class="toolbar" style="margin-top:16px"><button class="btn pri" id="dCmp">Đối chiếu với số liệu doanh nghiệp</button><button class="btn" id="dAdd">${CMP.has(a.id)?'Bỏ khỏi so sánh':'Thêm vào so sánh'}</button><button class="btn" id="dDl">Tải hồ sơ</button></div>
+  <div class="toolbar" style="margin-top:16px"><button class="btn pri" id="dCmp">Đối chiếu với số liệu doanh nghiệp</button><button class="btn" id="dAdd">${CMP.has(a.id)?'Bỏ khỏi so sánh':'Thêm vào so sánh'}</button><button class="btn" id="dDl">Tải hồ sơ</button><button class="btn" id="dKk">Kiểm kê theo tháng</button>${a.s!=='electricity-generation'?'<button class="btn" id="dCb">Tính CBAM</button>':''}</div>
   <p class="note">Ước tính độc lập của Climate TRACE, không phải số liệu kê khai chính thức.</p></aside>`;
   const close=()=>{$('drawerHost').innerHTML='';};
   $('dClose').onclick=close;$('scrim').onclick=close;
@@ -712,6 +772,8 @@ function openDetail(id){
   $('dCmp').onclick=()=>{close();cmpFac=a.id;show('doi-chieu');};
   $('dAdd').onclick=()=>{if(CMP.has(a.id))CMP.delete(a.id);else if(CMP.size<5)CMP.add(a.id);$('dAdd').textContent=CMP.has(a.id)?'Bỏ khỏi so sánh':'Thêm vào so sánh';renderCmpBar();};
   $('dDl').onclick=()=>downloadProfile(a);
+  $('dKk').onclick=()=>{close();kFac=a.id;show('kiem-ke');};
+  if($('dCb'))$('dCb').onclick=()=>{close();bFac=a.id;bDirOverride=null;bElecOverride=null;show('cbam');};
 }
 const CMP=new Set();
 const GRP=[[/^Vietnam Electricity|^EVNGENCO|^Power Generation 3/,'EVN và các Tổng công ty Phát điện'],[/^Vietnam National Coal|VVMI|VVVMI/,'TKV (Vinacomin)'],[/^PetroVietnam|^Vietnam Oil and Gas/,'Petrovietnam'],[/^Vicem|^Bim Son Cement|^Vietnam Cement Industry/,'VICEM'],[/^Hoa Phat/,'Hòa Phát'],[/Formosa/,'Formosa'],[/VAS/,'VAS'],[/^Vissai/,'Vissai'],[/^Song Lam/,'Xi măng Sông Lam'],[/^Pomina/,'Pomina']];
@@ -770,6 +832,143 @@ function downloadProfile(a){
   saveFile('ho-so-'+fold(a.n).replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.html',html,'text/html');
 }
 
+// ===== Kiểm kê theo tháng =====
+const MONTHS=['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'];
+const KCOLS={'electricity-generation':[['bituminous','Than bitum, t','fuel'],['anthracite','Than antraxit, t','fuel'],['fo','Dầu FO, t','fuel'],['gas','Khí, t','fuel'],['gen','Điện phát, MWh','prod'],['buy','Điện mua, MWh','elec']],
+  'cement':[['clinker','Clinker, t','clk'],['cem','Xi măng, t','prod'],['bituminous','Than, t','fuel'],['fo','Dầu FO, t','fuel'],['buy','Điện mua, MWh','elec']],
+  'iron-and-steel':[['bof','Thép BOF, t','bof'],['eaf','Thép EAF, t','eaf'],['bituminous','Than, t','fuel'],['gas','Khí, t','fuel'],['buy','Điện mua, MWh','elec']]};
+let kFac=null,kLast=null;
+const kStore=()=>store.get('ct.kk')||{};
+const kKey=()=>kFac+'|'+$('kYear').value;
+function kRows(){const d=kStore()[kKey()];return d&&d.rows?d.rows:MONTHS.map(()=>({}));}
+function kSave(rows){const all=kStore();all[kKey()]={rows,saved:new Date().toISOString().slice(0,10)};store.set('ct.kk',all);}
+function renderKk(){
+  const opts=DATA.assets.filter(a=>a.e>0).sort((a,b)=>a.s.localeCompare(b.s)||b.e-a.e);
+  if(kFac==null)kFac=cmpFac||opts[0]?.id;
+  $('kFac').innerHTML=Object.keys(SECTORS).map(k=>`<optgroup label="${SECTORS[k].vi}">${opts.filter(a=>a.s===k).map(a=>`<option value="${a.id}" ${String(a.id)===String(kFac)?'selected':''}>${esc(a.n)}</option>`).join('')}</optgroup>`).join('');
+  const prevY=$('kYear').value;$('kYear').innerHTML=years().map(y=>`<option ${String(y)===(prevY||String(BASE()))?'selected':''}>${y}</option>`).join('');
+  kTable();kCompute();
+}
+function kTable(){
+  const a=byId(kFac),cols=KCOLS[a.s],rows=kRows();
+  $('kTbl').innerHTML=`<thead><tr><th>Tháng</th>${cols.map(c=>`<th class="n" style="white-space:normal;min-width:96px">${c[1]}</th>`).join('')}</tr></thead><tbody>${MONTHS.map((m,i)=>`<tr style="cursor:default"><td><b>${m}</b></td>${cols.map(c=>`<td><input type="number" min="0" step="any" data-m="${i}" data-c="${c[0]}" value="${rows[i]&&rows[i][c[0]]!=null?rows[i][c[0]]:''}" style="width:100%;min-width:90px;font-family:var(--mono);font-size:12.5px;padding:5px 7px;text-align:right"></td>`).join('')}</tr>`).join('')}</tbody><tfoot><tr id="kSum"></tr></tfoot>`;
+  $('kHint').textContent=a.s==='electricity-generation'?'Nhà máy điện: nhập nhiên liệu theo tấn, điện phát và điện mua theo MWh. Điện tự sản xuất không tính phạm vi 2.':a.s==='cement'?'Xi măng: phát thải quá trình tính từ clinker; nhiên liệu đốt lò nhập theo tấn.':'Thép: phát thải quá trình theo hệ số IPCC bậc 1 cho BOF và EAF; nếu đã tính than cốc trong hệ số BOF, cân nhắc không nhập lại than lò cao để tránh tính trùng.';
+}
+$('kFac').addEventListener('change',e=>{kFac=e.target.value;cmpFac=kFac;kTable();kCompute();});
+$('kYear').addEventListener('change',()=>{kTable();kCompute();});
+$('kTbl').addEventListener('input',e=>{const t=e.target;if(!t.dataset.c)return;const rows=kRows();const v=t.value===''?null:parseFloat(t.value);rows[+t.dataset.m]=rows[+t.dataset.m]||{};rows[+t.dataset.m][t.dataset.c]=isFinite(v)?v:null;kSave(rows);kCompute();});
+function kCalc(a,rows){
+  const g=GWP[S.gwp],cols=KCOLS[a.s];const F=k=>S.fuels.find(x=>x.k===k);const tTJ=f=>(f.co2+f.ch4*g.ch4+f.n2o*g.n2o)/1000;
+  const months=rows.map((r,i)=>{let fuel=0,proc=0,TJ=0;const parts={};cols.forEach(([k,,type])=>{const v=r&&r[k];if(!(v>0))return;
+      if(type==='fuel'){const f=F(k);const tj=v/1000*f.ncv;TJ+=tj;const e=tj*tTJ(f);fuel+=e;parts[k]=e;}
+      else if(type==='clk'){const e=v*S.proc.clinker*S.proc.ckd;proc+=e;parts[k]=e;}
+      else if(type==='bof'){const e=v*S.proc.bof;proc+=e;parts[k]=e;}
+      else if(type==='eaf'){const e=v*S.proc.eaf;proc+=e;parts[k]=e;}});
+    const prod=a.s==='iron-and-steel'?((r&&r.bof)||0)+((r&&r.eaf)||0):a.s==='cement'?((r&&r.cem)||0):((r&&r.gen)||0);
+    const s2=((r&&r.buy)||0)*S.grid;const filled=cols.some(([k])=>r&&r[k]>0);
+    return {i,fuel,proc,s1:fuel+proc,s2,prod,TJ,parts,filled,hr:a.s==='electricity-generation'&&prod>0?TJ*1e6/prod:null};});
+  const sum=k=>months.reduce((s,m)=>s+m[k],0);
+  return {months,s1:sum('s1'),s2:sum('s2'),fuel:sum('fuel'),proc:sum('proc'),prod:sum('prod'),TJ:sum('TJ'),filled:months.filter(m=>m.filled).length};
+}
+function kFlags(a,rows,R){
+  const fl=[];const cols=KCOLS[a.s];const med=arr=>{const s=arr.slice().sort((x,y)=>x-y);return s.length?s[Math.floor(s.length/2)]:0;};const unit=new Set();
+  const miss=R.months.filter(m=>!m.filled).map(m=>MONTHS[m.i]);if(miss.length&&miss.length<12)fl.push(['warn',`Thiếu số liệu ${miss.join(', ')}. Tổng năm đang thấp hơn thực tế.`]);
+  cols.forEach(([k,l])=>{const vals=rows.map(r=>r&&r[k]).filter(v=>v>0);if(vals.length<4)return;const md=med(vals);rows.forEach((r,i)=>{const v=r&&r[k];if(!(v>0))return;if(v>md*5||v<md/5){unit.add(i);fl.push(['bad',`${MONTHS[i]}, ${l}: ${nf(v,0)}, ${v>md?'gấp '+nf(v/md,0)+' lần':'chỉ bằng 1/'+nf(md/v,0)} trung vị các tháng (${nf(md,0)}). Nghi nhập sai đơn vị, ví dụ nghìn tấn thay vì tấn.`]);}});});
+  const ints=R.months.filter(m=>m.prod>0&&m.s1>0&&!unit.has(m.i)).map(m=>({i:m.i,v:m.s1/m.prod}));
+  if(ints.length>=5){const md=med(ints.map(x=>x.v));const mad=med(ints.map(x=>Math.abs(x.v-md)))||md*0.02;ints.forEach(x=>{const z=0.6745*(x.v-md)/mad;if(Math.abs(z)>3.5)fl.push(['warn',`${MONTHS[x.i]}: cường độ phát thải ${nfx(x.v,3)} ${a.s==='electricity-generation'?'t/MWh':'t/t'}, lệch xa trung vị ${nfx(md,3)} (điểm z hiệu chỉnh ${nf(z,1)}).`]);});}
+  for(let i=1;i<12;i++){const m=R.months[i],p=R.months[i-1];if(unit.has(i)||unit.has(i-1)||!(m.prod>0&&p.prod>0&&m.s1>0&&p.s1>0))continue;const dE=m.s1/p.s1-1,dP=m.prod/p.prod-1;if(Math.abs(dE-dP)>0.3)fl.push(['warn',`${MONTHS[i]}: phát thải ${dE>0?'tăng':'giảm'} ${nf(Math.abs(dE)*100,0)}% so với tháng trước trong khi sản lượng ${dP>0?'tăng':'giảm'} ${nf(Math.abs(dP)*100,0)}%.`]);}
+  if(a.s==='electricity-generation')R.months.forEach(m=>{if(m.hr&&!unit.has(m.i)&&(m.hr<8000||m.hr>13500))fl.push(['warn',`${MONTHS[m.i]}: suất hao nhiệt ${nf(m.hr,0)} kJ/kWh, ngoài khoảng thường gặp 8.000 đến 13.500.`]);});
+  if(a.s==='cement')R.months.forEach(m=>{const r=rows[m.i];if(r&&r.clinker>0&&r.cem>0&&!unit.has(m.i)){const ratio=r.clinker/r.cem;if(ratio>1||ratio<0.5)fl.push(['warn',`${MONTHS[m.i]}: tỷ lệ clinker trên xi măng ${nf(ratio*100,0)}%, ngoài khoảng 50 đến 100%.`]);}});
+  return fl;
+}
+function verdictFor(a,inv,sat){const unc=S.unc[a.c||'']??60;const gap=(inv-sat)/sat;const lo=sat*(1-unc/100),hi=sat*(1+unc/100);
+  if(Math.abs(gap)<=S.match/100)return {gap,unc,lo,hi,cls:'ok',v:'Khớp trong ngưỡng',t:`Sai lệch trong khoảng cộng trừ ${S.match}%.`};
+  if(inv>=lo&&inv<=hi)return {gap,unc,lo,hi,cls:'warn',v:'Lệch nhưng trong khoảng bất định',t:`Sai lệch vượt ${S.match}% nhưng vẫn trong khoảng bất định ±${unc}% của ước tính vệ tinh.`};
+  return {gap,unc,lo,hi,cls:'bad',v:'Cần rà soát',t:'Số kiểm kê nằm ngoài khoảng bất định của ước tính vệ tinh; rà soát cùng doanh nghiệp trước khi xuất báo cáo.'};}
+function kCompute(){
+  const a=byId(kFac);if(!a)return;const rows=kRows();const R=kCalc(a,rows);const y=+$('kYear').value;const sat=emis(a,y);const isP=a.s==='electricity-generation';
+  const cols=KCOLS[a.s];$('kSum').innerHTML=`<td><b>Cả năm</b></td>${cols.map(([k])=>`<td class="n"><b>${nf(rows.reduce((s,r)=>s+((r&&r[k])||0),0),0)}</b></td>`).join('')}`;
+  if(!R.filled){$('kKpi').innerHTML='';$('kChart').innerHTML='';$('kFlags').innerHTML='<p class="note">Chưa có số liệu.</p>';$('kCmp').innerHTML='<p class="note">Chưa có số liệu.</p>';$('kResC').textContent='Nhập số liệu hoặc bấm Điền dữ liệu mẫu.';kLast=null;return;}
+  const fl=kFlags(a,rows,R);kLast={a,y,R,fl,rows,sat};
+  const inten=R.prod?R.s1/R.prod:null;
+  $('kResT').textContent=`${esc(shortName(a.n))}, năm ${y}`;$('kResC').textContent=`${R.filled} trên 12 tháng có số liệu; GWP ${S.gwp}.`;
+  $('kKpi').innerHTML=`<div class="kp"><div class="k"><div class="l">Phạm vi 1</div><div class="v">${fmtE(R.s1)}</div><div class="note">${uL()}</div></div><div class="k"><div class="l">Phạm vi 2</div><div class="v">${fmtE(R.s2)}</div><div class="note">điện mua × ${S.grid}</div></div><div class="k"><div class="l">Cường độ</div><div class="v">${inten?nfx(inten,3):'không có'}</div><div class="note">t CO2e/${isP?'MWh':'t sản phẩm'}</div></div></div>`;
+  const W=560,H=200,Lp=44,Rr=10,T=14,B=26;const mx=Math.max(...R.months.map(m=>m.s1))*1.12||1;const bw=(W-Lp-Rr)/12*0.62,x=i=>Lp+(W-Lp-Rr)/12*(i+0.5),yy=v=>T+(H-T-B)*(1-v/mx);const flagged=new Set(fl.map(f=>{const m=f[1].match(/^T(\d+)/);return m?+m[1]-1:-1;}));
+  let sv=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Phát thải phạm vi 1 theo tháng">${axisY(Lp,Rr,yy,niceTicks(mx,3),v=>nf(v/1e3,0),W)}`;
+  R.months.forEach(m=>{const h1=yy(0)-yy(m.fuel),h2=yy(0)-yy(m.proc);sv+=`<rect x="${x(m.i)-bw/2}" y="${yy(m.fuel)}" width="${bw}" height="${h1}" fill="${SECTORS[a.s].col}" fill-opacity=".85"><title>${MONTHS[m.i]}: nhiên liệu ${nf(m.fuel,0)} t</title></rect><rect x="${x(m.i)-bw/2}" y="${yy(m.fuel+m.proc)}" width="${bw}" height="${h2}" fill="${SECTORS[a.s].col}" fill-opacity=".4"><title>${MONTHS[m.i]}: quá trình ${nf(m.proc,0)} t</title></rect>${flagged.has(m.i)?`<circle cx="${x(m.i)}" cy="${yy(m.s1)-8}" r="4" fill="var(--bad)"/>`:''}<text x="${x(m.i)}" y="${H-8}" font-size="10.5" text-anchor="middle" fill="var(--muted)" class="mono">${MONTHS[m.i]}</text>`;});
+  $('kChart').innerHTML=sv+`</svg><p class="note">Nghìn tấn CO2e phạm vi 1. Phần đậm: đốt nhiên liệu; phần nhạt: quá trình sản xuất. Chấm đỏ: tháng có cờ.</p>`;
+  $('kFlags').innerHTML=fl.length?fl.map(([c,t])=>`<div class="callout ${c}" style="margin-top:8px;padding:9px 12px">${t}</div>`).join(''):'<div class="callout ok">Không phát hiện bất thường theo các quy tắc kiểm tra.</div>';
+  if(sat){const v=verdictFor(a,R.s1,sat);kLast.v=v;$('kCmp').innerHTML=`<div class="kp"><div class="k"><div class="l">Kiểm kê phạm vi 1</div><div class="v">${fmtE(R.s1)}</div></div><div class="k"><div class="l">Vệ tinh ${y}</div><div class="v">${fmtE(sat)}</div></div><div class="k"><div class="l">Sai lệch</div><div class="v">${v.gap>0?'+':''}${nfx(v.gap*100,1)}%</div></div></div><div class="callout ${v.cls}"><div class="t">${v.v}</div>${v.t}${R.filled<12?' Lưu ý: chưa đủ 12 tháng nên tổng năm thấp hơn thực tế.':''}</div>`;}
+  else $('kCmp').innerHTML=`<p class="note">Năm ${y} chưa có ước tính vệ tinh cho cơ sở này.</p>`;
+}
+$('kSample').onclick=()=>{
+  const a=byId(kFac),y=+$('kYear').value;const E=emis(a,y)||a.e;const g=GWP[S.gwp];const per=k=>{const f=S.fuels.find(x=>x.k===k);return f.ncv/1000*(f.co2+f.ch4*g.ch4+f.n2o*g.n2o)/1000;};
+  const w=[0.078,0.07,0.08,0.083,0.088,0.09,0.091,0.089,0.085,0.083,0.079,0.084];const sw=w.reduce((s,v)=>s+v,0);const P=(a.act||0)*(E/(a.e||E));
+  const rows=w.map((wi,i)=>{const f=wi/sw,j=1+(((i*7)%5)-2)*0.01;let r={};
+    if(a.s==='electricity-generation'){const gasP=/gas/.test(a.t)&&!/coal/.test(a.t);if(gasP)r.gas=Math.round(E*f*0.97*j/per('gas'));else{r.bituminous=Math.round(E*f*0.97*j/per('bituminous'));r.fo=Math.round(E*f*0.01/per('fo'));}r.gen=Math.round(P*f);r.buy=Math.round(P*f*0.005);}
+    else if(a.s==='cement'){const cem=P*f;const ck=cem*Math.min(0.95,(a.ef||0.58)/0.844);r.cem=Math.round(cem);r.clinker=Math.round(ck*j);r.bituminous=Math.round(ck*S.io.ckFuel/S.fuels.find(x=>x.k==='bituminous').ncv);r.fo=Math.round(ck*0.002);r.buy=Math.round(cem*0.09);}
+    else{const bf=/BF\/BOF/.test(a.t);const st=P*f;if(bf)r.bof=Math.round(st*j);else r.eaf=Math.round(st*j);r.bituminous=Math.round(E*f*(bf?0.22:0.15)/per('bituminous'));r.buy=Math.round(st*(bf?0.12:0.45));}
+    return r;});
+  const k0=KCOLS[a.s].find(c=>c[2]==='fuel'||c[2]==='clk');const k=a.s==='cement'?'bituminous':KCOLS[a.s].find(c=>c[2]==='fuel'&&rows[0][c[0]]>0)[0];
+  rows[3][k]=Math.round(rows[3][k]*1.45);rows[8][k]=Math.round(rows[8][k]/1000);
+  kSave(rows);kTable();kCompute();$('kMsg').textContent='Đã điền dữ liệu mẫu giả định, có cài sẵn 2 lỗi ở T4 và T9 để thử cờ kiểm tra.';
+};
+$('kClear').onclick=()=>{kSave(MONTHS.map(()=>({})));kTable();kCompute();$('kMsg').textContent='';};
+$('kPasteBtn').onclick=()=>{$('kPasteBox').hidden=!$('kPasteBox').hidden;};
+function kIngest(txt){const a=byId(kFac),cols=KCOLS[a.s];const lines=txt.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);const out=[];
+  lines.forEach(l=>{let c=l.split(/\t|;|,(?=\s*[\d-])/).map(x=>x.trim());const nums=c.map(x=>{const t=x.replace(/\s/g,'');if(/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(t))return parseFloat(t.replace(/\./g,'').replace(',','.'));return parseFloat(t.replace(',','.'));});
+    if(nums.every(n=>!isFinite(n)))return;let vals=nums;if(c.length>cols.length)vals=nums.slice(c.length-cols.length);const r={};cols.forEach(([k],i)=>{if(isFinite(vals[i]))r[k]=vals[i];});out.push(r);});
+  if(!out.length){$('kMsg').textContent='Không đọc được dòng số liệu nào; kiểm tra lại định dạng.';return;}
+  const rows=MONTHS.map((m,i)=>out[i]||{});kSave(rows);kTable();kCompute();$('kMsg').textContent=`Đã đọc ${Math.min(out.length,12)} tháng.`;}
+$('kPasteGo').onclick=()=>kIngest($('kPaste').value);
+$('kFile').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>kIngest(String(rd.result));rd.readAsText(f);});
+$('kCsv').onclick=()=>{if(!kLast)return;const {a,R,rows}=kLast;const cols=KCOLS[a.s];const csv=[['thang',...cols.map(c=>c[0]),'pham_vi_1_t','pham_vi_2_t','san_luong'].join(',')].concat(R.months.map(m=>[MONTHS[m.i],...cols.map(([k])=>rows[m.i]&&rows[m.i][k]!=null?rows[m.i][k]:''),Math.round(m.s1),Math.round(m.s2),Math.round(m.prod)].join(','))).join('\n');saveFile('kiem-ke-'+fold(shortName(a.n)).replace(/[^a-z0-9]+/g,'-')+'-'+kLast.y+'.csv',csv,'text/csv');};
+$('kReport').onclick=()=>{
+  if(!kLast){$('kMsg').textContent='Chưa có số liệu để xuất báo cáo.';return;}const {a,y,R,fl,rows,sat,v}=kLast;const cols=KCOLS[a.s];const isP=a.s==='electricity-generation';
+  const tr=(k,val)=>`<tr><th>${k}</th><td>${val}</td></tr>`;const usedF=cols.filter(c=>c[2]==='fuel').map(c=>S.fuels.find(f=>f.k===c[0]));
+  const html=`<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Báo cáo kiểm kê sơ bộ: ${esc(a.n)} ${y}</title><style>body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;max-width:900px;margin:32px auto;padding:0 18px;color:#141c18;line-height:1.5}h1{font-size:23px;margin:0 0 4px}h2{font-size:16px;margin:26px 0 8px;border-bottom:2px solid #0d6a55;padding-bottom:4px}table{border-collapse:collapse;width:100%;font-size:13.5px}th,td{border-bottom:1px solid #dde3dc;padding:6px 8px;text-align:left;vertical-align:top}td.n,th.n{text-align:right;font-family:ui-monospace,Menlo,monospace}.m{color:#56645c;font-size:13px}.box{border:1px solid #dde3dc;border-radius:10px;padding:10px 12px;margin:6px 0}.bad{border-color:#b3261e;background:#f9e0dc}.warn{border-color:#a05e00;background:#fbedd5}.ok{border-color:#1d7a4a;background:#dff0e4}</style></head><body>
+<p class="m">Báo cáo kiểm kê khí nhà kính sơ bộ · Lập ngày ${new Date().toISOString().slice(0,10)} · Phương pháp IPCC 2006 bậc 1</p><h1>${esc(a.n)}</h1><p class="m">${esc(kind(a))} · ${esc(a.o||'Chủ sở hữu chưa rõ')} · Năm kiểm kê ${y}</p>
+<h2>1. Kết quả tổng hợp</h2><table>${tr('Phát thải phạm vi 1','<b>'+nf(R.s1,0)+' t CO2e</b>')}${tr('Trong đó: đốt nhiên liệu',nf(R.fuel,0)+' t CO2e')}${tr('Trong đó: quá trình sản xuất',nf(R.proc,0)+' t CO2e')}${tr('Phát thải phạm vi 2 (điện mua)',nf(R.s2,0)+' t CO2e')}${tr('Sản lượng',nf(R.prod,0)+(isP?' MWh':' t'))}${tr('Cường độ phạm vi 1',R.prod?nfx(R.s1/R.prod,4)+' t CO2e/'+(isP?'MWh':'t'):'không có')}${tr('Số tháng có số liệu',R.filled+'/12')}</table>
+<h2>2. Số liệu hoạt động theo tháng</h2><table><thead><tr><th>Tháng</th>${cols.map(c=>`<th class="n">${c[1]}</th>`).join('')}<th class="n">Phạm vi 1, t</th><th class="n">Phạm vi 2, t</th></tr></thead><tbody>${R.months.map(m=>`<tr><td>${MONTHS[m.i]}</td>${cols.map(([k])=>`<td class="n">${rows[m.i]&&rows[m.i][k]!=null?nf(rows[m.i][k],0):''}</td>`).join('')}<td class="n">${nf(m.s1,0)}</td><td class="n">${nf(m.s2,0)}</td></tr>`).join('')}</tbody></table>
+<h2>3. Hệ số sử dụng</h2><table><thead><tr><th>Nhiên liệu</th><th class="n">Nhiệt trị TJ/nghìn t</th><th class="n">CO2 kg/TJ</th><th class="n">CH4 kg/TJ</th><th class="n">N2O kg/TJ</th></tr></thead><tbody>${usedF.map(f=>`<tr><td>${esc(f.vi)}</td><td class="n">${f.ncv}</td><td class="n">${f.co2}</td><td class="n">${f.ch4}</td><td class="n">${f.n2o}</td></tr>`).join('')}</tbody></table><p class="m">GWP ${S.gwp} (CH4 ${GWP[S.gwp].ch4}, N2O ${GWP[S.gwp].n2o}). Hệ số lưới điện ${S.grid} t CO2/MWh.${a.s==='cement'?` Clinker ${S.proc.clinker} t CO2/t, hệ số CKD ${S.proc.ckd}.`:''}${a.s==='iron-and-steel'?` Thép BOF ${S.proc.bof}, EAF ${S.proc.eaf} t CO2/t.`:''}</p>
+<h2>4. Kiểm tra chất lượng số liệu</h2>${fl.length?fl.map(([c,t])=>`<div class="box ${c}">${t}</div>`).join(''):'<div class="box ok">Không phát hiện bất thường theo các quy tắc kiểm tra.</div>'}
+<h2>5. Đối chiếu với ước tính vệ tinh độc lập</h2>${sat&&v?`<table>${tr('Ước tính Climate TRACE '+y,nf(sat,0)+' t CO2e (mức tin cậy '+CONF_VI[a.c||'']+')')}${tr('Sai lệch của kiểm kê',(v.gap>0?'+':'')+nfx(v.gap*100,1)+'%')}${tr('Khoảng bất định giả định','±'+v.unc+'%')}</table><div class="box ${v.cls}"><b>${v.v}.</b> ${v.t}</div>`:'<p class="m">Chưa có ước tính vệ tinh cho năm này.</p>'}
+<h2>6. Giới hạn</h2><p class="m">Báo cáo sơ bộ phục vụ rà soát nội bộ, chưa qua thẩm định độc lập và không thay báo cáo kiểm kê theo quy định. Hệ số mặc định IPCC có thể khác hệ số quốc gia; ước tính vệ tinh là nguồn độc lập dùng để sàng lọc, chưa được cơ quan quản lý công nhận.</p></body></html>`;
+  saveFile('bao-cao-kiem-ke-'+fold(shortName(a.n)).replace(/[^a-z0-9]+/g,'-')+'-'+y+'.html',html,'text/html');
+};
+$('kToCbam').onclick=()=>{if(!kLast||!kLast.R.prod)return;const a=kLast.a;if(a.s==='electricity-generation'){$('kMsg').textContent='CBAM chỉ áp dụng cho thép và xi măng trong web này.';return;}bFac=a.id;bDirOverride=kLast.R.s1/kLast.R.prod;bElecOverride=kLast.rows.reduce((s,r)=>s+((r&&r.buy)||0),0)/kLast.R.prod;show('cbam');};
+
+// ===== CBAM =====
+const CBAM_PATH=[[2026,2.5],[2027,5],[2028,10],[2029,22.5],[2030,48.5],[2031,61],[2032,73.5],[2033,86],[2034,100]];
+let bFac=null,bDirOverride=null,bElecOverride=null,bLast=null;
+function renderCbam(){
+  const opts=DATA.assets.filter(a=>a.e>0&&a.s!=='electricity-generation').sort((a,b)=>a.s.localeCompare(b.s)||b.e-a.e);
+  if(bFac==null||!opts.find(a=>a.id===bFac))bFac=opts[0]?.id;
+  $('bFac').innerHTML=['iron-and-steel','cement'].map(k=>`<optgroup label="${SECTORS[k].vi}">${opts.filter(a=>a.s===k).map(a=>`<option value="${a.id}" ${String(a.id)===String(bFac)?'selected':''}>${esc(a.n)}</option>`).join('')}</optgroup>`).join('');
+  bFill();bCompute();
+}
+function bFill(){const a=byId(bFac);const c=S.cbam;$('bDir').value=bDirOverride!=null?+bDirOverride.toFixed(4):a.ef;$('bElec').value=bElecOverride!=null?+bElecOverride.toFixed(4):(a.s==='cement'?0.1:'');$('bElecL').hidden=a.s!=='cement';$('bEur').value=c.eur;$('bFx').value=c.fx;$('bVn').value=c.vn;$('bMark').value=c.mark;if(!$('bVol').value)$('bVol').value='';
+  $('bSrc').textContent=bDirOverride!=null?'Cường độ lấy từ số liệu kiểm kê theo tháng.':'Cường độ mặc định lấy từ ước tính Climate TRACE.';}
+$('bFac').addEventListener('change',e=>{bFac=e.target.value;bDirOverride=null;bElecOverride=null;$('bVol').value='';bFill();bCompute();});
+$('v-cbam').addEventListener('input',e=>{const t=e.target,v=parseFloat(t.value);if(t.id==='bEur'&&v>=0)S.cbam.eur=v;else if(t.id==='bFx'&&v>=0)S.cbam.fx=v;else if(t.id==='bVn'&&v>=0)S.cbam.vn=v;else if(t.id==='bMark'&&v>=0)S.cbam.mark=v;else if(t.id==='bDir')bDirOverride=isFinite(v)?v:null;else if(t.id==='bElec')bElecOverride=isFinite(v)?v:null;if(['bEur','bFx','bVn','bMark'].includes(t.id))saveS();bCompute();});
+$('bSample').onclick=()=>{const a=byId(bFac);$('bVol').value=Math.round((a.act||0)*0.1/1000)*1000;bCompute();};
+function bCompute(){
+  const a=byId(bFac);if(!a)return;const vol=parseFloat($('bVol').value)||0;const dir=parseFloat($('bDir').value)||0;const elec=a.s==='cement'?(parseFloat($('bElec').value)||0):0;const c=S.cbam;
+  const per=dir+elec*S.grid;const emb=vol*per;const vnEur=c.fx?c.vn/c.fx:0;const net=Math.max(0,c.eur-vnEur);
+  const rows=CBAM_PATH.map(([y,p])=>{const cert=emb*p/100;const eur=cert*net;return {y,p,cert,eur,vnd:eur*c.fx,perT:vol?eur/vol:0,def:eur*(1+c.mark/100)};});bLast={a,vol,dir,elec,per,emb,rows};
+  if(!vol){$('bKpi').innerHTML='<p class="note">Nhập sản lượng xuất sang EU hoặc bấm Điền ví dụ.</p>';$('bChart').innerHTML='';$('bTbl').innerHTML='';$('bC').textContent='';return;}
+  const r30=rows.find(r=>r.y===2030),r34=rows.at(-1);
+  $('bT').textContent=`${esc(shortName(a.n))}: ${fmtVnd(r34.vnd)} mỗi năm khi CBAM áp đủ từ 2034`;
+  $('bC').textContent=`${nf(vol,0)} t xuất khẩu, ${nfx(per,3)} t CO2e/t (trực tiếp ${nfx(dir,3)}${elec?`, gián tiếp ${nfx(elec*S.grid,3)}`:''}), giá ${nf(c.eur,0)} EUR/t${c.vn?`, trừ giá đã trả ở Việt Nam`:''}.`;
+  $('bKpi').innerHTML=`<div class="kp"><div class="k"><div class="l">Phát thải gắn với hàng</div><div class="v">${nf(emb,0)}</div><div class="note">t CO2e/năm</div></div><div class="k"><div class="l">Năm 2030</div><div class="v">${fmtVnd(r30.vnd)}</div><div class="note">${nf(r30.perT,1)} EUR/t sản phẩm</div></div><div class="k"><div class="l">Từ 2034</div><div class="v">${fmtVnd(r34.vnd)}</div><div class="note">${nf(r34.perT,1)} EUR/t sản phẩm</div></div></div>`;
+  const W=560,H=210,Lp=50,R=10,T=14,B=26;const mx=Math.max(...rows.map(r=>r.def*c.fx))*1.1||1;const bw=(W-Lp-R)/rows.length*0.56,x=i=>Lp+(W-Lp-R)/rows.length*(i+0.5),yy=v=>T+(H-T-B)*(1-v/mx);
+  let sv=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Chi phí CBAM theo năm">${axisY(Lp,R,yy,niceTicks(mx,3),v=>nf(v/1e9,0),W)}`;
+  rows.forEach((r,i)=>{sv+=`<rect x="${x(i)-bw/2}" y="${yy(r.def*c.fx)}" width="${bw}" height="${yy(r.vnd)-yy(r.def*c.fx)}" fill="var(--bad)" fill-opacity=".25"><title>${r.y}: thêm ${fmtVnd((r.def-r.eur)*c.fx)} nếu dùng giá trị mặc định</title></rect><rect x="${x(i)-bw/2}" y="${yy(r.vnd)}" width="${bw}" height="${yy(0)-yy(r.vnd)}" fill="var(--accent)" fill-opacity=".85"><title>${r.y}: ${fmtVnd(r.vnd)}</title></rect><text x="${x(i)}" y="${H-8}" font-size="10.5" text-anchor="middle" fill="var(--muted)" class="mono">${r.y}</text>`;});
+  $('bChart').innerHTML=sv+`</svg><p class="note">Tỷ đồng mỗi năm. Phần xanh: chi phí với số liệu phát thải thực đã thẩm định. Phần đỏ nhạt: phần phải trả thêm nếu không có số liệu thực và bị áp giá trị mặc định cộng ${nf(c.mark,0)}%; đây là giá trị trực tiếp của kiểm kê đáng tin cậy.</p>`;
+  $('bTbl').innerHTML=`<thead><tr><th>Năm</th><th class="n">Tỷ lệ phải nộp</th><th class="n">Chứng chỉ, t CO2e</th><th class="n">Chi phí, EUR</th><th class="n">Chi phí, đồng</th><th class="n">EUR/t sản phẩm</th><th class="n">Nếu dùng giá trị mặc định</th></tr></thead><tbody>${rows.map(r=>`<tr style="cursor:default"><td>${r.y}</td><td class="n">${nfx(r.p,1)}%</td><td class="n">${nf(r.cert,0)}</td><td class="n">${nf(r.eur,0)}</td><td class="n">${fmtVnd(r.vnd)}</td><td class="n">${nfx(r.perT,2)}</td><td class="n">${fmtVnd(r.def*c.fx)}</td></tr>`).join('')}</tbody>`;
+}
+$('bCsv').onclick=()=>{if(!bLast||!bLast.vol)return;const csv=['nam,ty_le_phai_nop_pct,chung_chi_tco2e,chi_phi_eur,chi_phi_vnd,eur_moi_tan,neu_mac_dinh_vnd'].concat(bLast.rows.map(r=>[r.y,r.p,Math.round(r.cert),Math.round(r.eur),Math.round(r.vnd),r.perT.toFixed(2),Math.round(r.def*S.cbam.fx)].join(','))).join('\n');saveFile('cbam-'+fold(shortName(bLast.a.n)).replace(/[^a-z0-9]+/g,'-')+'.csv',csv,'text/csv');};
+
 function fuelKey(a){const t=a.t||'';if(/coal/.test(t))return 'bituminous';if(/gas/.test(t))return 'gas';if(/oil/.test(t))return 'fo';return 'bituminous';}
 function ioCalc(a){
   const g=GWP[S.gwp],F=k=>S.fuels.find(x=>x.k===k),tPerTJ=f=>(f.co2+f.ch4*g.ch4+f.n2o*g.n2o)/1000,io=S.io,E=a.e||0,P=a.act||0;
@@ -804,7 +1003,7 @@ function openSide(){
     return `<details class="grp" data-s="${k}"><summary><svg class="chev" width="12" height="12" viewBox="0 0 12 12"><path d="M4 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="sw" style="background:${sv.col};margin:0"></span>${sv.vi}<span class="cnt">${all.length} cơ sở · ${nfx(tot/1e6,1)} tr t</span></summary>${subs}</details>`;}).join('');
   $('sideHost').innerHTML=`<div class="scrim" id="sScrim"></div><aside class="side" role="dialog" aria-label="Danh mục nhà máy"><div class="sh"><button class="close" id="sClose" aria-label="Đóng" style="top:calc(14px + env(safe-area-inset-top,0px))">×</button><h3>Danh mục nhà máy</h3><div class="note">Chia theo ngành và công nghệ; số bên phải là phát thải ${L}, ${uL()}, kèm thay đổi so với ${P}.</div>
     <input type="search" id="sQ" placeholder="Tìm nhà máy hoặc chủ sở hữu" style="width:100%;margin-top:10px">
-    <div class="go">${[['tong-quan','Tổng quan'],['phan-tich','Phân tích'],['co-so','Bảng đầy đủ'],['doi-chieu','Đối chiếu kiểm kê'],['cai-dat','Cài đặt'],['phuong-phap','Phương pháp']].map(([v,l])=>`<button data-v="${v}">${l}</button>`).join('')}</div></div>
+    <div class="go">${[['tong-quan','Tổng quan'],['phan-tich','Phân tích'],['doanh-nghiep','Doanh nghiệp'],['co-so','Bảng đầy đủ'],['kiem-ke','Kiểm kê theo tháng'],['cbam','Công cụ CBAM'],['doi-chieu','Đối chiếu nhanh'],['cai-dat','Cài đặt']].map(([v,l])=>`<button data-v="${v}">${l}</button>`).join('')}</div></div>
     <div class="sb" id="sBody">${body}</div></aside>`;
   $('hamb').setAttribute('aria-expanded','true');
   const close=()=>{$('sideHost').innerHTML='';$('hamb').setAttribute('aria-expanded','false');};
@@ -919,7 +1118,7 @@ $('v-cai-dat').addEventListener('input',e=>{
 });
 $('btnSetExport').onclick=()=>saveFile('cai-dat.json',JSON.stringify(S,null,2),'application/json');
 $('fileSet').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{S=Object.assign(structuredClone(DEFAULTS),JSON.parse(rd.result));saveS();renderSettings();$('setMsg').textContent='Đã nhập cài đặt.';}catch(err){$('setMsg').textContent='File không đúng định dạng JSON.';}};rd.readAsText(f);});
-$('btnSetReset').onclick=()=>{S=Object.assign(structuredClone(DEFAULTS),CFG||{});S.io=Object.assign({},DEFAULTS.io,S.io||{});S.carbon=Object.assign({},DEFAULTS.carbon,S.carbon||{});store.del('ct.settings');applyTheme();renderSettings();$('setMsg').textContent='Đã khôi phục mặc định.';};
+$('btnSetReset').onclick=()=>{S=Object.assign(structuredClone(DEFAULTS),CFG||{});S.io=Object.assign({},DEFAULTS.io,S.io||{});S.carbon=Object.assign({},DEFAULTS.carbon,S.carbon||{});S.cbam=Object.assign({},DEFAULTS.cbam,S.cbam||{});store.del('ct.settings');applyTheme();renderSettings();$('setMsg').textContent='Đã khôi phục mặc định.';};
 
 function parseCSV(txt){const rows=[];let row=[],cur='',q=false;for(let i=0;i<txt.length;i++){const c=txt[i];if(q){if(c==='"'){if(txt[i+1]==='"'){cur+='"';i++;}else q=false;}else cur+=c;}else if(c==='"')q=true;else if(c===','){row.push(cur);cur='';}else if(c==='\n'||c==='\r'){if(c==='\r'&&txt[i+1]==='\n')i++;row.push(cur);rows.push(row);row=[];cur='';}else cur+=c;}if(cur||row.length){row.push(cur);rows.push(row);}return rows.filter(r=>r.some(x=>x!==''));}
 function csvToData(txt){
@@ -947,7 +1146,7 @@ async function loadData(){
   if(ext&&Array.isArray(ext.assets))raw={assets:ext.assets.map(rec),yearly:(yr&&yr.yearly)||{},meta:ext.meta||{}};
   else raw={assets:SEED.assets.map(rec),yearly:SEED.yearly,meta:SEED.meta};
   const up=store.get('ct.data');if(up&&up.assets){raw=up;if(raw.assets[0]&&raw.assets[0].name!==undefined)raw.assets=raw.assets.map(rec);}
-  CFG=cfg;if(cfg&&!store.get('ct.settings')){S=Object.assign(structuredClone(DEFAULTS),cfg);S.io=Object.assign({},DEFAULTS.io,S.io||{});S.carbon=Object.assign({},DEFAULTS.carbon,S.carbon||{});applyTheme();}
+  CFG=cfg;if(cfg&&!store.get('ct.settings')){S=Object.assign(structuredClone(DEFAULTS),cfg);S.io=Object.assign({},DEFAULTS.io,S.io||{});S.carbon=Object.assign({},DEFAULTS.carbon,S.carbon||{});S.cbam=Object.assign({},DEFAULTS.cbam,S.cbam||{});applyTheme();}
   DATA=normalize(raw);DATA.no2=(no2&&no2.series)||{};
   afterData();
 }
