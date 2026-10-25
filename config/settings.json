@@ -1,0 +1,19 @@
+{
+  "match": 20,
+  "unit": "Mt",
+  "gwp": "AR5",
+  "grid": 0.6592,
+  "theme": "",
+  "unc": {"very high": 10, "high": 20, "medium": 35, "low": 50, "very low": 75, "": 60},
+  "fuels": [
+    {"k": "anthracite", "vi": "Than antraxit", "ncv": 26.7, "co2": 98300, "ch4": 1, "n2o": 1.5},
+    {"k": "bituminous", "vi": "Than bitum khác", "ncv": 25.8, "co2": 94600, "ch4": 1, "n2o": 1.5},
+    {"k": "subbit", "vi": "Than á bitum", "ncv": 18.9, "co2": 96100, "ch4": 1, "n2o": 1.5},
+    {"k": "diesel", "vi": "Dầu diesel", "ncv": 43.0, "co2": 74100, "ch4": 3, "n2o": 0.6},
+    {"k": "fo", "vi": "Dầu nhiên liệu (FO)", "ncv": 40.4, "co2": 77400, "ch4": 3, "n2o": 0.6},
+    {"k": "gas", "vi": "Khí thiên nhiên", "ncv": 48.0, "co2": 56100, "ch4": 1, "n2o": 0.1}
+  ],
+  "proc": {"clinker": 0.52, "ckd": 1.02, "bof": 1.46, "eaf": 0.08},
+  "data": {"country": "VNM", "subsectors": ["electricity-generation", "iron-and-steel", "cement"], "baseYear": 2024, "years": [2021, 2022, 2023, 2024, 2025]},
+  "no2": {"top": 15, "months": 24, "boxDeg": 0.1}
+}
