@@ -412,7 +412,7 @@ th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--accent
 /* ---- explorer ---- */
 .exgrid{display:grid;grid-template-columns:250px minmax(0,1fr);gap:16px;align-items:start}
 @media (max-width:860px){.exgrid{grid-template-columns:1fr}}
-@media (min-width:861px){.exf{position:sticky;top:70px}}.exf{}.exf h4{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 0 6px}
+@media (min-width:861px){.exf{position:sticky;top:calc(var(--abh,52px) + 64px)}}.exf{}.exf h4{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 0 6px}
 .exf summary{cursor:pointer}
 .ck{display:flex;align-items:center;gap:8px;font-size:13px;padding:3px 0;cursor:pointer}
 .exchips{margin-bottom:10px;align-items:center}
@@ -507,11 +507,32 @@ th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--accent
 #fErr{color:var(--bad);margin:0;min-height:1em}
 .hdone{display:flex;flex-direction:column;gap:10px;align-items:flex-start}.hdone p{margin:0;font-size:13.5px}
 .hpre{white-space:pre-wrap;font-size:12.5px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px;width:100%;box-sizing:border-box;margin:0;max-height:200px;overflow:auto}
-</style></head><body><header class="hero">
-  <svg class="orbit" viewBox="0 0 620 620" aria-hidden="true"><g fill="none" stroke="#7fdcc0" stroke-opacity=".35"><ellipse cx="310" cy="310" rx="300" ry="120" transform="rotate(-24 310 310)"/><ellipse cx="310" cy="310" rx="240" ry="90" transform="rotate(-24 310 310)" stroke-dasharray="3 6"/><circle cx="310" cy="310" r="150" stroke-opacity=".18"/></g><circle cx="560" cy="200" r="4" fill="#9ee6cf"/><circle cx="120" cy="420" r="3" fill="#9ee6cf" fill-opacity=".6"/></svg>
-  <div class="in">
-    <div class="topbar">
-      <div class="brand"><span class="logo"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="3.2" fill="#5fe0b8"/><ellipse cx="9" cy="9" rx="8" ry="3.4" fill="none" stroke="#9ee6cf" stroke-width="1.2" transform="rotate(-25 9 9)"/></svg></span><span id="brandName"></span></div>
+
+/* ---- sticky app bar ---- */
+.appbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:25;color:var(--herofg);background:linear-gradient(160deg,var(--hero1),var(--hero2));border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.appbar .topbar{flex-wrap:nowrap;margin:0;padding-block:9px}
+.appbar .brand{flex:none}
+.abnav{display:flex;align-items:center;gap:6px;flex:1;min-width:0;margin-left:6px}
+.pga.ab{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:var(--herofg);width:32px;height:32px;flex:none}
+.pga.ab:hover:not(:disabled){border-color:#5fe0b8;color:#5fe0b8}
+.abtitle{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;font-size:13.5px;color:var(--heromuted);padding-left:4px}
+.appbar .tools{flex:none;display:flex;align-items:center;gap:6px;flex-wrap:nowrap}
+nav.tabs{top:calc(env(safe-area-inset-top,0px) + var(--abh,52px))}
+main [id]{scroll-margin-top:calc(var(--abh,52px) + 60px)}
+.pgnav .pgarrows{display:none}
+@media (max-width:860px){
+  .appbar .brand>span:not(.logo){display:none}
+  .appbar #homeLbl,.appbar #palLbl,.appbar .hbtn kbd,.appbar .hbtn .kbd{display:none}
+  .appbar .hbtn{padding:7px 9px}
+  .appbar .hsel{display:none}
+  .abnav{margin-left:2px}
+}
+@media (max-width:360px){.appbar .homebtn{display:none}}
+/* launcher: keep brand + language pinned */
+.splash .stop{position:sticky;top:0;z-index:3;margin:calc(-22px - env(safe-area-inset-top,0px)) calc(-1 * max(16px,env(safe-area-inset-left,0px))) 0;padding:calc(12px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px));background:color-mix(in srgb,var(--hero1) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+</style></head><body><div class="appbar" id="appbar">
+    <div class="in topbar">
+      <div class="brand"><span class="logo"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="3.2" fill="#5fe0b8"/><ellipse cx="9" cy="9" rx="8" ry="3.4" fill="none" stroke="#9ee6cf" stroke-width="1.2" transform="rotate(-25 9 9)"/></svg></span><span id="brandName"></span></div><div class="abnav"><button class="pga ab" id="abBack" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="pga ab" id="abFwd" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="abtitle" id="abTitle"></span></div>
       <div class="tools">
         <button class="hbtn homebtn" id="homeBtn"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="1.5" y="1.5" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="8" y="1.5" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="1.5" y="8" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="8" y="8" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span id="homeLbl"></span></button>
         <button class="hbtn" id="openPal"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="6" cy="6" r="4.3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9.3 9.3L13 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span id="palLbl"></span><kbd>Ctrl K</kbd></button>
@@ -519,6 +540,10 @@ th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--accent
         <div class="lang" role="group" aria-label="Language"><button data-lang="vi">VI</button><button data-lang="en">EN</button></div>
       </div>
     </div>
+</div>
+<header class="hero">
+  <svg class="orbit" viewBox="0 0 620 620" aria-hidden="true"><g fill="none" stroke="#7fdcc0" stroke-opacity=".35"><ellipse cx="310" cy="310" rx="300" ry="120" transform="rotate(-24 310 310)"/><ellipse cx="310" cy="310" rx="240" ry="90" transform="rotate(-24 310 310)" stroke-dasharray="3 6"/><circle cx="310" cy="310" r="150" stroke-opacity=".18"/></g><circle cx="560" cy="200" r="4" fill="#9ee6cf"/><circle cx="120" cy="420" r="3" fill="#9ee6cf" fill-opacity=".6"/></svg>
+  <div class="in">
     <div class="eyebrow"><span class="live" id="eyeLive"></span><span id="stamp"></span></div>
     <h1 id="heroTitle"></h1>
     <p class="lede" id="heroLede"></p>
@@ -1100,7 +1125,7 @@ function show(v,opts={}){
   ALLV.forEach(x=>{const el=$('v-'+x.id);if(x.id===v){el.hidden=false;el.classList.remove('view');void el.offsetWidth;el.classList.add('view');}else el.hidden=true;});
   buildNav();store.set('ct.view',v);try{if(v!=='profile')history.replaceState(null,'','#'+v)}catch(e){}
   (RENDER[v]||(()=>{}))();
-  if(!opts.noScroll){const n=document.querySelector('nav.tabs');const top=n&&n.offsetParent?n.offsetTop:0;if(window.scrollY>top)window.scrollTo({top,behavior:'smooth'});}
+  if(!opts.noScroll){const n=document.querySelector('nav.tabs');const ab=$('appbar');const top=n&&n.offsetParent?Math.max(0,n.offsetTop-(ab?ab.offsetHeight:0)):(ab?Math.max(0,document.querySelector('main').offsetTop-ab.offsetHeight):0);if(window.scrollY>top)window.scrollTo({top,behavior:'smooth'});}
 }
 $('tabs').addEventListener('click',e=>{const b=e.target.closest('button[data-v]');if(b)show(b.dataset.v);});
 $('tabs').addEventListener('keydown',e=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;const i=VIEWS.findIndex(v=>v.id===CUR);const n=VIEWS[(i+(e.key==='ArrowRight'?1:VIEWS.length-1))%VIEWS.length];show(n.id);const b=$('tabs').querySelector(`[data-v="${n.id}"]`);if(b)b.focus();});
@@ -2017,9 +2042,9 @@ function drawPg(){
   const back=HIST.i>0?HIST.s[HIST.i-1]:null,fwd=HIST.i<HIST.s.length-1?HIST.s[HIST.i+1]:null;
   const th=V_THEME[CUR]||'em';const here=CUR==='profile'?keyTitle('p:'+PROF.id):keyTitle(CUR);
   const arr=(d,dis,lab)=>`<button class="pga" data-h="${d}" ${dis?'disabled':''} aria-label="${esc(lab)}" title="${esc(lab)}"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="${d<0?'M10 3L5 8l5 5':'M6 3l5 5-5 5'}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
-  nav.innerHTML=`<div class="pgarrows">${arr(-1,!back,back?t('pg.backTo',{p:keyTitle(back)}):t('pg.back'))}${arr(1,!fwd,fwd?t('pg.fwdTo',{p:keyTitle(fwd)}):t('pg.fwd'))}</div>
-    <div class="pgcrumb"><button class="pgth" data-th="${th}">${t('th.'+th)}</button><span aria-hidden="true">›</span>${CUR==='profile'?`<button class="pgth" data-go="directory">${t('nav.directory')}</button><span aria-hidden="true">›</span>`:''}<b>${esc(here)}</b></div>
+  nav.innerHTML=`<div class="pgcrumb"><button class="pgth" data-th="${th}">${t('th.'+th)}</button><span aria-hidden="true">›</span>${CUR==='profile'?`<button class="pgth" data-go="directory">${t('nav.directory')}</button><span aria-hidden="true">›</span>`:''}<b>${esc(here)}</b></div>
     ${back?`<button class="pgback" data-h="-1">← ${esc(t('pg.backTo',{p:keyTitle(back)}))}</button>`:''}`;
+  const ab=$('abBack'),af=$('abFwd');if(ab){const lb=back?t('pg.backTo',{p:keyTitle(back)}):t('pg.back'),lf=fwd?t('pg.fwdTo',{p:keyTitle(fwd)}):t('pg.fwd');ab.disabled=!back;af.disabled=!fwd;ab.title=lb;ab.setAttribute('aria-label',lb);af.title=lf;af.setAttribute('aria-label',lf);$('abTitle').textContent=here;}
   let prev,next,pl,nl;
   if(CUR==='profile'){const L=azList();const i=L.findIndex(a=>a.id===PROF.id);const p=L[(i-1+L.length)%L.length],n=L[(i+1)%L.length];prev=()=>openProfile(p.id);next=()=>openProfile(n.id);pl=[t('pg.prevSite'),shortName(p.n)];nl=[t('pg.nextSite'),shortName(n.n)];}
   else{const i=VIEWS.findIndex(v=>v.id===CUR);const p=VIEWS[(i-1+VIEWS.length)%VIEWS.length],n=VIEWS[(i+1)%VIEWS.length];prev=()=>show(p.id);next=()=>show(n.id);pl=[t('pg.prev'),t(p.k)];nl=[t('pg.next'),t(n.k)];}
@@ -2031,6 +2056,8 @@ function drawPg(){
   show=function(v,opts){_show(v,opts);const k=CUR==='profile'?'p:'+PROF.id:CUR;
     if(!HIST.nav&&HIST.s[HIST.i]!==k){HIST.s=HIST.s.slice(0,HIST.i+1);HIST.s.push(k);if(HIST.s.length>60)HIST.s.shift();HIST.i=HIST.s.length-1;}
     HIST.nav=false;drawPg();};
+  $('abBack').onclick=()=>histGo(-1);$('abFwd').onclick=()=>histGo(1);
+  const RO=window.ResizeObserver?new ResizeObserver(()=>document.documentElement.style.setProperty('--abh',$('appbar').offsetHeight+'px')):null;if(RO)RO.observe($('appbar'));else document.documentElement.style.setProperty('--abh',$('appbar').offsetHeight+'px');
   document.addEventListener('click',e=>{const b=e.target.closest('#pgnav [data-h]');if(b&&!b.disabled){histGo(+b.dataset.h);return;}
     const g=e.target.closest('#pgnav .pgth');if(g){if(g.dataset.go)show(g.dataset.go);else{THM_CUR=g.dataset.th;openThemes();}}});
   document.addEventListener('keydown',e=>{if(e.altKey&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){e.preventDefault();histGo(e.key==='ArrowLeft'?-1:1);}});
