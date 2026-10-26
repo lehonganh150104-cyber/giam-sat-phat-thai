@@ -597,6 +597,9 @@ body.int .appbar{box-shadow:inset 0 -2px 0 rgba(242,190,92,.6),0 4px 18px rgba(0
 .splash .sptools{display:flex;align-items:center;gap:8px}
 .splash .modebtn span{display:inline}
 .splash .modebtn{padding:7px 10px}
+
+/* public mode: hide every tool affordance */
+body.pub .int-only,body.pub #fStar,body.pub #dStar,body.pub #dKk,body.pub #dChk,body.pub #dCb,body.pub #dNote,body.pub #dNoteS,body.pub h4:has(+ #dNote),body.pub .stf{display:none!important}
 </style></head><body><div class="appbar" id="appbar">
     <div class="in topbar">
       <div class="brand"><span class="logo"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="3.2" fill="#5fe0b8"/><ellipse cx="9" cy="9" rx="8" ry="3.4" fill="none" stroke="#9ee6cf" stroke-width="1.2" transform="rotate(-25 9 9)"/></svg></span><span id="brandName"></span></div><div class="abnav"><button class="pga ab" id="abBack" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="pga ab" id="abFwd" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="abtitle" id="abTitle"></span></div>
@@ -842,6 +845,14 @@ const T={
 "vf.c3none":["Không có ước tính vệ tinh để đối chiếu cho nhà máy, năm này","No satellite estimate to compare for this plant and year"],"vf.c3ok":["Lệch {d} so với ước tính vệ tinh {e} t, trong ngưỡng ±{m}% (dữ liệu tải {f})","Differs by {d} from the satellite estimate of {e} t, within ±{m}% (data downloaded {f})"],"vf.c3warn":["Lệch {d} so với ước tính vệ tinh {e} t, ngoài ngưỡng ±{m}%: nên hỏi doanh nghiệp giải thích","Differs by {d} from the satellite estimate of {e} t, outside ±{m}%: ask the company to explain"],
 "vf.c4ok":["Doanh nghiệp khai đã thẩm định độc lập bởi {b}; hãy xin chứng nhận để đối chiếu","Company states independent verification by {b}; request the certificate to confirm"],"vf.c4warn":["Chưa thẩm định độc lập: số liệu là doanh nghiệp tự khai","Not independently verified: figures are self-reported"],"vf.c5":["Tạo ngày {d} ({n} ngày trước)","Created {d} ({n} days ago)"],
 "vf.note":["Mã kiểm tra chứng minh tệp không bị sửa sau khi tạo, không chứng minh số liệu đúng. Độ tin cậy cao nhất khi có đủ: mã khớp hai nơi, thẩm định độc lập, và chênh lệch với vệ tinh nhỏ.","The fingerprint proves the file was not edited after creation, not that the figures are right. Confidence is highest when the fingerprint matches in two places, there is independent verification, and the satellite gap is small."],
+"heroLede@pub":["Ước tính độc lập từ vệ tinh và mô hình của Climate TRACE, kèm hồ sơ từng nhà máy, điểm tin cậy của số liệu và nguồn ghi rõ ngày cập nhật.","Independent satellite and model estimates from Climate TRACE, with a profile for every plant, a trust score for the data and dated sources."],
+"w.lede@pub":["Nền tảng theo dõi phát thải khí nhà kính của nhà máy điện, thép, xi măng Việt Nam bằng dữ liệu vệ tinh, công khai nguồn và độ tin cậy của từng con số.","Tracking greenhouse gas emissions from Vietnam's power, steel and cement plants with satellite data, showing the source and reliability of every figure."],
+"w.chips@pub":["Climate TRACE|Copernicus Sentinel-5P|IPCC 2006|Nhiệt điện|Gang thép|Xi măng|Hồ sơ từng nhà máy|Điểm tin cậy|Xác minh báo cáo công bố|Song ngữ Việt, Anh","Climate TRACE|Copernicus Sentinel-5P|IPCC 2006|Power|Steel|Cement|Plant profiles|Trust scores|Disclosure verification|Vietnamese and English"],
+"tr.priN@pub":["Danh sách này cho thấy nơi số liệu cần được kiểm chứng thêm.","This list shows where figures most need further checking."],
+"tr.mapC@pub":["Góc trên bên trái: phát thải lớn nhưng số liệu kém tin cậy, nơi cần kiểm chứng thêm nhất. Bấm chấm để xem nhà máy.","Top left: large emitters with weak data, where checking matters most. Click a dot to open the plant."],
+"src.lic.set@pub":["Hệ số tham chiếu của nền tảng","Platform reference factor"],"src.grid@pub":["Hệ số đang dùng: {g} t CO2/MWh","Factor in use: {g} t CO2/MWh"],
+"fq.set@pub":["Đổi ngôn ngữ, tiền tệ ở đâu?","Where do I change language or currency?"],"fa.set@pub":["Ở góc trên của trang: nút VI/EN và ô chọn tiền tệ (trên máy tính).","At the top of the page: the VI/EN switch and the currency box (on desktop)."],
+"qa.dir":["Danh bạ cơ sở","Facility directory"],"qa.dir.d":["Tra từ A đến Z, theo ngành, vùng, tập đoàn","Browse A to Z, by sector, region, group"],"qa.ver":["Xác minh báo cáo công bố","Verify a disclosure"],"qa.ver.d":["Kiểm tra báo cáo doanh nghiệp có bị sửa không","Check a company report was not altered"],
 // ---- nav ----
 "grp.explore":["Khám phá","Explore"],"grp.tools":["Công cụ","Tools"],"grp.ref":["Tra cứu","Reference"],
 "nav.home":["Tổng quan","Overview"],"nav.home.d":["Bản đồ, số liệu chính, nhận định nhanh","Map, key figures, quick insights"],
@@ -1130,7 +1141,7 @@ const fold=x=>String(x||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''
 
 // ---------- i18n ----------
 let LANG=(()=>{const s=store.get('ct.lang');if(s==='vi'||s==='en')return s;return (navigator.language||'vi').toLowerCase().startsWith('vi')?'vi':'en';})();
-function t(key,p){const e=T[key];let s=e?(LANG==='en'?e[1]:e[0]):key;if(typeof s==='function')return s(p||{});if(p)s=s.replace(/\{(\w+)\}/g,(m,k)=>p[k]!=null?p[k]:m);return s;}
+function t(key,p){if(typeof MODE!=='undefined'&&MODE==='pub'&&T[key+'@pub'])key=key+'@pub';const e=T[key];let s=e?(LANG==='en'?e[1]:e[0]):key;if(typeof s==='function')return s(p||{});if(p)s=s.replace(/\{(\w+)\}/g,(m,k)=>p[k]!=null?p[k]:m);return s;}
 const LOC=()=>LANG==='en'?'en-US':'vi-VN';
 const nf=(v,d=1)=>v==null||!isFinite(v)?t('na'):v.toLocaleString(LOC(),{maximumFractionDigits:d,minimumFractionDigits:0});
 const nfx=(v,d)=>v==null||!isFinite(v)?t('na'):v.toLocaleString(LOC(),{maximumFractionDigits:d,minimumFractionDigits:d});
@@ -1338,7 +1349,7 @@ const ZOOM={all:null,bac:[102.1,19.0,108.4,23.5],trung:[104.4,11.0,110.2,19.8],n
 function proj(lon,lat){const g=SEED.geo;return [((lon-g.L0)*g.K*g.s),((g.A1-lat)*g.s)];}
 RENDER.home=function(){
   const ys=years();if(HOME.year==null)HOME.year=LAST();const Y=HOME.year,P=Y-1;
-  const qa=[['inventory','M5 3h10v14H5zM8 7h4M8 10h4','qa.inv'],['cbam','M10 3v14M5 7h7a3 3 0 010 6H6','qa.cbam'],['owners','M3 17V7l7-4 7 4v10','qa.own'],['lookup','M4 4h9l3 3v9H4zM7 9h6M7 12h6','qa.look']];
+  const qa=[...(MODE==='pub'?[['directory','M4 3h10a2 2 0 012 2v12H6a2 2 0 01-2-2zM7 7h6M7 10h6','qa.dir'],['verify','M10 2l6 3v5c0 4-3 7-6 8-3-1-6-4-6-8V5zM7 10l2 2 4-4','qa.ver']]:[['inventory','M5 3h10v14H5zM8 7h4M8 10h4','qa.inv'],['cbam','M10 3v14M5 7h7a3 3 0 010 6H6','qa.cbam']]),['owners','M3 17V7l7-4 7 4v10','qa.own'],['lookup','M4 4h9l3 3v9H4zM7 9h6M7 12h6','qa.look']];
   $('v-home').innerHTML=`<div class="homegrid">${qa.map(([v,ic,k])=>`<button class="qa" data-go="${v}"><span class="ico">${icon(ic)}</span><span><b>${t(k)}</b><span>${t(k+'.d')}</span></span></button>`).join('')}</div>
   <div class="chead" style="margin-bottom:10px"><div class="sec-label" style="margin:0">${t('home.secLbl')}</div><div class="toolbar"><span class="note">${t('year')}</span><div class="seg" id="yearSeg">${ys.map(y=>`<button data-y="${y}" aria-pressed="${y==Y}">${y}</button>`).join('')}</div></div></div>
   <div class="row3" id="sectorCards"></div>
@@ -1827,7 +1838,7 @@ RENDER.trust=function(){
   <div class="row2" style="margin-top:16px"><div class="card"><h2>${t('tr.mapT')}</h2><p class="cap">${t('tr.mapC')}</p><div id="trMap"></div></div>
    <div class="card"><h2>${t('tr.priT')}</h2><p class="cap">${t('tr.priC')}</p><ol class="prilist">${pri.slice(0,10).map(({a,v})=>`<li data-id="${a.id}"><div class="m"><b>${esc(shortName(a.n))}</b><span class="note">${esc(kind(a))} · ${fmtE(E(a))} ${uL()}</span></div><span class="grade sm g${TRUST[a.id].g}">${TRUST[a.id].g}</span><span class="mono">${TRUST[a.id].sc}</span></li>`).join('')}</ol><p class="note">${t('tr.priN')}</p></div></div>
   <div class="card" style="margin-top:16px"><div class="chead"><h2>${t('tr.tblT')}</h2><div class="toolbar"><input type="search" id="trQ" placeholder="${esc(t('findPlant'))}" value="${esc(TR.q)}"><select id="trSec"><option value="">${t('allSec')}</option>${Object.keys(SECTORS).map(k=>`<option value="${k}" ${TR.sec===k?'selected':''}>${secN(k)}</option>`).join('')}</select><select id="trG"><option value="">${t('tr.allG')}</option>${['A','B','C','D'].map(g=>`<option ${TR.g===g?'selected':''}>${g}</option>`).join('')}</select><button class="btn" id="trCsv">${t('exportCsv')}</button></div></div><div class="tablewrap" style="margin-top:10px"><table id="trTbl"></table></div></div>
-  <div class="card" style="margin-top:16px"><h2>${t('tr.valT')}</h2><p class="cap">${t('tr.valC')}</p><div class="tablewrap" style="max-height:none"><table class="vtab"><thead><tr><th>${t('tr.v0')}</th><th>${t('tr.v1')}</th><th>${t('tr.v2')}</th><th>${t('tr.v3')}</th></tr></thead><tbody>${[1,2,3,4,5,6,7].map(i=>`<tr style="cursor:default"><td>${t('tr.r'+i)}</td>${['a','b','c'].map(c=>{const v=t('tr.r'+i+c);return `<td class="${v.startsWith('✓')?'yes':v.startsWith('✗')?'no':''}">${esc(v)}</td>`;}).join('')}</tr>`).join('')}</tbody></table></div><p class="note" style="margin-top:8px">${t('tr.valN')}</p></div>`;
+  <div class="card int-only" style="margin-top:16px"><h2>${t('tr.valT')}</h2><p class="cap">${t('tr.valC')}</p><div class="tablewrap" style="max-height:none"><table class="vtab"><thead><tr><th>${t('tr.v0')}</th><th>${t('tr.v1')}</th><th>${t('tr.v2')}</th><th>${t('tr.v3')}</th></tr></thead><tbody>${[1,2,3,4,5,6,7].map(i=>`<tr style="cursor:default"><td>${t('tr.r'+i)}</td>${['a','b','c'].map(c=>{const v=t('tr.r'+i+c);return `<td class="${v.startsWith('✓')?'yes':v.startsWith('✗')?'no':''}">${esc(v)}</td>`;}).join('')}</tr>`).join('')}</tbody></table></div><p class="note" style="margin-top:8px">${t('tr.valN')}</p></div>`;
   trMap(list,E);trTable();
   $('v-trust').querySelector('.prilist').onclick=e=>{const li=e.target.closest('li[data-id]');if(li)openDetail(li.dataset.id);};
   $('trQ').oninput=e=>{TR.q=e.target.value;trTable();};$('trSec').onchange=e=>{TR.sec=e.target.value;trTable();};$('trG').onchange=e=>{TR.g=e.target.value;trTable();};
@@ -2204,7 +2215,7 @@ function openHelp(tab){
   if(HELP.tab==='faq'){
     $('hpB').innerHTML=`<input type="search" id="hQ" placeholder="${esc(t('hp.q'))}" value="${esc(HELP.q)}" style="width:100%"><div id="hList" class="hlist"></div>
       <div class="hpmore"><span>${t('hp.notFound')}</span><button class="btn" id="hToC">✉ ${t('hp.contact')}</button></div>`;
-    const draw=()=>{const s=fold(HELP.q.trim());const L=FAQ.filter(([id])=>!s||fold(t('fq.'+id)+' '+t('fa.'+id)).includes(s));
+    const draw=()=>{const s=fold(HELP.q.trim());const L=FAQ.filter(([id])=>!(MODE==='pub'&&['inv','priv','cbam'].includes(id))).filter(([id])=>!s||fold(t('fq.'+id)+' '+t('fa.'+id)).includes(s));
       $('hList').innerHTML=L.length?L.map(([id,go])=>`<details class="hq"${s&&L.length<4?' open':''}><summary>${esc(t('fq.'+id))}</summary><p>${t('fa.'+id,{d:fd(DATA.meta.fetched)})}</p>${go?`<button class="drill-link" data-fg="${id}">${t(go==='contact'?'hp.toContact':'hp.go')} →</button>`:''}</details>`).join(''):`<p class="empty">${t('noResult')}</p>`;};
     draw();$('hQ').oninput=e=>{HELP.q=e.target.value;draw();};
     $('hList').onclick=e=>{const b=e.target.closest('[data-fg]');if(!b)return;const go=FAQ.find(x=>x[0]===b.dataset.fg)[1];if(go==='contact'){HELP.tab='contact';HELP.cat=b.dataset.fg==='pilot'?'pilot':'use';openHelp();}else{close();go();}};
@@ -2472,7 +2483,7 @@ function openSplash(step){
     <div><div class="eyebrow"><span class="live">${t('eyeLive')}</span><span>Climate TRACE · ${years()[0]}${LANG==='en'?' to ':' đến '}${L}</span></div><h1>${t('heroTitle')}</h1><p class="lede">${t('sp.lede')}</p></div>
     <div class="sst"><div data-drill="all" role="button" tabindex="0"><span>${t('hs.total',{y:L})}</span><b>${nfx(tot/1e6,1)}</b><span>${t('u.Mt')}</span></div><div data-drill="n" role="button" tabindex="0"><span>${t('hs.n')}</span><b>${n}</b><span>${t('facilities')}</span></div><div><span>${t('sp.sec')}</span><b>3</b><span>${Object.keys(SECTORS).map(secS).join(', ')}</span></div><div><span>${t('sp.yrs')}</span><b>${years().length}</b><span>${years()[0]}${LANG==='en'?' to ':' đến '}${L}</span></div></div>
     <div><div class="sgl">${t('sp.pick')}</div></div>
-    ${['explore','tools','ref'].map(g=>`<div><div class="sgl">${t('grp.'+g)}</div><div class="tiles">${grp(g)}</div></div>`).join('')}
+    ${['explore','tools','ref'].filter(g=>VIEWS.some(v=>v.g===g)).map(g=>`<div><div class="sgl">${t('grp.'+g)}</div><div class="tiles">${grp(g)}</div></div>`).join('')}
     <div class="sfoot"><span>${t('footL')}</span><span>${t('copyS')} · ${t('sp.hint')}</span></div>
    </div></div>`;
   document.documentElement.style.overflow='hidden';
