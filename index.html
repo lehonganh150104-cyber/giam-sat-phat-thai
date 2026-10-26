@@ -396,6 +396,27 @@ td.iss{min-width:260px;white-space:normal}
 .evbar{display:flex;height:26px;border-radius:8px;overflow:hidden;gap:2px;margin-top:12px}
 .evbar>div{display:grid;place-items:center;font-size:12px;font-weight:600;color:#fff}
 .etp{background:var(--ok)}.etn{background:#5aa98a}.efp{background:var(--bad)}.efn{background:var(--warn)}.einc{background:var(--faint)}
+/* ---- drill-down ---- */
+[data-drill]{cursor:pointer;position:relative}
+.hs[data-drill],.insi[data-drill],.kp .k[data-drill],.sst>div[data-drill],.wstats>div[data-drill]{transition:background .15s,box-shadow .15s}
+.hs[data-drill]:hover,.hs[data-drill]:focus-visible{background:rgba(255,255,255,.07);outline:none}
+.sst>div[data-drill]:hover,.wstats>div[data-drill]:hover{background:rgba(127,220,192,.12);border-color:rgba(127,220,192,.5)}
+.kp .k[data-drill]:hover,.kp .k[data-drill]:focus-visible{box-shadow:0 0 0 2px var(--accent) inset;outline:none}
+.insi[data-drill]:hover,.insi[data-drill]:focus-visible{background:var(--panel2);outline:none;border-radius:8px}
+.drill-ic{position:absolute;top:10px;right:12px;font-size:12px;opacity:.45;transition:opacity .15s}
+[data-drill]:hover>.drill-ic{opacity:1}
+.drill-link{border:0;background:none;padding:0;font:inherit;color:var(--accent);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.modal.dl{max-width:1000px}
+.dl-kpi{display:flex;gap:8px 20px;flex-wrap:wrap;font-size:13px;color:var(--muted)}.dl-kpi b{color:var(--fg);font-family:var(--mono)}
+th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--accent)}
+/* ---- explorer ---- */
+.exgrid{display:grid;grid-template-columns:250px minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:860px){.exgrid{grid-template-columns:1fr}}
+@media (min-width:861px){.exf{position:sticky;top:70px}}.exf{}.exf h4{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 0 6px}
+.exf summary{cursor:pointer}
+.ck{display:flex;align-items:center;gap:8px;font-size:13px;padding:3px 0;cursor:pointer}
+.exchips{margin-bottom:10px;align-items:center}
+.exbar label{display:flex;flex-direction:column;gap:3px;font-size:11.5px;color:var(--muted)}
 </style></head><body><header class="hero">
   <svg class="orbit" viewBox="0 0 620 620" aria-hidden="true"><g fill="none" stroke="#7fdcc0" stroke-opacity=".35"><ellipse cx="310" cy="310" rx="300" ry="120" transform="rotate(-24 310 310)"/><ellipse cx="310" cy="310" rx="240" ry="90" transform="rotate(-24 310 310)" stroke-dasharray="3 6"/><circle cx="310" cy="310" r="150" stroke-opacity=".18"/></g><circle cx="560" cy="200" r="4" fill="#9ee6cf"/><circle cx="120" cy="420" r="3" fill="#9ee6cf" fill-opacity=".6"/></svg>
   <div class="in">
@@ -423,6 +444,7 @@ td.iss{min-width:260px;white-space:normal}
   <section id="v-owners" class="view" hidden></section>
   <section id="v-list" class="view" hidden></section>
   <section id="v-trust" class="view" hidden></section>
+  <section id="v-explorer" class="view" hidden></section>
   <section id="v-inventory" class="view" hidden></section>
   <section id="v-check" class="view" hidden></section>
   <section id="v-cbam" class="view" hidden></section>
@@ -509,6 +531,18 @@ const T={
 "ev.h2ok":["Tỷ lệ báo động sai {p}% trên {n} lần ghi: đang đạt ngưỡng H2.","False alarm rate {p}% over {n} records: meets the H2 threshold."],"ev.h2no":["Tỷ lệ báo động sai {p}% trên {n} lần ghi: chưa đạt ngưỡng H2.","False alarm rate {p}% over {n} records: below the H2 threshold."],"ev.h2na":["Chưa có cảnh báo nào để tính tỷ lệ.","No alerts yet to compute a rate."],
 "ev.small":["Mẫu còn nhỏ, cần ít nhất 30 lần ghi để kết luận.","Sample still small; at least 30 records are needed to conclude."],
 "ev.logT":["Sổ kiểm chứng","Evidence log"],"ev.empty":["Chưa có lần đối chiếu nào.","No comparisons recorded yet."],"ev.out":["Kết quả","Outcome"],
+"nav.explorer":["Kho dữ liệu","Data explorer"],"nav.explorer.d":["Lọc, nhóm, so sánh theo năm và tải dữ liệu, kiểu OECD Data Explorer","Filter, group, compare by year and download, OECD Data Explorer style"],
+"dr.hint":["Bấm để xem danh sách","Click to see the list"],"dr.list":["xem danh sách","see list"],"dr.crumb":["Danh sách thống kê","Statistical list"],"dr.share":["Tỷ trọng","Share"],"dr.total":["Tổng","Total"],"dr.ofNat":["của ba ngành","of the three sectors"],
+"dr.openEx":["Mở trong Kho dữ liệu","Open in Data explorer"],"dr.note":["Bấm tiêu đề cột để sắp xếp, bấm một dòng để xem chi tiết nhà máy.","Click a column header to sort, a row to open the plant."],
+"dr.all":["Phát thải từng cơ sở năm {y}","Emissions by site, {y}"],"dr.n":["{n} cơ sở có số liệu năm {y}","{n} sites with data in {y}"],"dr.vs":["Thay đổi phát thải {y} so với {p}","Emission change {y} versus {p}"],"dr.vsS":["Sắp xếp theo mức thay đổi; bấm tiêu đề cột để đổi.","Sorted by change; click a header to re-sort."],
+"dr.top10":["10 cơ sở phát thải lớn nhất năm {y}","Top 10 emitters, {y}"],"dr.sec":["{s}: danh sách cơ sở năm {y}","{s}: sites in {y}"],"dr.coal":["Nhà máy nhiệt điện than năm {y}","Coal power plants, {y}"],"dr.low":["Cơ sở có mức tin cậy thấp hoặc rất thấp","Sites with low or very low confidence"],
+"dr.trust":["Điểm tin cậy từng cơ sở","Trust score by site"],"dr.grade":["Hạng {g}: {d}","Grade {g}: {d}"],"dr.def":["Cơ sở dùng giá trị mặc định của mô hình","Sites on model default values"],"dr.impl":["Cơ sở có hệ số ngoài khoảng hợp lý","Sites with implausible factors"],
+"dr.half":["{n} cơ sở tạo ra một nửa phát thải năm {y}","{n} sites producing half of {y} emissions"],"dr.steel":["Thép: {k}","Steel: {k}"],"dr.ce":["Xi măng có hệ số {v} t CO2e/t","Cement plants with factor {v} t CO2e/t"],
+"ex.D":["Chọn bộ lọc bên trái, chọn cách nhóm và chỉ tiêu; bảng, biểu đồ và file tải về đổi theo. Bấm một dòng nhóm để đi sâu xuống từng cơ sở.","Pick filters on the left, then grouping and measure; the table, chart and download follow. Click a group row to drill down to sites."],
+"ex.filters":["Bộ lọc","Filters"],"ex.reset":["Xoá bộ lọc","Reset filters"],"ex.by":["Nhóm theo","Group by"],"ex.byFac":["Từng cơ sở","Each site"],"ex.m":["Chỉ tiêu","Measure"],"ex.mE":["Phát thải","Emissions"],"ex.mS":["Tỷ trọng trong ba ngành, %","Share of three sectors, %"],"ex.mC":["Thay đổi so năm trước, %","Change on previous year, %"],
+"ex.from":["Từ năm","From"],"ex.to":["Đến năm","To"],"ex.applied":["Đang lọc","Filters applied"],"ex.none":["Chưa lọc, đang xem toàn bộ 127 cơ sở","No filters, showing all 127 sites"],"ex.remove":["Bỏ bộ lọc này","Remove this filter"],"ex.sel":["Danh sách đã chọn","Selected list"],
+"ex.count":["{n} dòng từ {f} cơ sở · đơn vị: {u}","{n} rows from {f} sites · unit: {u}"],"ex.note":["Số liệu Climate TRACE; năm ghi 0 hiển thị là chưa ghi nhận. Tỷ trọng tính trên tổng ba ngành của năm đó.","Climate TRACE data; years recorded as 0 show as not recorded. Share is of the three-sector total for that year."],
+"ex.chartN":["Biểu đồ vẽ {n} dòng đầu của bảng theo thứ tự đang sắp xếp.","The chart draws the first {n} rows of the table in the current sort order."],"ex.oneYear":["Chọn ít nhất hai năm để vẽ xu hướng.","Pick at least two years to draw a trend."],
 // ---- nav ----
 "grp.explore":["Khám phá","Explore"],"grp.tools":["Công cụ","Tools"],"grp.ref":["Tra cứu","Reference"],
 "nav.home":["Tổng quan","Overview"],"nav.home.d":["Bản đồ, số liệu chính, nhận định nhanh","Map, key figures, quick insights"],
@@ -894,6 +928,7 @@ const VIEWS=[
   {id:'owners',g:'explore',k:'nav.owners',ico:'M3 17V7l7-4 7 4v10M7 17v-4h6v4'},
   {id:'list',g:'explore',k:'nav.list',ico:'M4 5h12M4 10h12M4 15h12'},
   {id:'trust',g:'explore',k:'nav.trust',ico:'M10 2l6 3v5c0 4-3 7-6 8-3-1-6-4-6-8V5zM7 10l2 2 4-4'},
+  {id:'explorer',g:'explore',k:'nav.explorer',ico:'M3 4h14M3 4v12h14M7 12V9M11 12V6M15 12v-4'},
   {id:'inventory',g:'tools',k:'nav.inventory',ico:'M5 3h10v14H5zM8 7h4M8 10h4M8 13h2'},
   {id:'check',g:'tools',k:'nav.check',ico:'M4 10l4 4 8-9'},
   {id:'cbam',g:'tools',k:'nav.cbam',ico:'M10 3v14M5 7h7a3 3 0 010 6H6'},
@@ -906,7 +941,7 @@ const icon=(d,s=18)=>`<svg width="${s}" height="${s}" viewBox="0 0 20 20" aria-h
 function buildNav(){
   let last='';$('tabs').innerHTML=VIEWS.map(v=>{let h='';if(v.g!==last){h=`<span class="grp-l">${t('grp.'+v.g)}</span>`;last=v.g;}return h+`<button role="tab" data-v="${v.id}" aria-selected="${v.id===CUR}">${t(v.k)}</button>`;}).join('');
   const bn=[['home','nav.home'],['list','nav.listS'],['inventory','nav.toolsS'],['lookup','nav.lookup'],['more','nav.more']];
-  $('bnav').innerHTML=bn.map(([id,k])=>{const v=VIEWS.find(x=>x.id===id);const cur=id===CUR||(id==='inventory'&&['inventory','check','cbam','evidence'].includes(CUR))||(id==='more'&&['analysis','owners','trust','storage','settings'].includes(CUR));return `<button data-v="${id}" aria-current="${cur}">${icon(v?v.ico:'M4 6h12M4 10h12M4 14h12',20)}<span>${t(k)}</span></button>`;}).join('');
+  $('bnav').innerHTML=bn.map(([id,k])=>{const v=VIEWS.find(x=>x.id===id);const cur=id===CUR||(id==='inventory'&&['inventory','check','cbam','evidence'].includes(CUR))||(id==='more'&&['analysis','owners','trust','explorer','storage','settings'].includes(CUR));return `<button data-v="${id}" aria-current="${cur}">${icon(v?v.ico:'M4 6h12M4 10h12M4 14h12',20)}<span>${t(k)}</span></button>`;}).join('');
   $('hambLbl').textContent=t('catalog');$('homeLbl').textContent=t('sp.btn');$('palLbl').textContent=t('search');
   document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===LANG));
   $('curSel').value=S.cur;
@@ -946,7 +981,7 @@ function renderHero(){
     [t('hs.vs',{y:P}),sgn(pct(tL,tP)),t('hs.vsH',{d:nfx(Math.abs(tL-tP)/1e6,1),dir:(tL-tP)>0?t('more_'):t('less_'),y0:years()[0],p:sgn(pct(tL,tF))})],
     [t('hs.n'),nf(list.length,0)+`<small>${t('facilities')}</small>`,Object.keys(SECTORS).map(k=>`${secS(k)} ${list.filter(a=>a.s===k).length}`).join(', ')],
     [t('hs.top'),nfx(top10/tL*100,0)+`%<small>${t('hs.topS')}</small>`,t('hs.topH',{n:list.length})]
-  ].map(([l,v,h])=>`<div class="hs"><div class="l">${l}</div><div class="v">${v}</div><div class="h">${esc(h)}</div></div>`).join('');
+  ].map(([l,v,h],i)=>`<div class="hs" data-drill="${['all','vs','n','top10'][i]}" data-y="${L}" role="button" tabindex="0" title="${esc(t('dr.hint'))}"><div class="l">${l}</div><div class="v">${v}</div><div class="h">${esc(h)}</div><span class="drill-ic" aria-hidden="true">↗</span></div>`).join('');
 }
 // ---------- command palette ----------
 function openPal(){
@@ -1018,7 +1053,7 @@ RENDER.home=function(){
   $('sectorCards').innerHTML=Object.entries(SECTORS).map(([k,v])=>{const tt=bySecTot(k,Y),tp=ys.includes(P)?bySecTot(k,P):null;const d=tp?pct(tt,tp):null;const n=DATA.assets.filter(a=>a.s===k&&(emis(a,Y)||0)>0).length;
     return `<div class="card sector" style="--c:${v.col}" data-s="${k}" role="button" tabindex="0" aria-pressed="${HOME.sec.has(k)}"><div class="top"><div class="nm"><span class="sw" style="background:${v.col};margin:0"></span>${secN(k)}</div>${d!=null?`<span class="delta ${dcls(d)}">${sgn(d)} ${t('vsY',{y:P})}</span>`:''}</div>
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:8px"><div class="v">${nfx(tt/1e6,1)}<small>${t('u.MtS')}</small></div>${spark(ys.map(y=>bySecTot(k,y)),v.col)}</div>
-    <div class="meta"><span>${n} ${t('facilities')}</span><span>${t('shareOf3',{p:nfx(tt/all*100,0)})}</span><span>${t('trend')} ${ys[0]}–${ys.at(-1)}</span></div></div>`;}).join('');
+    <div class="meta"><button class="drill-link" data-drill="sec:${k}" data-y="${Y}">${n} ${t('facilities')} · ${t('dr.list')} ↗</button><span>${t('shareOf3',{p:nfx(tt/all*100,0)})}</span><span>${t('trend')} ${ys[0]}–${ys.at(-1)}</span></div></div>`;}).join('');
   const list=DATA.assets.filter(a=>HOME.sec.has(a.s)&&(emis(a,Y)??0)>0);
   drawMap(list);drawTop(list);drawInsights();
   $('v-home').querySelector('.homegrid').onclick=e=>{const b=e.target.closest('[data-go]');if(b)show(b.dataset.go);};
@@ -1050,16 +1085,16 @@ function drawTop(list){const Y=HOME.year;const top=list.slice().sort((a,b)=>emis
 function drawInsights(){
   const y=HOME.year,p=y-1,ys=years();const list=DATA.assets.filter(a=>(emis(a,y)||0)>0);const tot=list.reduce((s,a)=>s+emis(a,y),0);const out=[];
   const big=list.slice().sort((a,b)=>emis(b,y)-emis(a,y))[0];
-  if(big)out.push(['1',t('ins.big',{n:esc(big.n),y,v:fmtE(emis(big,y)),u:uL(),p:nfx(emis(big,y)/tot*100,1)})]);
+  if(big)out.push(['1','id:'+big.id,t('ins.big',{n:esc(big.n),y,v:fmtE(emis(big,y)),u:uL(),p:nfx(emis(big,y)/tot*100,1)})]);
   if(ys.includes(p)){const ch=list.map(a=>({a,d:emis(a,y)-(emis(a,p)||0),pp:emis(a,p)})).filter(x=>x.pp);const up=ch.slice().sort((a,b)=>b.d-a.d)[0],dn=ch.slice().sort((a,b)=>a.d-b.d)[0];
-    if(up&&up.d>0)out.push(['↑',t('ins.up',{p,n:esc(up.a.n),v:fmtE(up.d),u:uL(),pc:sgn(pct(emis(up.a,y),up.pp))})]);
-    if(dn&&dn.d<0)out.push(['↓',t('ins.down',{n:esc(dn.a.n),v:fmtE(-dn.d),u:uL(),pc:sgn(pct(emis(dn.a,y),dn.pp))})]);
+    if(up&&up.d>0)out.push(['↑','id:'+up.a.id,t('ins.up',{p,n:esc(up.a.n),v:fmtE(up.d),u:uL(),pc:sgn(pct(emis(up.a,y),up.pp))})]);
+    if(dn&&dn.d<0)out.push(['↓','id:'+dn.a.id,t('ins.down',{n:esc(dn.a.n),v:fmtE(-dn.d),u:uL(),pc:sgn(pct(emis(dn.a,y),dn.pp))})]);
     const secs=Object.keys(SECTORS).map(k=>({k,d:pct(bySecTot(k,y),bySecTot(k,p))})).sort((a,b)=>b.d-a.d);const lo=secs.at(-1);
-    out.push(['%',t('ins.sec',{y,s1:secN(secs[0].k),d1:sgn(secs[0].d),s2:secN(lo.k),dir:lo.d<0?t('fell'):t('rose'),d2:nfx(Math.abs(lo.d),1)})]);}
+    out.push(['%','vs',t('ins.sec',{y,s1:secN(secs[0].k),d1:sgn(secs[0].d),s2:secN(lo.k),dir:lo.d<0?t('fell'):t('rose'),d2:nfx(Math.abs(lo.d),1)})]);}
   const coal=DATA.assets.filter(a=>a.s==='electricity-generation'&&a.t==='coal');const coalE=coal.reduce((s,a)=>s+(emis(a,y)||0),0),elecE=bySecTot('electricity-generation',y);
-  out.push(['C',t('ins.coal',{p:nfx(coalE/elecE*100,0),n:coal.length,m:DATA.assets.filter(a=>a.s==='electricity-generation').length})]);
-  out.push(['!',t('ins.low',{n:list.filter(a=>a.c==='low'||a.c==='very low').length})]);
-  $('insights').innerHTML=out.map(([i,x])=>`<div class="insi"><div class="ic">${i}</div><p>${x}</p></div>`).join('');
+  out.push(['C','coal',t('ins.coal',{p:nfx(coalE/elecE*100,0),n:coal.length,m:DATA.assets.filter(a=>a.s==='electricity-generation').length})]);
+  out.push(['!','lowconf',t('ins.low',{n:list.filter(a=>a.c==='low'||a.c==='very low').length})]);
+  $('insights').innerHTML=out.map(([i,k,x])=>`<div class="insi" data-drill="${k}" data-y="${y}" role="button" tabindex="0"><div class="ic">${i}</div><p>${x}</p><span class="drill-ic" aria-hidden="true">↗</span></div>`).join('');
 }
 
 // ---------- ANALYSIS ----------
@@ -1081,7 +1116,7 @@ RENDER.analysis=function(){
   {const list=DATA.assets.map(a=>emis(a,L)||0).filter(v=>v>0).sort((a,b)=>b-a);const tot=list.reduce((s,v)=>s+v,0);let acc=0;const cum=list.map(v=>(acc+=v)/tot);const W=560,H=240,Lp=44,R=16,T=12,B=30;const x=i=>Lp+(W-Lp-R)*(i+1)/list.length,y=v=>T+(H-T-B)*(1-v);const n50=cum.findIndex(c=>c>=0.5)+1,n80=cum.findIndex(c=>c>=0.8)+1;
     let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Pareto">${axisY(Lp,R,y,[0,.25,.5,.75,1],v=>nf(v*100,0)+'%',W)}<path d="M${Lp},${y(0)}L${cum.map((c,i)=>x(i).toFixed(1)+','+y(c).toFixed(1)).join('L')}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>`;
     [[n50,.5],[n80,.8]].forEach(([n,c])=>{s+=`<line x1="${x(n-1)}" x2="${x(n-1)}" y1="${y(c)}" y2="${y(0)}" stroke="var(--accent)" stroke-dasharray="3 3"/><circle cx="${x(n-1)}" cy="${y(c)}" r="4" fill="var(--accent)"/><text x="${x(n-1)+8}" y="${y(c)+16}" font-size="11.5" fill="var(--fg)">${t('an.parL',{n,p:nf(c*100,0)})}</text>`;});
-    $('aPareto').innerHTML=s+`<text x="${W-R}" y="${H-8}" font-size="10.5" text-anchor="end" fill="var(--muted)">${t('an.parX',{n:list.length})}</text></svg>`;$('aParetoT').textContent=t('an.parT',{n:n50});}
+    $('aPareto').dataset.drill='pareto';$('aPareto').style.cursor='pointer';$('aPareto').innerHTML=s+`<text x="${W-R}" y="${H-8}" font-size="10.5" text-anchor="end" fill="var(--muted)">${t('an.parX',{n:list.length})}</text></svg>`;$('aParetoT').textContent=t('an.parT',{n:n50});}
   {const coal=DATA.assets.filter(a=>a.s==='electricity-generation'&&a.t==='coal'&&a.cap>0&&a.ef);const W=560,H=290,Lp=48,R=16,T=18,B=38;const lx=v=>Math.log10(v),xmn=lx(20),xmx=lx(6000),ymn=0.86,ymx=Math.max(...coal.map(a=>a.ef))+0.03;const x=v=>Lp+(W-Lp-R)*(lx(v)-xmn)/(xmx-xmn),y=v=>T+(H-T-B)*(1-(v-ymn)/(ymx-ymn));
     let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(t('an.scT'))}">`;for(let v=0.9;v<=ymx+1e-9;v+=0.1)s+=`<line x1="${Lp}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${Lp-8}" y="${y(v)+4}" font-size="10.5" text-anchor="end" fill="var(--muted)" class="mono">${nfx(v,1)}</text>`;
     [30,100,300,1000,3000].forEach(v=>s+=`<line x1="${x(v)}" x2="${x(v)}" y1="${T}" y2="${H-B}" stroke="var(--grid)"/><text x="${x(v)}" y="${H-20}" font-size="10.5" text-anchor="middle" fill="var(--muted)" class="mono">${nf(v,0)}</text>`);
@@ -1091,12 +1126,12 @@ RENDER.analysis=function(){
     const small=coal.filter(a=>a.cap<300),large=coal.filter(a=>a.cap>=1000);const av=l=>l.reduce((q,a)=>q+a.ef,0)/l.length;
     $('aScatter').innerHTML=s+`</svg><p class="note">${t('an.scN',{a:nfx(av(small),2),p:nf((av(small)/av(large)-1)*100,0),b:nfx(av(large),2),n:coal.filter(a=>a.cf&&Math.abs(a.cf-0.6246)<0.003).length,m:coal.length})}</p>`;$('aScatter').querySelector('svg').onclick=e=>{const c=e.target.closest('[data-id]');if(c)openDetail(c.dataset.id);};}
   {const st=DATA.assets.filter(a=>a.s==='iron-and-steel');const grp=x=>x==='BF/BOF'?'bf':/EAF,BF/.test(x)?'mix':'eaf';const G={};st.forEach(a=>{const k=grp(a.t);G[k]=G[k]||{p:0,e:0,n:0};G[k].p+=a.act||0;G[k].e+=a.e;G[k].n++;});const ks=Object.keys(G).sort((a,b)=>G[b].e-G[a].e);const tp=ks.reduce((s,k)=>s+G[k].p,0),te=ks.reduce((s,k)=>s+G[k].e,0);const W=560,H=176,X0=110;const cols={bf:'var(--steel)',eaf:'var(--faint)',mix:'var(--cement)'};
-    const bar=(yy,lab,key,tot)=>{let x0=X0,s=`<text x="${X0-10}" y="${yy+20}" font-size="12" text-anchor="end" fill="var(--fg)" font-weight="600">${lab}</text>`;ks.forEach(k=>{const w=(W-X0-10)*G[k][key]/tot;s+=`<rect x="${x0}" y="${yy}" width="${w}" height="30" fill="${cols[k]}" fill-opacity=".85"><title>${t('cat.'+k)}: ${nf(G[k][key]/tot*100,0)}%</title></rect>${w>38?`<text x="${x0+7}" y="${yy+20}" font-size="11.5" fill="#fff" font-weight="700">${nf(G[k][key]/tot*100,0)}%</text>`:''}`;x0+=w;});return s;};
+    const bar=(yy,lab,key,tot)=>{let x0=X0,s=`<text x="${X0-10}" y="${yy+20}" font-size="12" text-anchor="end" fill="var(--fg)" font-weight="600">${lab}</text>`;ks.forEach(k=>{const w=(W-X0-10)*G[k][key]/tot;s+=`<rect data-drill="steel:${k}" style="cursor:pointer" x="${x0}" y="${yy}" width="${w}" height="30" fill="${cols[k]}" fill-opacity=".85"><title>${t('cat.'+k)}: ${nf(G[k][key]/tot*100,0)}%</title></rect>${w>38?`<text x="${x0+7}" y="${yy+20}" font-size="11.5" fill="#fff" font-weight="700">${nf(G[k][key]/tot*100,0)}%</text>`:''}`;x0+=w;});return s;};
     let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(t('an.stC'))}">${bar(8,t('production'),'p',tp)}${bar(52,t('emissions'),'e',te)}`;let lx=X0;ks.forEach(k=>{const lb=t('cat.'+k)+' ('+G[k].n+')';s+=`<rect x="${lx}" y="104" width="11" height="11" rx="2" fill="${cols[k]}"/><text x="${lx+16}" y="114" font-size="11.5" fill="var(--muted)">${lb}</text>`;lx+=lb.length*6.3+40;});
     const ib=G.bf,ie=G.eaf;s+=`<text x="${X0}" y="146" font-size="12" fill="var(--fg)">${t('an.stI1')}: <tspan class="mono" font-weight="600">${ib?nfx(ib.e/ib.p,2):'?'}</tspan> ${t('u.tpt')}</text><text x="${X0}" y="166" font-size="12" fill="var(--fg)">${t('an.stI2')}: <tspan class="mono" font-weight="600">${ie?nfx(ie.e/ie.p,2):'?'}</tspan> ${t('u.tpt')}</text></svg>`;
     $('aSteel').innerHTML=s;if(ib)$('aSteelT').textContent=t('an.stT',{a:nf(ib.p/tp*100,0),b:nf(ib.e/te*100,0)});}
   {const ce=DATA.assets.filter(a=>a.s==='cement'&&a.ef>0);const G={};ce.forEach(a=>{const k=a.ef.toFixed(2);G[k]=G[k]||{n:0,e:0,list:[]};G[k].n++;G[k].e+=a.e;G[k].list.push(a);});const ks=Object.keys(G).sort((a,b)=>+a-+b);const W=560,rh=30,X0=70,H=ks.length*rh+30;const mx=Math.max(...ks.map(k=>G[k].n));
-    let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(t('an.ceC'))}">`;ks.forEach((k,i)=>{const yy=6+i*rh,w=(W-X0-160)*G[k].n/mx;s+=`<text x="${X0-10}" y="${yy+16}" font-size="12" text-anchor="end" fill="var(--fg)" class="mono">${nfx(+k,2)}</text><rect x="${X0}" y="${yy+4}" width="${w}" height="18" rx="3" fill="var(--cement)" fill-opacity=".8"><title>${esc(G[k].list.map(a=>a.n).join('; '))}</title></rect><text x="${X0+w+8}" y="${yy+17}" font-size="11.5" fill="var(--muted)">${t('an.ceBar',{n:G[k].n,v:nfx(G[k].e/1e6,G[k].e<1e6?2:1)})}</text>`;});
+    let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(t('an.ceC'))}">`;ks.forEach((k,i)=>{const yy=6+i*rh,w=(W-X0-160)*G[k].n/mx;s+=`<text x="${X0-10}" y="${yy+16}" font-size="12" text-anchor="end" fill="var(--fg)" class="mono">${nfx(+k,2)}</text><rect data-drill="ce:${k}" style="cursor:pointer" x="${X0}" y="${yy+4}" width="${w}" height="18" rx="3" fill="var(--cement)" fill-opacity=".8"><title>${esc(G[k].list.map(a=>a.n).join('; '))}</title></rect><text x="${X0+w+8}" y="${yy+17}" font-size="11.5" fill="var(--muted)">${t('an.ceBar',{n:G[k].n,v:nfx(G[k].e/1e6,G[k].e<1e6?2:1)})}</text>`;});
     $('aCement').innerHTML=s+`<text x="${X0-10}" y="${H-4}" font-size="10.5" text-anchor="end" fill="var(--muted)">t CO2e/t</text></svg><p class="note">${t('an.ceN',{n:ce.length,k:ks.length})}</p>`;$('aCementT').textContent=t('an.ceT',{n:ce.length,k:ks.length});}
 };
 
@@ -1486,8 +1521,8 @@ RENDER.trust=function(){
   const pri=list.map(a=>({a,v:E(a)*(1-TRUST[a.id].sc/100)})).sort((x,y)=>y.v-x.v);
   const gb=['A','B','C','D'].map(g=>[g,byG(g)]);
   $('v-trust').innerHTML=vhead(t('grp.explore'),t('nav.trust'),t('tr.D'))+`
-  <div class="kp" style="margin-bottom:16px"><div class="k"><div class="l">${t('tr.k1')} ${qi('trust')}</div><div class="v">${nf(wavg,0)}/100</div><div class="note">${t('tr.k1n')}</div></div><div class="k"><div class="l">${t('tr.k2')}</div><div class="v">${nf(defE/tot*100,0)}%</div><div class="note">${t('tr.k2n')}</div></div><div class="k"><div class="l">${t('tr.k3')}</div><div class="v">${implaus}</div><div class="note">${t('tr.k3n')}</div></div></div>
-  <div class="card"><h2>${t('tr.mixT')}</h2><p class="cap">${t('tr.mixC',{y:L})}</p><div class="gbar">${gb.map(([g,v])=>v>0?`<div class="g${g}" style="flex:${v}" title="${g}: ${nf(v/tot*100,1)}%"><b>${g}</b> ${nf(v/tot*100,0)}%</div>`:'').join('')}</div><div class="glegend">${['A','B','C','D'].map(g=>`<span><i class="g${g}"></i>${g}: ${t('tr.g'+g)}</span>`).join('')}</div></div>
+  <div class="kp" style="margin-bottom:16px"><div class="k" data-drill="trust" role="button" tabindex="0"><div class="l">${t('tr.k1')} ${qi('trust')}</div><div class="v">${nf(wavg,0)}/100</div><div class="note">${t('tr.k1n')}</div></div><div class="k" data-drill="def" role="button" tabindex="0"><div class="l">${t('tr.k2')}</div><div class="v">${nf(defE/tot*100,0)}%</div><div class="note">${t('tr.k2n')}</div></div><div class="k" data-drill="implaus" role="button" tabindex="0"><div class="l">${t('tr.k3')}</div><div class="v">${implaus}</div><div class="note">${t('tr.k3n')}</div></div></div>
+  <div class="card"><h2>${t('tr.mixT')}</h2><p class="cap">${t('tr.mixC',{y:L})}</p><div class="gbar">${gb.map(([g,v])=>v>0?`<div class="g${g}" data-drill="grade:${g}" role="button" tabindex="0" style="flex:${v};cursor:pointer" title="${g}: ${nf(v/tot*100,1)}%"><b>${g}</b> ${nf(v/tot*100,0)}%</div>`:'').join('')}</div><div class="glegend">${['A','B','C','D'].map(g=>`<span><i class="g${g}"></i>${g}: ${t('tr.g'+g)}</span>`).join('')}</div></div>
   <div class="row2" style="margin-top:16px"><div class="card"><h2>${t('tr.mapT')}</h2><p class="cap">${t('tr.mapC')}</p><div id="trMap"></div></div>
    <div class="card"><h2>${t('tr.priT')}</h2><p class="cap">${t('tr.priC')}</p><ol class="prilist">${pri.slice(0,10).map(({a,v})=>`<li data-id="${a.id}"><div class="m"><b>${esc(shortName(a.n))}</b><span class="note">${esc(kind(a))} · ${fmtE(E(a))} ${uL()}</span></div><span class="grade sm g${TRUST[a.id].g}">${TRUST[a.id].g}</span><span class="mono">${TRUST[a.id].sc}</span></li>`).join('')}</ol><p class="note">${t('tr.priN')}</p></div></div>
   <div class="card" style="margin-top:16px"><div class="chead"><h2>${t('tr.tblT')}</h2><div class="toolbar"><input type="search" id="trQ" placeholder="${esc(t('findPlant'))}" value="${esc(TR.q)}"><select id="trSec"><option value="">${t('allSec')}</option>${Object.keys(SECTORS).map(k=>`<option value="${k}" ${TR.sec===k?'selected':''}>${secN(k)}</option>`).join('')}</select><select id="trG"><option value="">${t('tr.allG')}</option>${['A','B','C','D'].map(g=>`<option ${TR.g===g?'selected':''}>${g}</option>`).join('')}</select><button class="btn" id="trCsv">${t('exportCsv')}</button></div></div><div class="tablewrap" style="margin-top:10px"><table id="trTbl"></table></div></div>
@@ -1541,6 +1576,121 @@ function evDraw(){const L=store.get('ct.ev')||[];const c={tp:0,fp:0,fn:0,tn:0,in
    <div class="callout ${far==null?'':far<=0.2?'ok':'warn'}" style="margin-top:10px">${far==null?t('ev.h2na'):far<=0.2?t('ev.h2ok',{p:nf(far*100,0),n}):t('ev.h2no',{p:nf(far*100,0),n})}${n<30?' '+t('ev.small'):''}</div>`:`<div class="empty">${t('ev.empty')}</div>`;
   $('evLog').innerHTML=n?`<div class="tablewrap" style="max-height:420px"><table><thead><tr><th>${t('facility')}</th><th>${t('ev.per')}</th><th>${t('ev.src')}</th><th>${t('ev.sig')}</th><th>${t('ev.truth')}</th><th>${t('ev.out')}</th><th>${t('ev.note')}</th><th></th></tr></thead><tbody>${L.map((r,i)=>{const k=evClass(r);return `<tr style="cursor:default"><td>${esc(shortName(r.n))}</td><td>${esc(r.per)}</td><td>${r.src==='no2'?'NO2':r.src==='ct'?'Climate TRACE':esc(t('ev.other'))}</td><td>${t('ev.s.'+r.sig)}</td><td>${t('ev.s.'+r.truth)}</td><td><span class="chip ${k==='tp'||k==='tn'?'ok':k==='inc'?'':'bad'}">${t('ev.c.'+k)}</span></td><td>${esc(r.note)}</td><td><button class="mini-btn" data-del="${i}">×</button></td></tr>`;}).join('')}</tbody></table></div>`:`<div class="empty">${t('ev.empty')}</div>`;}
 
+// ---------- DRILL-DOWN LISTS ----------
+const E_=(a,y)=>emis(a,y)||0;
+function openList(cfg){
+  const y=cfg.y||LAST(),P=y-1;if(!TRUST)trustAll();
+  const base=(cfg.list||DATA.assets).filter(a=>cfg.keepZero||E_(a,y)>0);
+  const nat=DATA.assets.reduce((s,a)=>s+E_(a,y),0);
+  const st={q:'',sec:'',k:cfg.sort||'e',dir:cfg.dir||-1};
+  const cols=[['n',t('facility')],['g',t('group')],['e',t('emisY',{y})],['sh',t('dr.share')]].concat((cfg.cols||['chg','tr']).map(c=>c==='chg'?['chg',t('vsY',{y:P})]:c==='tr'?['tr',t('tr.score')]:c==='int'?['int',t('intensity')]:['cap',t('capacity')]));
+  const val=(a,k)=>k==='n'?a.n:k==='g'?grpOf(a.o):k==='e'?E_(a,y):k==='sh'?E_(a,y)/nat:k==='chg'?(emis(a,P)&&emis(a,y)?pct(emis(a,y),emis(a,P)):null):k==='tr'?TRUST[a.id].sc:k==='int'?a.ef:a.cap;
+  const cell=(a,k)=>{const v=val(a,k);if(k==='n')return `<b>${esc(a.n)}</b><div class="note">${esc(kind(a))}</div>`;if(k==='g')return esc(v);if(k==='e')return fmtE(v||null);if(k==='sh')return nfx(v*100,2)+'%';if(k==='chg')return v==null?'·':`<span class="delta ${dcls(v)}">${sgn(v)}</span>`;if(k==='tr')return `<span class="grade sm g${TRUST[a.id].g}">${TRUST[a.id].g}</span> ${v}`;if(k==='int')return v!=null?nfx(v,3):'·';return capTxt(a);};
+  const rowsNow=()=>{const q=fold(st.q.trim());const r=base.filter(a=>(!st.sec||a.s===st.sec)&&(!q||fold(a.n+' '+(a.o||'')+' '+grpOf(a.o)).includes(q)));r.sort((a,b)=>{const x=val(a,st.k),z=val(b,st.k);if(x==null)return 1;if(z==null)return -1;return (typeof x==='string'?x.localeCompare(z):x-z)*st.dir;});return r;};
+  $('modalHost').innerHTML=`<div class="scrim" id="dlScrim" style="z-index:44"></div><div class="modal dl" role="dialog" aria-label="${esc(cfg.title)}"><button class="close" id="dlClose" aria-label="${esc(t('close'))}">×</button>
+   <div class="crumbs">${t('dr.crumb')}</div><h2 style="margin:2px 40px 2px 0">${esc(cfg.title)}</h2>${cfg.sub?`<p class="note" style="margin:0 0 10px">${esc(cfg.sub)}</p>`:''}
+   <div class="dl-kpi" id="dlKpi"></div>
+   <div class="toolbar" style="margin:10px 0"><input type="search" id="dlQ" placeholder="${esc(t('findPlant'))}"><div class="chiprow" id="dlSec"><button data-s="" aria-pressed="true">${t('all')}</button>${Object.keys(SECTORS).filter(k=>base.some(a=>a.s===k)).map(k=>`<button data-s="${k}" aria-pressed="false">${secS(k)}</button>`).join('')}</div><span style="flex:1"></span><button class="btn" id="dlCsv">${t('exportCsv')}</button><button class="btn pri" id="dlEx">${t('dr.openEx')}</button></div>
+   <div class="tablewrap" style="max-height:60vh"><table id="dlTbl"></table></div><p class="note" style="margin-top:8px">${t('dr.note')}</p></div>`;
+  const draw=()=>{const r=rowsNow();const sum=r.reduce((s,a)=>s+E_(a,y),0);
+    $('dlKpi').innerHTML=`<span><b>${r.length}</b> ${t('facilities')}</span><span><b>${fmtE(sum)}</b> ${uL()}, ${y}</span><span><b>${nfx(sum/nat*100,1)}%</b> ${t('dr.ofNat')}</span>`;
+    $('dlTbl').innerHTML=`<thead><tr><th class="n">#</th>${cols.map(([k,l])=>`<th class="${k==='n'||k==='g'?'':'n'} sortable" data-k="${k}">${l}${st.k===k?(st.dir<0?' ↓':' ↑'):''}</th>`).join('')}</tr></thead><tbody>${r.map((a,i)=>`<tr data-id="${a.id}"><td class="n mono">${i+1}</td>${cols.map(([k])=>`<td class="${k==='n'||k==='g'?'':'n'}">${cell(a,k)}</td>`).join('')}</tr>`).join('')}</tbody><tfoot><tr><td></td><td><b>${t('dr.total')}</b></td><td></td><td class="n"><b>${fmtE(sum)}</b></td><td class="n"><b>${nfx(sum/nat*100,2)}%</b></td>${cols.slice(4).map(()=>'<td></td>').join('')}</tr></tfoot>`;};
+  draw();
+  const close=()=>{$('modalHost').innerHTML='';};$('dlClose').onclick=close;$('dlScrim').onclick=close;
+  $('dlQ').oninput=e=>{st.q=e.target.value;draw();};
+  $('dlSec').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.sec=b.dataset.s;$('dlSec').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();};
+  $('dlTbl').onclick=e=>{const h=e.target.closest('th[data-k]');if(h){const k=h.dataset.k;if(st.k===k)st.dir*=-1;else{st.k=k;st.dir=(k==='n'||k==='g')?1:-1;}draw();return;}const r=e.target.closest('tr[data-id]');if(r){close();openDetail(r.dataset.id);}};
+  $('dlCsv').onclick=()=>{const r=rowsNow();saveFile(slug(cfg.title).slice(0,60)+'-'+y+'.csv',['id,facility,sector,type,owner,group,emissions_'+y+'_t,share_pct,change_vs_'+P+'_pct,trust_score'].concat(r.map(a=>[a.id,csvQ(a.n),a.s,csvQ(a.t),csvQ(a.o),csvQ(grpOf(a.o)),Math.round(E_(a,y)),(E_(a,y)/nat*100).toFixed(3),val(a,'chg')!=null?val(a,'chg').toFixed(1):'',TRUST[a.id].sc].join(','))).join('\n'),'text/csv');};
+  $('dlEx').onclick=()=>{EXP.ids=new Set(rowsNow().map(a=>a.id));EXP.idsLabel=cfg.title;EXP.by='fac';close();if($('splash'))closeSplash('explorer');else show('explorer');};
+  document.addEventListener('keydown',function k(e){if(e.key==='Escape'&&$('dlClose')){close();document.removeEventListener('keydown',k);}});
+}
+function openDrill(key,y){
+  y=+y||LAST();const P=y-1;const all=DATA.assets.filter(a=>E_(a,y)>0);if(!TRUST)trustAll();
+  const [k,arg]=key.split(':');
+  const M={
+    all:()=>openList({title:t('dr.all',{y}),y}),
+    n:()=>openList({title:t('dr.n',{y,n:all.length}),y,sort:'n',dir:1}),
+    vs:()=>openList({title:t('dr.vs',{y,p:P}),sub:t('dr.vsS'),y,sort:'chg',cols:['chg','tr']}),
+    top10:()=>openList({title:t('dr.top10',{y}),y,list:all.slice().sort((a,b)=>E_(b,y)-E_(a,y)).slice(0,10)}),
+    sec:()=>openList({title:t('dr.sec',{s:secN(arg),y}),y,list:DATA.assets.filter(a=>a.s===arg),cols:['chg','cap','int']}),
+    id:()=>openDetail(arg),
+    coal:()=>openList({title:t('dr.coal',{y}),y,list:DATA.assets.filter(a=>a.s==='electricity-generation'&&/coal/.test(a.t)),cols:['chg','cap','int']}),
+    lowconf:()=>openList({title:t('dr.low'),y,list:DATA.assets.filter(a=>a.c==='low'||a.c==='very low'),sort:'tr',dir:1}),
+    trust:()=>openList({title:t('dr.trust'),y,sort:'tr',dir:1}),
+    grade:()=>openList({title:t('dr.grade',{g:arg,d:t('tr.g'+arg)}),y,list:DATA.assets.filter(a=>TRUST[a.id].g===arg),sort:'tr',dir:1}),
+    def:()=>openList({title:t('dr.def'),sub:t('tr.k2n'),y,list:DATA.assets.filter(a=>TRUST[a.id].fl.some(f=>f.k==='defAct'||f.k==='defEf'))}),
+    implaus:()=>openList({title:t('dr.impl'),sub:t('tr.k3n'),y,list:DATA.assets.filter(a=>TRUST[a.id].fl.some(f=>f.k==='efRange')),cols:['int','tr']}),
+    pareto:()=>{const l=all.slice().sort((a,b)=>E_(b,y)-E_(a,y));const tot=l.reduce((s,a)=>s+E_(a,y),0);let c=0;const h=l.filter(a=>{const r=c<tot/2;c+=E_(a,y);return r;});openList({title:t('dr.half',{n:h.length,y}),y,list:h});},
+    steel:()=>openList({title:t('dr.steel',{k:t('cat.'+arg)}),y,list:DATA.assets.filter(a=>a.s==='iron-and-steel'&&(arg==='bf'?a.t==='BF/BOF':arg==='mix'?/EAF,BF/.test(a.t):a.t!=='BF/BOF'&&!/EAF,BF/.test(a.t))),cols:['chg','cap','int']}),
+    ce:()=>openList({title:t('dr.ce',{v:nfx(+arg,2)}),y,list:DATA.assets.filter(a=>a.s==='cement'&&a.ef>0&&a.ef.toFixed(2)===arg),cols:['cap','int']}),
+    grp:()=>openList({title:arg,y,list:DATA.assets.filter(a=>grpOf(a.o)===arg),cols:['chg','tr']})};
+  (M[k]||M.all)();
+}
+document.addEventListener('click',e=>{const d=e.target.closest('[data-drill]');if(!d)return;e.preventDefault();e.stopPropagation();const go=()=>openDrill(d.dataset.drill,d.dataset.y);if($('splash')&&d.closest('#splash')){closeSplash(CUR);setTimeout(go,50);}else go();},true);
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('[data-drill]')){e.preventDefault();e.target.click();}});
+
+// ---------- DATA EXPLORER ----------
+const EXP={sec:new Set(Object.keys(SECTORS)),conf:new Set(['very high','high','medium','low','very low','']),grade:new Set(['A','B','C','D']),grp:'',q:'',by:'fac',m:'e',y0:null,y1:null,ids:null,idsLabel:'',sk:'last',sd:-1};
+const PAL=['var(--accent)','var(--elec)','var(--steel)','var(--cement)','var(--warn)','var(--muted)'];
+function exFiltered(){if(!TRUST)trustAll();const q=fold(EXP.q.trim());return DATA.assets.filter(a=>EXP.sec.has(a.s)&&EXP.conf.has(a.c||'')&&EXP.grade.has(TRUST[a.id].g)&&(!EXP.grp||grpOf(a.o)===EXP.grp)&&(!EXP.ids||EXP.ids.has(a.id))&&(!q||fold(a.n+' '+(a.o||'')+' '+grpOf(a.o)+' '+kind(a)).includes(q)));}
+function exRows(list,ys){
+  const keyOf=a=>EXP.by==='fac'?a.id:EXP.by==='sec'?a.s:EXP.by==='type'?kind(a):grpOf(a.o);
+  const lab=(k,a)=>EXP.by==='fac'?a.n:EXP.by==='sec'?secN(a.s):k;
+  const G=new Map();list.forEach(a=>{const k=keyOf(a);if(!G.has(k))G.set(k,{k,label:lab(k,a),sub:EXP.by==='fac'?kind(a):'',items:[],raw:{}});const g=G.get(k);g.items.push(a);});
+  const nat={};ys.forEach(y=>nat[y]=DATA.assets.reduce((s,a)=>s+E_(a,y),0));const allYs=years();
+  const rows=[...G.values()].map(g=>{allYs.forEach(y=>g.raw[y]=g.items.reduce((s,a)=>s+E_(a,y),0));g.v={};ys.forEach(y=>{const v=g.raw[y],p=g.raw[y-1];g.v[y]=EXP.m==='e'?(v||null):EXP.m==='share'?(v?v/nat[y]*100:null):(v&&p?pct(v,p):null);});return g;});
+  const sk=EXP.sk==='last'?ys.at(-1):EXP.sk;rows.sort((a,b)=>{if(sk==='label')return a.label.localeCompare(b.label)*EXP.sd;const x=a.v[sk],z=b.v[sk];if(x==null)return 1;if(z==null)return -1;return (x-z)*EXP.sd;});
+  return {rows,nat};}
+RENDER.explorer=function(){
+  const ys0=years();if(EXP.y0==null){EXP.y0=ys0[0];EXP.y1=ys0.at(-1);}const ys=ys0.filter(y=>y>=EXP.y0&&y<=EXP.y1);
+  const grps=[...new Set(DATA.assets.map(a=>grpOf(a.o)))].sort((a,b)=>{const ea=DATA.assets.filter(x=>grpOf(x.o)===a).reduce((s,x)=>s+x.e,0),eb=DATA.assets.filter(x=>grpOf(x.o)===b).reduce((s,x)=>s+x.e,0);return eb-ea;});
+  const cb=(set,val,lab,name)=>`<label class="ck"><input type="checkbox" data-set="${name}" value="${esc(val)}" ${set.has(val)?'checked':''}> ${lab}</label>`;
+  $('v-explorer').innerHTML=vhead(t('grp.explore'),t('nav.explorer'),t('ex.D'))+`<div class="exgrid"><aside class="card exf"><details ${innerWidth>860?'open':''}><summary><b>${t('ex.filters')}</b></summary>
+   <input type="search" id="exQ" placeholder="${esc(t('findPlant'))}" value="${esc(EXP.q)}" style="width:100%;margin:10px 0">
+   <h4>${t('sector')}</h4>${Object.keys(SECTORS).map(k=>cb(EXP.sec,k,secN(k),'sec')).join('')}
+   <h4>${t('group')}</h4><select id="exGrp" style="width:100%"><option value="">${t('all')}</option>${grps.map(g=>`<option ${EXP.grp===g?'selected':''}>${esc(g)}</option>`).join('')}</select>
+   <h4>${t('conf')}</h4>${['very high','high','medium','low','very low',''].filter(c=>DATA.assets.some(a=>(a.c||'')===c)).map(c=>cb(EXP.conf,c,confN(c),'conf')).join('')}
+   <h4>${t('tr.score')}</h4>${['A','B','C','D'].map(g=>cb(EXP.grade,g,g+': '+t('tr.g'+g),'grade')).join('')}
+   <button class="btn ghost" id="exReset" style="margin-top:12px;width:100%">${t('ex.reset')}</button></details></aside>
+   <div style="min-width:0"><div class="chiprow exchips" id="exChips"></div>
+    <div class="card"><div class="toolbar exbar"><label>${t('ex.by')}<select id="exBy">${[['fac','ex.byFac'],['sec','sector'],['type','type'],['grp','group']].map(([v,k])=>`<option value="${v}" ${EXP.by===v?'selected':''}>${t(k)}</option>`).join('')}</select></label>
+     <label>${t('ex.m')}<select id="exM">${[['e','ex.mE'],['share','ex.mS'],['chg','ex.mC']].map(([v,k])=>`<option value="${v}" ${EXP.m===v?'selected':''}>${t(k)}</option>`).join('')}</select></label>
+     <label>${t('ex.from')}<select id="exY0">${ys0.map(y=>`<option ${y===EXP.y0?'selected':''}>${y}</option>`).join('')}</select></label><label>${t('ex.to')}<select id="exY1">${ys0.map(y=>`<option ${y===EXP.y1?'selected':''}>${y}</option>`).join('')}</select></label>
+     <span style="flex:1"></span><button class="btn" id="exCsv">${t('exportCsv')}</button></div>
+     <div id="exChart" style="margin-top:12px"></div></div>
+    <div class="card" style="margin-top:16px"><p class="note" id="exCount" style="margin:0 0 8px"></p><div class="tablewrap" style="max-height:70vh"><table id="exTbl"></table></div><p class="note" style="margin-top:8px">${t('ex.note')}</p></div></div></div>`;
+  exDraw(ys);
+  const V=$('v-explorer');
+  V.onchange=e=>{const x=e.target;if(x.dataset.set){const s=EXP[x.dataset.set];x.checked?s.add(x.value):s.delete(x.value);}else if(x.id==='exGrp')EXP.grp=x.value;else if(x.id==='exBy'){EXP.by=x.value;EXP.sk='last';}else if(x.id==='exM'){EXP.m=x.value;}else if(x.id==='exY0'){EXP.y0=+x.value;if(EXP.y1<EXP.y0)EXP.y1=EXP.y0;}else if(x.id==='exY1'){EXP.y1=+x.value;if(EXP.y0>EXP.y1)EXP.y0=EXP.y1;}else return;RENDER.explorer();};
+  $('exQ').oninput=e=>{EXP.q=e.target.value;exDraw(ys);};
+  $('exReset').onclick=()=>{EXP.sec=new Set(Object.keys(SECTORS));EXP.conf=new Set(['very high','high','medium','low','very low','']);EXP.grade=new Set(['A','B','C','D']);EXP.grp='';EXP.q='';EXP.ids=null;EXP.idsLabel='';EXP.y0=null;RENDER.explorer();};
+  $('exChips').onclick=e=>{const b=e.target.closest('[data-clr]');if(!b)return;const k=b.dataset.clr;if(k==='ids'){EXP.ids=null;EXP.idsLabel='';}else if(k==='grp')EXP.grp='';else if(k==='q')EXP.q='';else if(k==='sec')EXP.sec=new Set(Object.keys(SECTORS));else if(k==='conf')EXP.conf=new Set(['very high','high','medium','low','very low','']);else if(k==='grade')EXP.grade=new Set(['A','B','C','D']);RENDER.explorer();};
+  $('exTbl').onclick=e=>{const h=e.target.closest('th[data-sk]');if(h){const k=h.dataset.sk==='label'?'label':+h.dataset.sk;if(EXP.sk===k||(EXP.sk==='last'&&k===ys.at(-1)))EXP.sd*=-1;else{EXP.sk=k;EXP.sd=k==='label'?1:-1;}exDraw(ys);return;}const r=e.target.closest('tr[data-k]');if(!r)return;if(EXP.by==='fac')openDetail(r.dataset.k);else{if(EXP.by==='sec')EXP.sec=new Set([r.dataset.k]);else if(EXP.by==='grp')EXP.grp=r.dataset.k;else{EXP.ids=new Set(exFiltered().filter(a=>kind(a)===r.dataset.k).map(a=>a.id));EXP.idsLabel=r.dataset.k;}EXP.by='fac';RENDER.explorer();}};
+  $('exCsv').onclick=()=>{const {rows}=exRows(exFiltered(),ys);const mU=EXP.m==='e'?'t_co2e':EXP.m==='share'?'share_pct':'change_pct';saveFile('data-explorer-'+EXP.by+'-'+EXP.m+'.csv',[[EXP.by==='fac'?'facility':EXP.by,...ys.map(y=>y+'_'+mU)].join(',')].concat(rows.map(r=>[csvQ(r.label),...ys.map(y=>r.v[y]==null?'':(EXP.m==='e'?Math.round(r.v[y]):r.v[y].toFixed(2)))].join(','))).join('\n'),'text/csv');};
+};
+function exDraw(ys){
+  const list=exFiltered();const {rows,nat}=exRows(list,ys);
+  const chips=[];if(EXP.ids)chips.push(['ids',EXP.idsLabel||t('ex.sel')]);if(EXP.sec.size<Object.keys(SECTORS).length)chips.push(['sec',[...EXP.sec].map(secS).join(', ')||t('na')]);if(EXP.grp)chips.push(['grp',EXP.grp]);if(EXP.conf.size<6)chips.push(['conf',t('conf')+': '+[...EXP.conf].map(confN).join(', ')]);if(EXP.grade.size<4)chips.push(['grade',t('tr.score')+': '+[...EXP.grade].join(', ')]);if(EXP.q.trim())chips.push(['q','“'+EXP.q.trim()+'”']);
+  $('exChips').innerHTML=chips.length?`<span class="note">${t('ex.applied')}:</span>`+chips.map(([k,l])=>`<button data-clr="${k}" title="${esc(t('ex.remove'))}">${esc(l)} ×</button>`).join(''):`<span class="note">${t('ex.none')}</span>`;
+  const fmtV=v=>v==null?'·':EXP.m==='e'?fmtE(v):EXP.m==='share'?nfx(v,2)+'%':`<span class="delta ${dcls(v)}">${sgn(v)}</span>`;
+  const tot={};ys.forEach(y=>{const s=list.reduce((q,a)=>q+E_(a,y),0),p=list.reduce((q,a)=>q+E_(a,y-1),0);tot[y]=EXP.m==='e'?s:EXP.m==='share'?s/nat[y]*100:(p?pct(s,p):null);});
+  $('exCount').textContent=t('ex.count',{n:rows.length,f:list.length,u:EXP.m==='e'?uL():EXP.m==='share'?t('ex.mS'):t('ex.mC')});
+  const sk=EXP.sk==='last'?ys.at(-1):EXP.sk;
+  $('exTbl').innerHTML=`<thead><tr><th class="sortable" data-sk="label">${EXP.by==='fac'?t('facility'):EXP.by==='sec'?t('sector'):EXP.by==='type'?t('type'):t('group')}${sk==='label'?(EXP.sd<0?' ↓':' ↑'):''}</th>${EXP.by!=='fac'?`<th class="n">${t('facilities')}</th>`:''}${ys.map(y=>`<th class="n sortable" data-sk="${y}">${y}${sk===y?(EXP.sd<0?' ↓':' ↑'):''}</th>`).join('')}<th>${t('trend')}</th></tr></thead><tbody>${rows.map(r=>`<tr data-k="${esc(r.k)}"><td><b>${esc(r.label)}</b>${r.sub?`<div class="note">${esc(r.sub)}</div>`:''}</td>${EXP.by!=='fac'?`<td class="n">${r.items.length}</td>`:''}${ys.map(y=>`<td class="n">${fmtV(r.v[y])}</td>`).join('')}<td>${spark(ys.map(y=>r.raw[y]||null),'var(--accent)',90,26)}</td></tr>`).join('')}</tbody><tfoot><tr><td><b>${t('dr.total')}</b></td>${EXP.by!=='fac'?`<td class="n"><b>${list.length}</b></td>`:''}${ys.map(y=>`<td class="n"><b>${fmtV(tot[y])}</b></td>`).join('')}<td></td></tr></tfoot>`;
+  // chart: top 6 rows + total line (for e/share)
+  const W=760,H=250,L=58,R=150,T=14,B=28;const top=rows.slice(0,6);const series=top.map((r,i)=>({lab:r.label,c:PAL[i],v:ys.map(y=>r.v[y])}));
+  const vals=series.flatMap(s=>s.v).filter(v=>v!=null);if(!vals.length||ys.length<2){$('exChart').innerHTML=`<div class="empty">${t(ys.length<2?'ex.oneYear':'noResult')}</div>`;return;}
+  let mn=Math.min(0,...vals),mx=Math.max(...vals)*1.08||1;const X=i=>L+(W-L-R)*(ys.length===1?0.5:i/(ys.length-1)),Yv=v=>T+(H-T-B)*(1-(v-mn)/(mx-mn));
+  const tk=niceTicks(mx,4).filter(v=>v>=mn);const fT=v=>EXP.m==='e'?(S.unit==='t'?nf(v,0):nf(v/UNIT[S.unit].d,1)):nf(v,0)+'%';
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(t('nav.explorer'))}">${axisY(L,R,Yv,tk,fT,W)}`;
+  if(mn<0)s+=`<line x1="${L}" x2="${W-R}" y1="${Yv(0)}" y2="${Yv(0)}" stroke="var(--muted)"/>`;
+  ys.forEach((y,i)=>{s+=`<text x="${X(i)}" y="${H-8}" font-size="11" text-anchor="middle" fill="var(--muted)" class="mono">${y}</text>`;});
+  const ends=[];series.forEach(se=>{const pts=se.v.map((v,i)=>v==null?null:[X(i),Yv(v)]);let d='',on=false;pts.forEach(p=>{if(!p){on=false;return;}d+=(on?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1);on=true;});s+=`<path d="${d}" fill="none" stroke="${se.c}" stroke-width="2.2"/>`+pts.filter(Boolean).map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="${se.c}"/>`).join('');const lp=pts.filter(Boolean).at(-1);if(lp)ends.push({y:lp[1],c:se.c,lab:se.lab});});
+  ends.sort((a,b)=>a.y-b.y);for(let i=1;i<ends.length;i++)if(ends[i].y-ends[i-1].y<14)ends[i].y=ends[i-1].y+14;
+  ends.forEach(e2=>{const lb=e2.lab.length>22?e2.lab.slice(0,21)+'…':e2.lab;s+=`<text x="${W-R+8}" y="${e2.y+4}" font-size="11" fill="${e2.c}" font-weight="600">${esc(lb)}</text>`;});
+  $('exChart').innerHTML=s+`</svg><p class="note">${t('ex.chartN',{n:top.length})}</p>`;
+}
+
 // ---------- splash launcher ----------
 function openSplash(step){
   if(step==='welcome')return openWelcome();stopGlobe();
@@ -1552,7 +1702,7 @@ function openSplash(step){
     <div class="stop"><div class="brand"><span class="logo"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="3.2" fill="#5fe0b8"/><ellipse cx="9" cy="9" rx="8" ry="3.4" fill="none" stroke="#9ee6cf" stroke-width="1.2" transform="rotate(-25 9 9)"/></svg></span><span>${t('brand')}</span></div>
      <div class="lang" role="group" aria-label="Language" id="spLang"><button data-lang="vi" aria-pressed="${LANG==='vi'}">VI</button><button data-lang="en" aria-pressed="${LANG==='en'}">EN</button></div></div>
     <div><div class="eyebrow"><span class="live">${t('eyeLive')}</span><span>Climate TRACE · ${years()[0]}${LANG==='en'?' to ':' đến '}${L}</span></div><h1>${t('heroTitle')}</h1><p class="lede">${t('sp.lede')}</p></div>
-    <div class="sst"><div><span>${t('hs.total',{y:L})}</span><b>${nfx(tot/1e6,1)}</b><span>${t('u.Mt')}</span></div><div><span>${t('hs.n')}</span><b>${n}</b><span>${t('facilities')}</span></div><div><span>${t('sp.sec')}</span><b>3</b><span>${Object.keys(SECTORS).map(secS).join(', ')}</span></div><div><span>${t('sp.yrs')}</span><b>${years().length}</b><span>${years()[0]}${LANG==='en'?' to ':' đến '}${L}</span></div></div>
+    <div class="sst"><div data-drill="all" role="button" tabindex="0"><span>${t('hs.total',{y:L})}</span><b>${nfx(tot/1e6,1)}</b><span>${t('u.Mt')}</span></div><div data-drill="n" role="button" tabindex="0"><span>${t('hs.n')}</span><b>${n}</b><span>${t('facilities')}</span></div><div><span>${t('sp.sec')}</span><b>3</b><span>${Object.keys(SECTORS).map(secS).join(', ')}</span></div><div><span>${t('sp.yrs')}</span><b>${years().length}</b><span>${years()[0]}${LANG==='en'?' to ':' đến '}${L}</span></div></div>
     <div><div class="sgl">${t('sp.pick')}</div></div>
     ${['explore','tools','ref'].map(g=>`<div><div class="sgl">${t('grp.'+g)}</div><div class="tiles">${grp(g)}</div></div>`).join('')}
     <div class="sfoot"><span>${t('footL')}</span><span>${t('copyS')} · ${t('sp.hint')}</span></div>
@@ -1580,7 +1730,7 @@ function openWelcome(){
     <div class="lang" role="group" aria-label="Language" id="wLang"><button data-lang="vi" aria-pressed="${LANG==='vi'}">VI</button><button data-lang="en" aria-pressed="${LANG==='en'}">EN</button></div></div>
    <div class="wgrid"><div class="wglobe"><canvas id="wGlobe" aria-label="${esc(t('w.globe'))}" role="img"></canvas><div class="wtag" id="wTag"><i></i>${t('w.tag',{n})}</div></div>
     <div class="wbox"><div class="hi"><span class="dot"></span><span id="wHi">${t('w.hi')}</span></div><h1>${t('w.title')}</h1><p>${t('w.lede')}</p>
-     <div class="wstats"><div><b data-to="${tot/1e6}" data-d="1">0</b><span>${t('u.Mt')}, ${L}</span></div><div><b data-to="${n}" data-d="0">0</b><span>${t('w.plants')}</span></div><div><b data-to="${years().length}" data-d="0">0</b><span>${t('w.years')}</span></div></div>
+     <div class="wstats"><div data-drill="all" role="button" tabindex="0"><b data-to="${tot/1e6}" data-d="1">0</b><span>${t('u.Mt')}, ${L}</span></div><div data-drill="n" role="button" tabindex="0"><b data-to="${n}" data-d="0">0</b><span>${t('w.plants')}</span></div><div><b data-to="${years().length}" data-d="0">0</b><span>${t('w.years')}</span></div></div>
      <div class="wact"><button class="cta" id="wGo"><span>${t('w.go')}</span><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h11M10 4.5L14.5 9 10 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="kb">${t('w.kb')}</span></div></div></div>
    <div class="wcopy">${t('copyS')}</div><div class="marq" aria-hidden="true"><div>${chipRow}${chipRow}</div></div></div></div>`;
   document.documentElement.style.overflow='hidden';
