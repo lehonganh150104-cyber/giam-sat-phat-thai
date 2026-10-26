@@ -541,6 +541,9 @@ main [id]{scroll-margin-top:calc(var(--abh,52px) + 60px)}
 .sth[open]{border-color:var(--accent)}.sth[open] summary{color:var(--fg)}.sth[open] summary .chev{transform:rotate(90deg)}
 .sthi{padding:0 6px 8px;display:flex;flex-direction:column}
 .sthi .thi{font-size:13.5px;padding:8px 10px}.sthi .thi:hover{background:var(--panel)}
+
+.thl,.thr,.hpb,.side .sb{overscroll-behavior:contain}
+.thm.pop .thg{min-height:0}
 </style></head><body><div class="appbar" id="appbar">
     <div class="in topbar">
       <div class="brand"><span class="logo"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="3.2" fill="#5fe0b8"/><ellipse cx="9" cy="9" rx="8" ry="3.4" fill="none" stroke="#9ee6cf" stroke-width="1.2" transform="rotate(-25 9 9)"/></svg></span><span id="brandName"></span></div><div class="abnav"><button class="pga ab" id="abBack" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="pga ab" id="abFwd" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="abtitle" id="abTitle"></span></div>
@@ -2020,7 +2023,10 @@ function openThemes(){
   $('moreHost').innerHTML=`<div class="scrim" id="moreScrim"></div><div class="thm ${mob?'sheet':'pop'}" role="dialog" aria-label="${esc(t('allSections'))}" ${mob?'':`style="top:${Math.max(8,top+6)}px"`}>
     <div class="thh"><b>${t('allSections')}</b><span class="note">${t('th.hint')}</span><button class="close" id="thClose" aria-label="${esc(t('close'))}">×</button></div>
     <div class="thg"><div class="thl" role="tablist">${left}</div><div class="thr" id="thR"></div></div></div>`;
-  const close=()=>{$('moreHost').innerHTML='';document.removeEventListener('keydown',esc_);const b=$('thBtn');if(b)b.setAttribute('aria-expanded','false');};
+  const pop=$('moreHost').querySelector('.thm.pop');
+  const place=()=>{if(!pop||!pop.isConnected)return;const n=document.querySelector('nav.tabs');const ab=$('appbar');const b=Math.max(n&&n.offsetParent?n.getBoundingClientRect().bottom:0,ab?ab.getBoundingClientRect().bottom:0);const tp=Math.max(8,Math.min(b+6,innerHeight-360));pop.style.top=tp+'px';pop.style.maxHeight=Math.max(300,innerHeight-tp-16)+'px';};
+  place();addEventListener('scroll',place,{passive:true});addEventListener('resize',place);
+  const close=()=>{removeEventListener('scroll',place);removeEventListener('resize',place);$('moreHost').innerHTML='';document.removeEventListener('keydown',esc_);const b=$('thBtn');if(b)b.setAttribute('aria-expanded','false');};
   const esc_=e=>{if(e.key==='Escape')close();};document.addEventListener('keydown',esc_);
   const tb=$('thBtn');if(tb)tb.setAttribute('aria-expanded','true');
   let acts=[];
