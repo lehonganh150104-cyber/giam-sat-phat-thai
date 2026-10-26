@@ -417,6 +417,42 @@ th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--accent
 .ck{display:flex;align-items:center;gap:8px;font-size:13px;padding:3px 0;cursor:pointer}
 .exchips{margin-bottom:10px;align-items:center}
 .exbar label{display:flex;flex-direction:column;gap:3px;font-size:11.5px;color:var(--muted)}
+
+/* ---- directory & profile (Data360 style) ---- */
+.dirhead{padding:6px 0 14px}.dirhead h1{font-size:clamp(28px,4vw,40px);margin:4px 0 6px;letter-spacing:-.02em}.dirhead p{color:var(--muted);margin:0;max-width:70ch}
+.dirstats{display:flex;flex-wrap:wrap;gap:6px 20px;margin:14px 0;font-size:14px;color:var(--muted)}.dirstats b{color:var(--fg);font-size:18px;font-family:var(--mono)}.dirstats .lk{cursor:pointer;color:var(--accent)}
+.dirtabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px}
+.dirtabs button{border:0;background:none;font:inherit;font-size:14px;font-weight:600;color:var(--fg);padding:8px 14px;border-radius:8px;cursor:pointer}
+.dirtabs button[aria-selected="true"]{background:var(--accent);color:#fff}
+.dirbody{margin-top:14px}
+.letters{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin:16px 0 6px;max-width:720px}
+.letters button{border:0;background:none;font:inherit;font-weight:600;font-size:15px;padding:8px 0;border-radius:8px;cursor:pointer;color:var(--fg)}
+.letters button[aria-pressed="true"]{background:var(--accent);color:#fff}.letters button:disabled{color:var(--faint);opacity:.45;cursor:default}
+.dgrp{margin-top:20px}.dgrp h3{font-size:22px;margin:0 0 8px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.dgrp h3 .note{font-size:12px;font-weight:400}
+.dcols{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:4px 24px}
+.dlink{display:block;padding:7px 0;color:var(--accent);text-decoration:none;font-size:15px;border-bottom:1px solid var(--line2)}.dlink:hover{text-decoration:underline}
+.dlink small{display:block;color:var(--muted);font-size:12px;text-decoration:none}
+.phero{background:linear-gradient(135deg,var(--hero1),var(--hero2));color:var(--herofg);border-radius:16px;padding:22px clamp(16px,3vw,32px) 26px}
+.pcrumb{font-size:14px;color:var(--heromuted)}.pcrumb a{color:var(--herofg);text-decoration:none}.pcrumb a:hover{text-decoration:underline}
+.pk{margin-top:18px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--heromuted);font-weight:700}
+.phero h1{font-size:clamp(26px,4vw,42px);margin:4px 0 8px;letter-spacing:-.02em;text-wrap:balance}
+.pcount{font-size:15px}.pcount span{opacity:.4;margin:0 8px}
+.pfacts{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px 24px;margin-top:20px}
+.pfacts span{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--heromuted);font-weight:700}.pfacts b{font-size:17px;display:block;margin-top:3px}
+.pjump{margin:16px 0 4px;font-size:14px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}.pjump a{color:var(--accent)}.pjump span{color:var(--faint)}
+.psec{font-size:24px;margin:18px 0 10px}
+.igrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+@media (max-width:420px){.igrid{grid-template-columns:1fr}}
+.icard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.icard h3{margin:0;font-size:15.5px}
+.ibody{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.iv{font-size:30px;font-weight:700;color:var(--accent);font-family:var(--mono);line-height:1.1}.iv small{font-size:14px;color:var(--muted)}
+.iu{color:var(--accent);font-size:13px;max-width:22ch}.iw{font-size:12.5px;color:var(--muted)}
+.isp{flex:1;min-width:150px;display:flex;justify-content:flex-end}
+.srcl{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line2);padding-top:8px;margin-top:auto}.srcl a{color:var(--accent)}
+.bench .bl{position:relative;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--ok-soft),var(--warn-soft),var(--bad-soft));margin:8px 0 4px}
+.bench .me,.bench .md{position:absolute;top:-4px;width:3px;height:16px;border-radius:2px;transform:translateX(-50%)}.bench .me{background:var(--fg)}.bench .md{background:var(--muted);opacity:.6}
+.trl{margin:4px 0 0;padding-left:18px;font-size:12.5px}.trl li.bad{color:var(--bad)}.trl li.warn{color:var(--warn)}.trl li.info{color:var(--muted)}
 </style></head><body><header class="hero">
   <svg class="orbit" viewBox="0 0 620 620" aria-hidden="true"><g fill="none" stroke="#7fdcc0" stroke-opacity=".35"><ellipse cx="310" cy="310" rx="300" ry="120" transform="rotate(-24 310 310)"/><ellipse cx="310" cy="310" rx="240" ry="90" transform="rotate(-24 310 310)" stroke-dasharray="3 6"/><circle cx="310" cy="310" r="150" stroke-opacity=".18"/></g><circle cx="560" cy="200" r="4" fill="#9ee6cf"/><circle cx="120" cy="420" r="3" fill="#9ee6cf" fill-opacity=".6"/></svg>
   <div class="in">
@@ -444,7 +480,9 @@ th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--accent
   <section id="v-owners" class="view" hidden></section>
   <section id="v-list" class="view" hidden></section>
   <section id="v-trust" class="view" hidden></section>
+  <section id="v-directory" class="view" hidden></section>
   <section id="v-explorer" class="view" hidden></section>
+  <section id="v-profile" class="view" hidden></section>
   <section id="v-inventory" class="view" hidden></section>
   <section id="v-check" class="view" hidden></section>
   <section id="v-cbam" class="view" hidden></section>
@@ -543,6 +581,28 @@ const T={
 "ex.from":["Từ năm","From"],"ex.to":["Đến năm","To"],"ex.applied":["Đang lọc","Filters applied"],"ex.none":["Chưa lọc, đang xem toàn bộ 127 cơ sở","No filters, showing all 127 sites"],"ex.remove":["Bỏ bộ lọc này","Remove this filter"],"ex.sel":["Danh sách đã chọn","Selected list"],
 "ex.count":["{n} dòng từ {f} cơ sở · đơn vị: {u}","{n} rows from {f} sites · unit: {u}"],"ex.note":["Số liệu Climate TRACE; năm ghi 0 hiển thị là chưa ghi nhận. Tỷ trọng tính trên tổng ba ngành của năm đó.","Climate TRACE data; years recorded as 0 show as not recorded. Share is of the three-sector total for that year."],
 "ex.chartN":["Biểu đồ vẽ {n} dòng đầu của bảng theo thứ tự đang sắp xếp.","The chart draws the first {n} rows of the table in the current sort order."],"ex.oneYear":["Chọn ít nhất hai năm để vẽ xu hướng.","Pick at least two years to draw a trend."],
+"nav.directory":["Danh bạ cơ sở","Facility directory"],"nav.directory.d":["Tra theo tên A đến Z, ngành, vùng, tập đoàn; mỗi cơ sở có trang hồ sơ riêng","Browse A to Z, by sector, region, group; each site has its own profile page"],
+"dir.D":["Mỗi cơ sở có một trang hồ sơ với các chỉ tiêu, biểu đồ theo năm và nguồn dữ liệu ghi rõ ngày cập nhật.","Each site has a profile page with indicators, yearly charts and sources with update dates."],
+"dir.sectors":["ngành","sectors"],"dir.owners":["chủ sở hữu, tập đoàn","owners and groups"],"dir.sources":["nguồn dữ liệu","data sources"],
+"dir.byName":["Theo tên","By name"],"dir.bySec":["Theo ngành","By sector"],"dir.byReg":["Theo vùng","By region"],"dir.byGrp":["Theo tập đoàn","By group"],"dir.byGrade":["Theo độ tin cậy","By trust grade"],
+"dir.grade":["Hạng {g}: {d}","Grade {g}: {d}"],"dir.reg":["Vùng","Region"],
+"reg.n":["Miền Bắc","North"],"reg.c":["Miền Trung","Central"],"reg.s":["Miền Nam","South"],"reg.note":["Chia vùng gần đúng theo vĩ độ: Bắc từ 19,8°B, Trung từ 12,4° đến 19,8°B, Nam dưới 12,4°B.","Regions approximated by latitude: North from 19.8°N, Central 12.4 to 19.8°N, South below 12.4°N."],
+"src.T":["Nguồn dữ liệu","Data sources"],"src.C":["{n} nguồn, mỗi nguồn ghi rõ nội dung, ngày cập nhật và giấy phép.","{n} sources, each with content, update date and licence."],
+"src.src":["Nguồn","Source"],"src.what":["Cung cấp","Provides"],"src.upd":["cập nhật","updated"],"src.lic":["Giấy phép","Licence"],
+"src.ct":["Phát thải theo năm, sản lượng, công suất, hệ số phát thải, mức tin cậy","Yearly emissions, output, capacity, emission factor, confidence"],
+"src.s5p":["Mật độ cột NO2 trung bình tháng quanh nhà máy","Monthly mean NO2 column around the plant"],"src.s5pOff":["chưa kết nối khóa Copernicus","Copernicus key not connected yet"],
+"src.ipcc":["Nhiệt trị và hệ số phát thải mặc định của nhiên liệu, quá trình","Default heating values and emission factors"],
+"src.gridN":["Hệ số lưới điện Việt Nam","Vietnam grid emission factor"],"src.grid":["Hệ số đang dùng: {g} t CO2/MWh (sửa ở Cài đặt)","Factor in use: {g} t CO2/MWh (edit in Settings)"],
+"src.cbam":["Lộ trình, mức chuẩn, giá trị mặc định CBAM","CBAM phase-in, benchmarks, default values"],"src.trN":["Quy tắc điểm tin cậy của nền tảng","Platform trust-score rules"],"src.tr":["Điểm tin cậy và cờ cảnh báo từng cơ sở","Trust score and flags per site"],
+"src.ne":["Đường biên và bản đồ nền","Borders and base map"],
+"src.lic.cop":["Dữ liệu mở Copernicus, ghi nguồn","Copernicus open data, attribution"],"src.lic.ref":["Tài liệu tham chiếu","Reference document"],"src.lic.set":["Giá trị cài đặt, có thể sửa","Configurable setting"],"src.lic.own":["Của nền tảng, © Lê Hồng Anh","Platform's own, © Le Hong Anh"],"src.lic.pd":["Phạm vi công cộng","Public domain"],
+"pf.open":["Hồ sơ đầy đủ","Full profile"],"pf.kind":["Cơ sở phát thải","Emitting facility"],"pf.inds":["chỉ tiêu","indicators"],"pf.jump":["Đi tới","Jump to"],"pf.jInd":["Chỉ tiêu nổi bật","Featured indicators"],"pf.jPeer":["Cơ sở cùng ngành, quy mô gần nhất","Similar-size sites in the sector"],"pf.jDetail":["Bảng chi tiết nhanh","Quick detail panel"],
+"pf.iE":["Phát thải khí nhà kính (CO2e)","Greenhouse gas emissions (CO2e)"],"pf.iC":["Thay đổi phát thải so năm trước","Emission change on previous year"],"pf.iS":["Tỷ trọng trong ngành {s}","Share of {s} sector"],"pf.iR":["Xếp hạng phát thải trong ngành {s}","Emission rank within {s}"],
+"pf.uPct":["Phần trăm thay đổi mỗi năm","Percentage change per year"],"pf.uShare":["Phần trăm phát thải của ngành","Percent of sector emissions"],"pf.uRank":["Thứ hạng trên {n} cơ sở (1 là lớn nhất)","Rank out of {n} sites (1 = largest)"],"pf.rkN":["Đường đi lên nghĩa là thứ hạng cao hơn (phát thải lớn hơn).","An upward line means a higher rank (larger emitter)."],
+"pf.bench":["Vạch đen: cơ sở này; vạch xám: trung vị {m} của {n} cơ sở cùng loại.","Black mark: this site; grey: median {m} of {n} similar sites."],
+"pf.uCf":["Điện thực phát so với tối đa","Actual versus maximum generation"],"pf.uUtil":["Sản lượng so với công suất","Output versus capacity"],"pf.uCost":["Kịch bản {u} USD/t, miễn phí {f}%","Scenario {u} USD/t, {f}% free"],
+"pf.no2None":["Sẽ có khi kết nối khóa Copernicus trên GitHub.","Available once the Copernicus key is set on GitHub."],
+"pf.srcC":["Trang này dùng {n} nguồn; danh sách đầy đủ của nền tảng bên dưới.","This page uses {n} sources; the platform's full list is below."],"pf.peerC":["Cùng ngành {s}, phát thải gần nhất với cơ sở này.","Same {s} sector, closest in emissions."],
 // ---- nav ----
 "grp.explore":["Khám phá","Explore"],"grp.tools":["Công cụ","Tools"],"grp.ref":["Tra cứu","Reference"],
 "nav.home":["Tổng quan","Overview"],"nav.home.d":["Bản đồ, số liệu chính, nhận định nhanh","Map, key figures, quick insights"],
@@ -928,6 +988,7 @@ const VIEWS=[
   {id:'owners',g:'explore',k:'nav.owners',ico:'M3 17V7l7-4 7 4v10M7 17v-4h6v4'},
   {id:'list',g:'explore',k:'nav.list',ico:'M4 5h12M4 10h12M4 15h12'},
   {id:'trust',g:'explore',k:'nav.trust',ico:'M10 2l6 3v5c0 4-3 7-6 8-3-1-6-4-6-8V5zM7 10l2 2 4-4'},
+  {id:'directory',g:'explore',k:'nav.directory',ico:'M4 3h10a2 2 0 012 2v12H6a2 2 0 01-2-2zM7 7h6M7 10h6M7 13h4'},
   {id:'explorer',g:'explore',k:'nav.explorer',ico:'M3 4h14M3 4v12h14M7 12V9M11 12V6M15 12v-4'},
   {id:'inventory',g:'tools',k:'nav.inventory',ico:'M5 3h10v14H5zM8 7h4M8 10h4M8 13h2'},
   {id:'check',g:'tools',k:'nav.check',ico:'M4 10l4 4 8-9'},
@@ -941,15 +1002,15 @@ const icon=(d,s=18)=>`<svg width="${s}" height="${s}" viewBox="0 0 20 20" aria-h
 function buildNav(){
   let last='';$('tabs').innerHTML=VIEWS.map(v=>{let h='';if(v.g!==last){h=`<span class="grp-l">${t('grp.'+v.g)}</span>`;last=v.g;}return h+`<button role="tab" data-v="${v.id}" aria-selected="${v.id===CUR}">${t(v.k)}</button>`;}).join('');
   const bn=[['home','nav.home'],['list','nav.listS'],['inventory','nav.toolsS'],['lookup','nav.lookup'],['more','nav.more']];
-  $('bnav').innerHTML=bn.map(([id,k])=>{const v=VIEWS.find(x=>x.id===id);const cur=id===CUR||(id==='inventory'&&['inventory','check','cbam','evidence'].includes(CUR))||(id==='more'&&['analysis','owners','trust','explorer','storage','settings'].includes(CUR));return `<button data-v="${id}" aria-current="${cur}">${icon(v?v.ico:'M4 6h12M4 10h12M4 14h12',20)}<span>${t(k)}</span></button>`;}).join('');
+  $('bnav').innerHTML=bn.map(([id,k])=>{const v=VIEWS.find(x=>x.id===id);const cur=id===CUR||(id==='inventory'&&['inventory','check','cbam','evidence'].includes(CUR))||(id==='more'&&['analysis','owners','trust','directory','explorer','storage','settings','profile'].includes(CUR));return `<button data-v="${id}" aria-current="${cur}">${icon(v?v.ico:'M4 6h12M4 10h12M4 14h12',20)}<span>${t(k)}</span></button>`;}).join('');
   $('hambLbl').textContent=t('catalog');$('homeLbl').textContent=t('sp.btn');$('palLbl').textContent=t('search');
   document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===LANG));
   $('curSel').value=S.cur;
 }
 function show(v,opts={}){
-  if(!VIEWS.find(x=>x.id===v))v='home';CUR=v;
-  VIEWS.forEach(x=>{const el=$('v-'+x.id);if(x.id===v){el.hidden=false;el.classList.remove('view');void el.offsetWidth;el.classList.add('view');}else el.hidden=true;});
-  buildNav();store.set('ct.view',v);try{history.replaceState(null,'','#'+v)}catch(e){}
+  const ALLV=[...VIEWS,{id:'profile'}];if(!ALLV.find(x=>x.id===v))v='home';CUR=v;
+  ALLV.forEach(x=>{const el=$('v-'+x.id);if(x.id===v){el.hidden=false;el.classList.remove('view');void el.offsetWidth;el.classList.add('view');}else el.hidden=true;});
+  buildNav();store.set('ct.view',v);try{if(v!=='profile')history.replaceState(null,'','#'+v)}catch(e){}
   (RENDER[v]||(()=>{}))();
   if(!opts.noScroll){const n=document.querySelector('nav.tabs');const top=n&&n.offsetParent?n.offsetTop:0;if(window.scrollY>top)window.scrollTo({top,behavior:'smooth'});}
 }
@@ -1255,7 +1316,7 @@ function openDetail(id){
   <h4>${t('d.ask')}</h4><ul class="note" style="margin:4px 0 0;padding-left:18px">${checks.map(c=>`<li>${c}</li>`).join('')}</ul>
   <h4>${t('d.note')}</h4><textarea class="note-in" id="dNote" placeholder="${esc(t('d.notePh'))}">${esc(note)}</textarea><p class="note" id="dNoteS"></p>
   <h4>${t('d.near')}</h4><div class="bars" id="nearBars">${near.map(b=>`<div class="row" data-id="${b.id}"><div class="rk">·</div><div style="min-width:0"><div class="nm">${esc(b.n)}</div><div class="track"><div class="fill" style="width:${Math.min(100,b.e/Math.max(a.e,...near.map(z=>z.e))*100).toFixed(0)}%;background:${SECTORS[b.s].col}"></div></div></div><div class="val">${fmtE(b.e)}</div></div>`).join('')}</div>
-  <div class="toolbar" style="margin-top:16px"><button class="btn pri" id="dKk">${t('nav.inventory')}</button><button class="btn" id="dChk">${t('nav.check')}</button>${!isP?`<button class="btn" id="dCb">${t('nav.cbam')}</button>`:''}<button class="btn" id="dAdd">${CMP.has(a.id)?t('cmpRemove'):t('cmpAdd')}</button><button class="btn" id="dDl">${t('d.dl')}</button></div>
+  <div class="toolbar" style="margin-top:16px"><button class="btn pri" id="dKk">${t('nav.inventory')}</button><button class="btn" id="dChk">${t('nav.check')}</button>${!isP?`<button class="btn" id="dCb">${t('nav.cbam')}</button>`:''}<button class="btn" id="dAdd">${CMP.has(a.id)?t('cmpRemove'):t('cmpAdd')}</button><button class="btn pri" id="dProf">${t('pf.open')}</button><button class="btn" id="dDl">${t('d.dl')}</button></div>
   <p class="note">${t('d.disc')}</p></aside>`;
   const close=()=>{$('drawerHost').innerHTML='';openDetail.cur=null;};
   $('dClose').onclick=close;$('scrim').onclick=close;
@@ -1267,7 +1328,7 @@ function openDetail(id){
   $('dChk').onclick=()=>{close();CHK.fac=a.id;show('check');};
   if($('dCb'))$('dCb').onclick=()=>{close();CB.fac=a.id;CB.dir=null;CB.elec=null;show('cbam');};
   $('dAdd').onclick=()=>{if(CMP.has(a.id))CMP.delete(a.id);else if(CMP.size<5)CMP.add(a.id);else toast(t('cmpMax'));$('dAdd').textContent=CMP.has(a.id)?t('cmpRemove'):t('cmpAdd');renderCmpBar();};
-  $('dDl').onclick=()=>downloadProfile(a);
+  $('dProf').onclick=()=>openProfile(a.id);$('dDl').onclick=()=>downloadProfile(a);
 }
 function no2Chart(rows){const W=560,H=150,L=44,R=14,T=12,B=26;const mx=Math.max(...rows.map(r=>r.v))*1.15||1;const x=i=>L+(W-L-R)*(i/Math.max(1,rows.length-1)),y=v=>T+(H-T-B)*(1-v/mx);
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="NO2">${axisY(L,R,y,niceTicks(mx,3),v=>nf(v*1e6,0),W)}<path d="M${rows.map((r,i)=>x(i)+','+y(r.v)).join('L')}" fill="none" stroke="var(--accent)" stroke-width="2"/>${rows.map((r,i)=>`<circle cx="${x(i)}" cy="${y(r.v)}" r="2.8" fill="var(--accent)"><title>${r.m}: ${nf(r.v*1e6,1)} µmol/m²</title></circle>`).join('')}<text x="${L}" y="${H-6}" font-size="10.5" fill="var(--muted)" class="mono">${rows[0].m}</text><text x="${W-R}" y="${H-6}" font-size="10.5" text-anchor="end" fill="var(--muted)" class="mono">${rows.at(-1).m}</text></svg><p class="note">${t('d.no2N')}</p>`;}
@@ -1691,6 +1752,94 @@ function exDraw(ys){
   $('exChart').innerHTML=s+`</svg><p class="note">${t('ex.chartN',{n:top.length})}</p>`;
 }
 
+// ---------- DIRECTORY (World Bank Data360 style) & FACILITY PROFILE ----------
+const REG_OF=a=>a.lat>=19.8?'n':a.lat>=12.4?'c':'s';
+const fd=s=>{if(!s)return t('na');const m=String(s).match(/^(\d{4})-(\d{2})-(\d{2})/);return m?(LANG==='en'?`${m[3]}/${m[2]}/${m[1]}`:`${m[3]}/${m[2]}/${m[1]}`):String(s);};
+function SOURCES(){const m=DATA.meta||{};const nm=DATA.no2meta||{};const hasNo2=Object.keys(DATA.no2||{}).length>0;
+  return [
+   {k:'ct',n:'Climate TRACE API v6',w:t('src.ct'),d:m.fetched,lic:'CC BY 4.0',u:'https://climatetrace.org'},
+   {k:'s5p',n:'Copernicus Sentinel-5P TROPOMI (NO2)',w:t('src.s5p'),d:hasNo2?(nm.fetched||m.fetched):null,st:hasNo2?'':t('src.s5pOff'),lic:t('src.lic.cop'),u:'https://dataspace.copernicus.eu'},
+   {k:'ipcc',n:'IPCC 2006 Guidelines',w:t('src.ipcc'),d:'2006',lic:t('src.lic.ref'),u:'https://www.ipcc-nggip.iges.or.jp/public/2006gl/'},
+   {k:'grid',n:t('src.gridN'),w:t('src.grid',{g:S.grid}),d:'2026-10-25',lic:t('src.lic.set'),u:''},
+   {k:'cbam',n:'EU CBAM (2023/956, 2025/2083, 2025/2620)',w:t('src.cbam'),d:'2026-10-25',lic:t('src.lic.ref'),u:'https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en'},
+   {k:'tr',n:t('src.trN'),w:t('src.tr'),d:'2026-10-25',lic:t('src.lic.own'),u:''},
+   {k:'ne',n:'Natural Earth',w:t('src.ne'),d:'5.1',lic:t('src.lic.pd'),u:'https://www.naturalearthdata.com'}];}
+const srcLine=k=>{const s=SOURCES().find(x=>x.k===k);return `<div class="srcl"><b>${t('src.src')}:</b> ${s.u?`<a href="${s.u}" target="_blank" rel="noopener">${esc(s.n)}</a>`:esc(s.n)}${s.d?` · ${t('src.upd')} ${fd(s.d)}`:''}${s.st?` · ${esc(s.st)}`:''}</div>`;};
+
+const DIR={by:'name',letter:'',q:''};
+RENDER.directory=function(){
+  if(!TRUST)trustAll();const all=DATA.assets.slice();const L=LAST();
+  const first=a=>{const c=fold(a.n).charAt(0).toUpperCase();return /[A-Z]/.test(c)?c:'#';};
+  const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');const have=new Set(all.map(first));
+  const tabs=[['name','dir.byName'],['sec','dir.bySec'],['reg','dir.byReg'],['grp','dir.byGrp'],['grade','dir.byGrade']];
+  const src=SOURCES();
+  $('v-directory').innerHTML=`<div class="dirhead"><div class="crumbs">${t('grp.explore')}</div><h1>${t('nav.directory')}</h1><p>${t('dir.D')}</p>
+   <div class="dirstats"><span><b>${all.length}</b> ${t('facilities')}</span><span><b>${Object.keys(SECTORS).length}</b> ${t('dir.sectors')}</span><span><b>${new Set(all.map(a=>grpOf(a.o))).size}</b> ${t('dir.owners')}</span><span class="lk" data-src="1"><b>${src.length}</b> ${t('dir.sources')} ↗</span></div>
+   <div class="dirtabs" role="tablist">${tabs.map(([k,l])=>`<button role="tab" data-by="${k}" aria-selected="${DIR.by===k}">${t(l)}</button>`).join('')}</div></div>
+   <div class="card dirbody"><input type="search" id="dirQ" placeholder="${esc(t('findPlant'))}" value="${esc(DIR.q)}" style="width:100%;max-width:420px">
+   ${DIR.by==='name'?`<div class="letters">${['ALL',...letters].map(c=>{const on=c==='ALL'?!DIR.letter:DIR.letter===c;const dis=c!=='ALL'&&!have.has(c);return `<button data-l="${c==='ALL'?'':c}" aria-pressed="${on}" ${dis?'disabled':''}>${c==='ALL'?t('all'):c}</button>`;}).join('')}</div>`:''}
+   <div id="dirList"></div></div>
+   <div class="card" style="margin-top:16px" id="dirSrc"><h2>${t('src.T')}</h2><p class="cap">${t('src.C',{n:src.length})}</p>${srcTable()}</div>`;
+  const draw=()=>{const q=fold(DIR.q.trim());let l=all.filter(a=>!q||fold(a.n+' '+(a.o||'')+' '+grpOf(a.o)).includes(q));
+    let groups;
+    if(DIR.by==='name'){if(DIR.letter)l=l.filter(a=>first(a)===DIR.letter);const m={};l.forEach(a=>{(m[first(a)]=m[first(a)]||[]).push(a);});groups=Object.keys(m).sort().map(k=>[k,m[k]]);}
+    else{const key=a=>DIR.by==='sec'?secN(a.s):DIR.by==='reg'?t('reg.'+REG_OF(a)):DIR.by==='grp'?grpOf(a.o):t('dir.grade',{g:TRUST[a.id].g,d:t('tr.g'+TRUST[a.id].g)});const m=new Map();l.forEach(a=>{const k=key(a);if(!m.has(k))m.set(k,[]);m.get(k).push(a);});
+      groups=[...m.entries()];if(DIR.by==='reg'){const o=[t('reg.n'),t('reg.c'),t('reg.s')];groups.sort((x,y)=>o.indexOf(x[0])-o.indexOf(y[0]));}else if(DIR.by==='grade')groups.sort((x,y)=>x[0].localeCompare(y[0]));else groups.sort((x,y)=>y[1].reduce((s,a)=>s+a.e,0)-x[1].reduce((s,a)=>s+a.e,0));}
+    groups.forEach(g=>g[1].sort((a,b)=>DIR.by==='name'?a.n.localeCompare(b.n):b.e-a.e));
+    $('dirList').innerHTML=groups.length?groups.map(([k,arr])=>`<section class="dgrp"><h3>${esc(k)} <span class="note">${arr.length} · ${fmtE(arr.reduce((s,a)=>s+(emis(a,L)||0),0))} ${uL()}</span></h3><div class="dcols">${arr.map(a=>`<a href="#p-${a.id}" class="dlink" data-pid="${a.id}">${esc(a.n)}<small>${esc(kind(a))}</small></a>`).join('')}</div></section>`).join(''):`<div class="empty">${t('noResult')}</div>`;
+    if(DIR.by==='reg')$('dirList').insertAdjacentHTML('beforeend',`<p class="note">${t('reg.note')}</p>`);};
+  draw();
+  $('v-directory').querySelector('.dirtabs').onclick=e=>{const b=e.target.closest('[data-by]');if(b){DIR.by=b.dataset.by;DIR.letter='';RENDER.directory();}};
+  const lt=$('v-directory').querySelector('.letters');if(lt)lt.onclick=e=>{const b=e.target.closest('button[data-l]');if(!b||b.disabled)return;DIR.letter=b.dataset.l;lt.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();};
+  $('dirQ').oninput=e=>{DIR.q=e.target.value;draw();};
+  $('dirList').onclick=e=>{const a=e.target.closest('[data-pid]');if(a){e.preventDefault();openProfile(a.dataset.pid);}};
+  $('v-directory').querySelector('[data-src]').onclick=()=>$('dirSrc').scrollIntoView({behavior:'smooth'});
+};
+function srcTable(){const S2=SOURCES();return `<div class="tablewrap" style="max-height:none"><table><thead><tr><th>${t('src.src')}</th><th>${t('src.what')}</th><th>${t('src.upd')}</th><th>${t('src.lic')}</th></tr></thead><tbody>${S2.map(s=>`<tr style="cursor:default"><td><b>${s.u?`<a href="${s.u}" target="_blank" rel="noopener">${esc(s.n)}</a>`:esc(s.n)}</b></td><td>${esc(s.w)}</td><td class="mono">${s.d?fd(s.d):esc(s.st||t('na'))}</td><td>${esc(s.lic)}</td></tr>`).join('')}</tbody></table></div>`;}
+
+// ---------- PROFILE ----------
+const PROF={id:null};
+function openProfile(id){PROF.id=String(id);$('drawerHost').innerHTML='';$('modalHost').innerHTML='';show('profile');}
+function sparkCard(vals,ys,col,f){const v=vals.map(x=>x==null?null:x);const nn=v.filter(x=>x!=null);if(nn.length<2)return '';const W=200,H=86,L=4,R=6,T=14,B=16;const mx=Math.max(...nn),mn=Math.min(...nn),r=mx-mn||Math.abs(mx)||1;const x=i=>L+(W-L-R)*i/(v.length-1),y=q=>T+(H-T-B)*(1-(q-mn)/r);
+  let d='',on=false;v.forEach((q,i)=>{if(q==null){on=false;return;}d+=(on?'L':'M')+x(i).toFixed(1)+','+y(q).toFixed(1);on=true;});const li=v.map((q,i)=>q==null?-1:i).filter(i=>i>=0).at(-1);
+  const lab=f||(q=>Math.abs(q)>=1e5?nf(q/1e6,2)+'M':Math.abs(q)>=100?nf(q,0):nf(q,1));
+  return `<svg viewBox="0 0 ${W+40} ${H}" width="100%" style="max-width:240px" aria-hidden="true"><text x="0" y="${T+3}" font-size="10" fill="var(--muted)" class="mono">${lab(mx)}</text><text x="0" y="${H-B+2}" font-size="10" fill="var(--muted)" class="mono">${lab(mn)}</text><g transform="translate(36,0)"><line x1="${L}" x2="${W-R}" y1="${T}" y2="${T}" stroke="var(--grid)" stroke-dasharray="3 3"/><line x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}" stroke="var(--grid)" stroke-dasharray="3 3"/><path d="${d}" fill="none" stroke="${col}" stroke-width="2"/><circle cx="${x(li)}" cy="${y(v[li])}" r="3.5" fill="${col}"/><text x="${L}" y="${H-2}" font-size="10" fill="var(--muted)" class="mono">${ys[0]}</text><text x="${W-R}" y="${H-2}" font-size="10" text-anchor="end" fill="var(--muted)" class="mono">${ys.at(-1)}</text></g></svg>`;}
+RENDER.profile=function(){
+  const a=byId(PROF.id||store.get('ct.prof'));if(!a){show('directory');return;}store.set('ct.prof',a.id);try{history.replaceState(null,'','#p-'+a.id)}catch(e){}
+  if(!TRUST)trustAll();const ys=years(),L=LAST(),T0=TRUST[a.id];const col=SECTORS[a.s].col;const isP=a.s==='electricity-generation';
+  const same=DATA.assets.filter(b=>b.s===a.s);const ser=ys.map(y=>emis(a,y));
+  const chg=ys.map((y,i)=>i&&ser[i]&&ser[i-1]?pct(ser[i],ser[i-1]):null);
+  const shr=ys.map(y=>{const v=emis(a,y),tt=bySecTot(a.s,y);return v&&tt?v/tt*100:null;});
+  const rk=ys.map(y=>{const v=emis(a,y);if(!v)return null;return same.filter(b=>(emis(b,y)||0)>v).length+1;});
+  const peers=same.filter(b=>b.t===a.t&&b.ef>0).map(b=>b.ef).sort((x,z)=>x-z);const med=peers.length?peers[Math.floor(peers.length/2)]:null;
+  const no2=(DATA.no2||{})[a.id];
+  const last=arr=>{for(let i=arr.length-1;i>=0;i--)if(arr[i]!=null)return [arr[i],ys[i]];return [null,null];};
+  const card=(id,title,val,unit,yr,spark,src,extra='')=>`<article class="icard" id="ind-${id}"><h3>${title}</h3><div class="ibody"><div><div class="iv">${val}</div><div class="iu">${unit}</div><div class="iw">${esc(shortName(a.n))}${yr?', '+yr:''}</div></div><div class="isp">${spark}</div></div>${extra}${srcLine(src)}</article>`;
+  const [eV,eY]=last(ser),[cV,cY]=last(chg),[sV,sY]=last(shr),[rV,rY]=last(rk);
+  const cards=[
+   card('em',t('pf.iE'),fmtE(eV),uL(),eY,sparkCard(ser,ys,col,q=>fmtE(q)),'ct'),
+   card('chg',t('pf.iC'),cV==null?t('na'):sgn(cV),t('pf.uPct'),cY,sparkCard(chg,ys,'var(--warn)',q=>sgn(q)),'ct'),
+   card('shr',t('pf.iS',{s:secS(a.s).toLowerCase()}),sV==null?t('na'):nfx(sV,1)+'%',t('pf.uShare'),sY,sparkCard(shr,ys,col,q=>nfx(q,q<1?2:1)+'%'),'ct'),
+   card('rk',t('pf.iR',{s:secS(a.s).toLowerCase()}),rV?'#'+rV:t('na'),t('pf.uRank',{n:same.length}),rY,sparkCard(rk.map(v=>v==null?null:-v),ys,'var(--muted)',q=>'#'+(-q)),'ct',`<p class="note" style="margin:6px 0 0">${t('pf.rkN')}</p>`),
+   card('ef',t('intensity'),a.ef!=null?nfx(a.ef,3):t('na'),'t CO2e/'+(isP?'MWh':t('u.tonne')),BASE(),'','ct',med?`<div class="bench"><div class="bl"><span style="left:${Math.min(98,a.ef/(med*2)*100)}%" class="me"></span><span style="left:50%" class="md"></span></div><p class="note">${t('pf.bench',{m:nfx(med,3),n:peers.length})}</p></div>`:''),
+   card('act',isP?t('cfS'):t('d.util'),isP?(a.cf!=null?nfx(a.cf*100,1)+'%':t('na')):(a.cap&&a.act?nfx(a.act/a.cap*100,1)+'%':t('na')),isP?t('pf.uCf'):t('pf.uUtil'),BASE(),'','ct',`<p class="note" style="margin:6px 0 0">${t('d.prod')}: ${isP?nf(a.act/1e3,0)+' GWh':nf(a.act,0)+' t'} · ${t('capacity')}: ${capTxt(a)}</p>`),
+   card('tr',t('tr.score'),`${T0.sc}<small>/100</small>`,t('tr.g'+T0.g),'','<span class="grade g'+T0.g+'" style="width:56px;height:56px;font-size:26px">'+T0.g+'</span>','tr',`<ul class="trl">${T0.fl.filter(f=>f.lv!=='ok').slice(0,4).map(f=>`<li class="${f.lv}">${esc(flagTxt(f))}</li>`).join('')}</ul>`),
+   card('cost',t('carbonCost'),money(carbonCost(eV)),t('pf.uCost',{u:nf(S.carbon.usd,0),f:nf(S.carbon.free,0)}),eY,'','grid'),
+   card('no2','NO2 Sentinel-5P',no2&&no2.length?nfx(no2.at(-1).v*1e6,1):t('na'),'µmol/m²',no2&&no2.length?(no2.at(-1).m||''):'',no2&&no2.length>1?sparkCard(no2.map(r=>r.v*1e6),[no2[0].m||'',no2.at(-1).m||''],'var(--accent)'):'','s5p',no2&&no2.length?'':`<p class="note" style="margin:6px 0 0">${t('pf.no2None')}</p>`)];
+  const used=['ct','tr','grid','s5p'];const nInd=cards.length;
+  const near=same.filter(b=>b.id!==a.id&&b.e>0).sort((x,z)=>Math.abs(Math.log(x.e/a.e))-Math.abs(Math.log(z.e/a.e))).slice(0,6);
+  $('v-profile').innerHTML=`<div class="phero"><nav class="pcrumb"><a href="#home" data-go="home">${t('nav.home')}</a> › <a href="#directory" data-go="directory">${t('nav.directory')}</a> › <b>${esc(shortName(a.n))}</b></nav>
+   <div class="pk">${t('pf.kind')}</div><h1>${esc(a.n)}</h1><div class="pcount"><b>${nInd}</b> ${t('pf.inds')} <span>|</span> <b>${used.length}</b> ${t('dir.sources')}</div>
+   <div class="pfacts">${[[t('sector'),secN(a.s)],[t('type'),kind(a)],[t('group'),grpOf(a.o)],[t('owner'),a.o||t('ownerUnknown')],[t('dir.reg'),t('reg.'+REG_OF(a))],[t('capacity'),capTxt(a)],[t('emisY',{y:eY||L}),fmtE(eV)+' '+uL()],[t('conf'),confN(a.c)]].map(([k,v])=>`<div><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join('')}</div></div>
+   <div class="pjump"><b>${t('pf.jump')}:</b> <a href="#ind-em" data-jump="ind-em">${t('pf.jInd')}</a><span>|</span><a href="#psrc" data-jump="psrc">${t('src.T')}</a><span>|</span><a href="#ppeer" data-jump="ppeer">${t('pf.jPeer')}</a><span>|</span><button class="drill-link" id="pOpen">${t('pf.jDetail')}</button><span>|</span><button class="drill-link" id="pDl">${t('d.dl')}</button></div>
+   <h2 class="psec">${t('pf.jInd')}</h2><div class="igrid">${cards.join('')}</div>
+   <div class="card" id="psrc" style="margin-top:18px"><h2>${t('src.T')}</h2><p class="cap">${t('pf.srcC',{n:used.length})}</p>${srcTable()}</div>
+   <div class="card" id="ppeer" style="margin-top:18px"><h2>${t('pf.jPeer')}</h2><p class="cap">${t('pf.peerC',{s:secN(a.s).toLowerCase()})}</p><div class="dcols">${near.map(b=>`<a href="#p-${b.id}" class="dlink" data-pid="${b.id}">${esc(b.n)}<small>${esc(kind(b))} · ${fmtE(emis(b,L))} ${uL()}</small></a>`).join('')}</div></div>`;
+  const V=$('v-profile');
+  V.onclick=e=>{const g=e.target.closest('[data-go]');if(g){e.preventDefault();show(g.dataset.go);return;}const j=e.target.closest('[data-jump]');if(j){e.preventDefault();const el=$(j.dataset.jump);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});return;}const p=e.target.closest('[data-pid]');if(p){e.preventDefault();openProfile(p.dataset.pid);window.scrollTo({top:0,behavior:'smooth'});}};
+  $('pOpen').onclick=()=>openDetail(a.id);$('pDl').onclick=()=>downloadProfile(a);
+};
+
 // ---------- splash launcher ----------
 function openSplash(step){
   if(step==='welcome')return openWelcome();stopGlobe();
@@ -1937,9 +2086,9 @@ async function loadData(){
   else raw={assets:SEED.assets.map(rec),yearly:SEED.yearly,meta:SEED.meta};
   const up=store.get('ct.data');if(up&&up.assets){raw=up;if(raw.assets[0]&&raw.assets[0].name!==undefined)raw.assets=raw.assets.map(rec);}
   CFG=cfg;if(cfg&&!store.get('ct.settings')){S=mergeS(cfg);applyTheme();}
-  DATA=normalize(raw);DATA.no2=(no2&&no2.series)||{};
+  DATA=normalize(raw);DATA.no2=(no2&&no2.series)||{};DATA.no2meta=(no2&&no2.meta)||null;
   renderStatic();renderHero();
-  let v=(location.hash||'').slice(1);const direct=!!VIEWS.find(x=>x.id===v);if(!direct)v='home';show(v,{noScroll:true});renderCmpBar();if(!direct)openWelcome();
+  let v=(location.hash||'').slice(1);if(/^p-/.test(v)&&byId(v.slice(2))){PROF.id=v.slice(2);v='profile';}const direct=v==='profile'||!!VIEWS.find(x=>x.id===v);if(!direct)v='home';show(v,{noScroll:true});renderCmpBar();if(!direct)openWelcome();
 }
 loadData();
 
