@@ -544,6 +544,34 @@ main [id]{scroll-margin-top:calc(var(--abh,52px) + 60px)}
 
 .thl,.thr,.hpb,.side .sb{overscroll-behavior:contain}
 .thm.pop .thg{min-height:0}
+
+/* ---- company desk ---- */
+.dkpick label{font-weight:700;font-size:13px}.dkrow{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.dkrow select{flex:1;min-width:0;max-width:520px}
+.dsum{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
+.dsum>div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;min-width:0}
+.dsum span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}.dsum b{display:block;font-size:22px;margin:4px 0 2px;font-family:var(--mono)}.dsum small{color:var(--muted);font-size:12px}
+@media (max-width:760px){.dsum{grid-template-columns:1fr 1fr}}
+.dkgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin-bottom:14px}@media (max-width:900px){.dkgrid{grid-template-columns:1fr}}
+.dkkv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0}.dkkv span{display:block;font-size:11px;color:var(--muted)}.dkkv b{font-family:var(--mono);font-size:16px}
+@media (max-width:480px){.dkkv{grid-template-columns:1fr 1fr}}
+.dkgap{margin:6px 0;padding-left:18px;font-size:13.5px;line-height:1.5}
+.dkq{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--line2);font-size:13.5px}.dkq span{flex:1;min-width:200px}
+.dkdl{list-style:none;padding:0;margin:12px 0 6px;display:flex;flex-direction:column;gap:8px}
+.dkdl li{display:grid;grid-template-columns:110px minmax(0,1fr);gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;border-left:4px solid var(--accent)}
+.dkdl li.soon{border-left-color:var(--warn)}.dkdl li.past{border-left-color:var(--muted);opacity:.7}
+.dkdl b{display:block;font-size:13.5px}.dkdl small{display:block;color:var(--muted);font-size:12px;margin-top:2px}.dd b{font-family:var(--mono)}
+.dkin{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:10px 0}@media (max-width:760px){.dkin{grid-template-columns:1fr 1fr}}@media (max-width:420px){.dkin{grid-template-columns:1fr}}
+.dkin label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:600}.dkin input{font:inherit;width:100%;box-sizing:border-box}.dkin small{font-weight:400;color:var(--muted);font-size:11.5px}
+.dkres{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}@media (max-width:760px){.dkres{grid-template-columns:1fr 1fr}}
+.dkres>div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--panel2);min-width:0}.dkres span{display:block;font-size:11.5px;color:var(--muted)}.dkres b{display:block;font-family:var(--mono);font-size:18px}.dkres small{color:var(--muted);font-size:11.5px}
+.dkres .bad b{color:var(--bad)}.dkres .ok b{color:var(--ok)}.dkres .hl{border-color:var(--accent)}
+.dkf{overflow-x:auto;font-size:13px;color:var(--muted);margin:4px 0 12px}
+.dkh3{font-size:15px;margin:14px 0 8px}.dkmx td,.dkmx th{text-align:right;font-family:var(--mono);font-size:12.5px;white-space:nowrap}.dkmx tbody th{text-align:left}.dkmx td.neg{color:var(--bad)}.dkmx td.pos{color:var(--ok)}
+.dkact{list-style:none;padding:0;margin:8px 0 0;display:flex;flex-direction:column;gap:6px}
+.dkact li{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 12px;border:1px solid var(--line);border-radius:10px;border-left:4px solid var(--muted)}
+.dkact li.p1{border-left-color:var(--bad)}.dkact li.p2{border-left-color:var(--warn)}
+.dkact label{display:flex;gap:10px;align-items:flex-start;flex:1;min-width:220px;font-size:13.5px;cursor:pointer}.dkact input{margin-top:3px}
+.dkact li.done span{text-decoration:line-through;color:var(--muted)}.dkact em{font-style:normal;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 </style></head><body><div class="appbar" id="appbar">
     <div class="in topbar">
       <div class="brand"><span class="logo"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="3.2" fill="#5fe0b8"/><ellipse cx="9" cy="9" rx="8" ry="3.4" fill="none" stroke="#9ee6cf" stroke-width="1.2" transform="rotate(-25 9 9)"/></svg></span><span id="brandName"></span></div><div class="abnav"><button class="pga ab" id="abBack" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="pga ab" id="abFwd" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="abtitle" id="abTitle"></span></div>
@@ -577,6 +605,7 @@ main [id]{scroll-margin-top:calc(var(--abh,52px) + 60px)}
   <section id="v-directory" class="view" hidden></section>
   <section id="v-explorer" class="view" hidden></section>
   <section id="v-profile" class="view" hidden></section>
+  <section id="v-desk" class="view" hidden></section>
   <section id="v-inventory" class="view" hidden></section>
   <section id="v-check" class="view" hidden></section>
   <section id="v-cbam" class="view" hidden></section>
@@ -729,6 +758,34 @@ const T={
 "fq.set":["Đổi ngôn ngữ, tiền tệ, hệ số lưới điện ở đâu?","Where do I change language, currency or the grid factor?"],"fa.set":["Ở mục Cài đặt. Ngôn ngữ và tiền tệ cũng đổi nhanh được ở góc trên trang.","Under Settings. Language and currency can also be switched at the top of the page."],
 "fq.use":["Tôi có được dùng lại nội dung trang này không?","May I reuse content from this site?"],"fa.use":["Số liệu Climate TRACE dùng theo giấy phép CC BY 4.0, cần ghi nguồn. Giao diện, mã nguồn, cách chấm điểm và phân tích của nền tảng thuộc bản quyền Lê Hồng Anh; muốn sử dụng cần xin phép trước.","Climate TRACE data is under CC BY 4.0 with attribution. The interface, code, scoring and analysis belong to Le Hong Anh; ask for permission before using them."],
 "fq.pilot":["Doanh nghiệp muốn thử nghiệm cùng nền tảng thì làm sao?","How can a company join a pilot?"],"fa.pilot":["Gửi tin nhắn ở mục Liên hệ hỗ trợ, chọn chủ đề Hợp tác thử nghiệm, nêu ngành, quy mô và loại số liệu có thể chia sẻ.","Send a message under Contact support, choose Pilot partnership, and state your sector, size and the data you could share."],
+"nav.desk":["Bàn làm việc doanh nghiệp","Company desk"],"nav.desk.d":["Chọn nhà máy của bạn: so với cùng loại, mốc nghĩa vụ, chi phí hạn ngạch, việc cần làm","Pick your plant: peer position, deadlines, quota cost, to-do list"],
+"dk.lede":["Một trang cho người phụ trách phát thải: nhà máy của bạn đứng ở đâu so với các nhà máy cùng loại ở Việt Nam, sắp tới phải nộp gì, hạn ngạch có thể tốn bao nhiêu, và nên làm gì trước.","One page for the emissions lead: where your plant stands against Vietnamese peers, what is due next, what the quota may cost, and what to do first."],
+"dk.pick":["Nhà máy của bạn","Your plant"],"dk.pickH":["Lựa chọn, câu trả lời và đánh dấu việc đã làm được lưu riêng trên máy này.","Choices, answers and ticked tasks are saved on this device only."],"dk.dl":["Tải bản tóm tắt","Download summary"],"dk.est":["ước tính vệ tinh","satellite estimate"],
+"dk.pos":["Hiệu quả so với cùng loại","Efficiency versus peers"],"dk.posH":["sạch hơn tỷ lệ này trong {n} nhà máy","cleaner than this share of {n} plants"],"dk.noBench":["Chưa đủ nhà máy cùng loại để so sánh","Not enough similar plants to compare"],"dk.next":["Mốc nghĩa vụ gần nhất","Next deadline"],"dk.days":["ngày","days"],
+"dk.s1":["Vị trí so với nhà máy cùng loại","Position against similar plants"],"dk.s1Ct":["So cường độ phát thải với {n} nhà máy {k} ở Việt Nam.","Emission intensity against {n} {k} plants in Vietnam."],"dk.s1Cs":["So với {n} nhà máy ngành {s} (cùng loại có dưới 5 nhà máy).","Against {n} {s} plants (fewer than 5 of the same type)."],
+"dk.stripA":["Phân bố cường độ phát thải các nhà máy cùng loại","Intensity distribution of similar plants"],"dk.you":["Bạn","You"],"dk.med":["Trung vị","Median"],"dk.q25":["Nhóm 25% tốt nhất","Best 25%"],"dk.yours":["Của bạn","Yours"],"dk.unit":["Đơn vị","Unit"],
+"dk.gapMed":["Nếu về mức trung vị: giảm khoảng {t}/năm, tương đương {c} theo giá hạn ngạch đang đặt.","At the median: about {t} less per year, worth {c} at the quota price set below."],"dk.atMed":["Đã tốt hơn mức trung vị.","Already better than the median."],
+"dk.gapQ":["Nếu vào nhóm 25% tốt nhất: giảm khoảng {t}/năm ({c}).","To reach the best 25%: about {t} less per year ({c})."],"dk.atQ":["Đã nằm trong nhóm 25% tốt nhất.","Already in the best 25%."],
+"dk.s1N":["Cường độ lấy từ ước tính Climate TRACE; nhà máy dùng giá trị mặc định có thể dồn về cùng một điểm. Nhập kiểm kê thật để so chính xác hơn.","Intensity comes from Climate TRACE estimates; plants on default values can cluster at one point. Enter a real inventory for a sharper comparison."],
+"dk.s2":["Nghĩa vụ và mốc thời gian","Obligations and deadlines"],"dk.likely":["Nhà máy này có khả năng thuộc diện kiểm kê bắt buộc (nhiệt điện, hoặc phát thải ước tính từ 3.000 t CO2e/năm). Hãy xác nhận tên trong danh sách chính thức.","This plant is likely subject to mandatory inventory (thermal power, or estimated emissions of 3,000 t CO2e/yr or more). Confirm its name in the official list."],"dk.unlikely":["Phát thải ước tính dưới ngưỡng 3.000 t CO2e/năm; vẫn có thể thuộc danh mục theo ngưỡng năng lượng. Hãy kiểm tra danh sách chính thức.","Estimated emissions are under 3,000 t CO2e/yr; it may still be listed under the energy threshold. Check the official list."],
+"dk.q42":["Có tên trong QĐ 42/2026/QĐ-TTg (2.441 cơ sở)?","Listed in Decision 42/2026/QD-TTg (2,441 facilities)?"],"dk.q263":["Được phân bổ hạn ngạch theo QĐ 263/2026 (110 cơ sở)?","Allocated a quota under Decision 263/2026 (110 facilities)?"],"dk.yes":["Có","Yes"],"dk.no":["Không","No"],"dk.unk":["Chưa rõ","Not sure"],
+"dk.d.plan":["Kế hoạch giảm nhẹ cấp cơ sở 2026 đến 2030","Facility mitigation plan 2026 to 2030"],"dk.d.inv":["Báo cáo kiểm kê cấp cơ sở (2 năm một lần, nộp UBND tỉnh)","Facility inventory report (every 2 years, to the provincial committee)"],"dk.d.mit":["Báo cáo giảm nhẹ hằng năm","Annual mitigation report"],"dk.d.ver":["Nộp kết quả kiểm kê đã thẩm định lên Bộ","Submit verified inventory to the Ministry"],"dk.d.cb1":["EU bắt đầu bán chứng chỉ CBAM; nhà nhập khẩu sẽ hỏi số liệu phát thải của bạn","EU starts selling CBAM certificates; importers will ask for your emission data"],"dk.d.cb2":["Hạn tờ khai CBAM năm đầu tiên của nhà nhập khẩu EU","First annual CBAM declaration due for EU importers"],
+"dk.past":["đã qua, kiểm tra đã nộp chưa","passed, check it was filed"],"dk.in":["còn {n} ngày","in {n} days"],"dk.legalRef":["Nghị định 06/2022 sửa đổi bởi 119/2025, {r}","Decree 06/2022 as amended by 119/2025, {r}"],"dk.euN":["Áp dụng khi xuất thép, xi măng sang EU","Applies when exporting steel or cement to the EU"],"dk.ifYes":["nếu câu trả lời là Có","if the answer is Yes"],
+"dk.s2N":["Theo nghiên cứu pháp lý cập nhật {d}; năm của kỳ báo cáo 2 năm cần xác nhận với Sở Nông nghiệp và Môi trường. Không thay cho tư vấn pháp lý.","Based on legal research updated {d}; the year of the biennial cycle should be confirmed with the provincial department. Not legal advice."],
+"dk.s3":["Kịch bản chi phí hạn ngạch","Quota cost scenario"],"dk.s3C":["Tính theo quy tắc: bù trừ bằng tín chỉ tối đa 30% hạn ngạch được phân bổ (Điều 19.8.a), vay tối đa 15% hạn ngạch kỳ sau đến 2030 (Điều 19.6.a). Mọi con số dưới đây là kịch bản bạn tự đặt.","Rules applied: offsets up to 30% of allocated quota (Art. 19.8.a), borrowing up to 15% of next-period quota until 2030 (Art. 19.6.a). Every number below is a scenario you set."],
+"dk.noQuota":["Bạn đã trả lời không có hạn ngạch: hiện chưa phát sinh chi phí hạn ngạch trong nước.","You answered no quota: no domestic quota cost arises for now."],
+"dk.E":["Phát thải E (t CO2e)","Emissions E (t CO2e)"],"dk.Eh":["Mặc định: ước tính năm {y}; sửa bằng số kiểm kê của bạn","Default: {y} estimate; replace with your inventory figure"],"dk.A":["Hạn ngạch được phân bổ A (t)","Allocated quota A (t)"],"dk.Ap":["Để trống: giả định {p}% của E","Blank: assume {p}% of E"],"dk.Ah":["Số bạn nhập","Your figure"],"dk.Aass":["Đang giả định {p}% của E = {v} t","Assuming {p}% of E = {v} t"],
+"dk.pct":["Giả định A theo % của E","Assumed A as % of E"],"dk.pctH":["Chỉ dùng khi chưa nhập A","Used only when A is blank"],"dk.Phn":["Giá hạn ngạch (đ/t)","Quota price (VND/t)"],"dk.PhnH":["Mặc định 133.000 đ: giá bình quân phiên đầu, thanh khoản thấp, chỉ tham khảo","Default 133,000 VND: first-session average, thin trading, reference only"],
+"dk.Ptc":["Giá tín chỉ (đ/t)","Credit price (VND/t)"],"dk.PtcH":["Để trống: bằng giá hạn ngạch","Blank: same as quota price"],"dk.Cr":["Tín chỉ bạn có (t)","Credits you hold (t)"],"dk.CrH":["Dùng tối đa {m} t (30% của A)","Usable up to {m} t (30% of A)"],
+"dk.short":["Thiếu hạn ngạch","Shortfall"],"dk.useO":["Dùng tín chỉ bù trừ","Offsets used"],"dk.oMax":["trần {m} t","cap {m} t"],"dk.buy":["Phải mua thêm","To buy"],"dk.cost":["Chi phí ước tính","Estimated cost"],"dk.borrow":["Hoặc vay tối đa {b} t từ kỳ sau (đến 2030)","Or borrow up to {b} t from the next period (to 2030)"],
+"dk.surplus":["Dư hạn ngạch","Surplus"],"dk.sv":["Giá trị phần dư nếu bán","Value of surplus if sold"],"dk.svH":["Theo giá hạn ngạch đang đặt","At the quota price set"],
+"dk.mx":["Ma trận rủi ro chi phí","Cost risk matrix"],"dk.mxE":["Phát thải","Emissions"],"dk.mxP":["Giá","Price"],"dk.mxN":["Hàng: sai số ±10% của số phát thải; cột: giá giảm một nửa hoặc tăng gấp đôi. Ô đỏ là chi phí, ô xanh là giá trị phần dư. Dự thảo nghị định xử phạt (07/2026) đề xuất phạt 300 đến 400 triệu đồng khi vượt hạn ngạch từ 5.000 t, chưa có hiệu lực.","Rows: ±10% emission error; columns: price halved or doubled. Red cells are cost, green cells are surplus value. A draft penalty decree (07/2026) proposes 300 to 400 million VND fines for exceeding quota by 5,000 t or more; not yet in force."],
+"dk.s4":["Việc cần làm","To-do list"],"dk.s4C":["Sinh tự động từ số liệu và câu trả lời của bạn, xếp theo mức ưu tiên. Còn {n} việc.","Generated from your data and answers, sorted by priority. {n} open."],"dk.goAct":["Làm ngay","Do it"],"dk.p1":["Ưu tiên cao","High"],"dk.p2":["Nên làm","Medium"],"dk.p3":["Khi có thời gian","Later"],
+"dk.a.chk42":["Tra tên nhà máy trong QĐ 42/2026/QĐ-TTg rồi chọn Có hoặc Không ở mục 2","Look up the plant in Decision 42/2026/QD-TTg, then answer Yes or No in section 2"],"dk.a.chk263":["Kiểm tra nhà máy có trong 110 cơ sở được phân bổ hạn ngạch (QĐ 263/2026) không","Check whether the plant is among the 110 quota facilities (Decision 263/2026)"],
+"dk.a.due":["Chuẩn bị: {t} (còn {n} ngày)","Prepare: {t} ({n} days left)"],"dk.a.inv":["Bắt đầu kiểm kê theo tháng cho nhà máy này","Start a monthly inventory for this plant"],"dk.a.def":["Số liệu vệ tinh đang dùng giá trị mặc định: nhập sản lượng thật theo tháng để thay thế","Satellite data uses default values: enter real monthly output to replace them"],
+"dk.a.phys":["Có chỉ số bất thường về vật lý: đối chiếu nhanh số kê khai với ước tính","Physically unusual figures: run a quick cross-check"],"dk.a.grade":["Điểm tin cậy hạng {g}: cần số liệu riêng để nâng hạng trước khi dùng cho báo cáo","Trust grade {g}: add plant data to raise it before using it in reports"],
+"dk.a.eff":["Rà soát hiệu suất: khoảng cách tới mức trung vị khoảng {t}/năm","Review efficiency: gap to the median is about {t} per year"],"dk.a.buy":["Lập phương án cho {t} t thiếu hạn ngạch: tín chỉ, mua thêm hay vay kỳ sau","Plan for the {t} t shortfall: credits, purchase or borrowing"],"dk.a.cbam":["Chuẩn bị số liệu phát thải gắn trong sản phẩm cho khách hàng EU","Prepare embedded-emission data for EU customers"],"dk.a.ev":["Ghi lại các lần đối chiếu vệ tinh với thực tế vào sổ kiểm chứng","Log satellite checks against reality in the evidence log"],
+"dk.gen":["Tạo lúc","Generated"],"dk.assumed":["giả định","assumed"],"dk.disc":["Số liệu ước tính và kịch bản, không thay báo cáo kiểm kê chính thức hay tư vấn pháp lý.","Estimates and scenarios; not an official inventory report or legal advice."],
 // ---- nav ----
 "grp.explore":["Khám phá","Explore"],"grp.tools":["Công cụ","Tools"],"grp.ref":["Tra cứu","Reference"],
 "nav.home":["Tổng quan","Overview"],"nav.home.d":["Bản đồ, số liệu chính, nhận định nhanh","Map, key figures, quick insights"],
@@ -1126,9 +1183,9 @@ const VIEWS=[
 const RENDER={};let CUR='home';
 const icon=(d,s=18)=>`<svg width="${s}" height="${s}" viewBox="0 0 20 20" aria-hidden="true"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 function buildNav(){
-  const TABS=['home','directory','list','trust','inventory','lookup'];const SHORT={trust:'tab.trust',inventory:'tab.inventory'};$('tabs').innerHTML=VIEWS.filter(v=>TABS.includes(v.id)||v.id===CUR).map(v=>`<button role="tab" data-v="${v.id}" aria-selected="${v.id===CUR}">${t(SHORT[v.id]||v.k)}</button>`).join('');
+  const TABS=['home','desk','directory','list','trust','inventory'];const SHORT={trust:'tab.trust',inventory:'tab.inventory'};$('tabs').innerHTML=VIEWS.filter(v=>TABS.includes(v.id)||v.id===CUR).map(v=>`<button role="tab" data-v="${v.id}" aria-selected="${v.id===CUR}">${t(SHORT[v.id]||v.k)}</button>`).join('');
   const bn=[['home','nav.home'],['list','nav.listS'],['inventory','nav.toolsS'],['lookup','nav.lookup'],['more','nav.more']];
-  $('bnav').innerHTML=bn.map(([id,k])=>{const v=VIEWS.find(x=>x.id===id);const cur=id===CUR||(id==='inventory'&&['inventory','check','cbam','evidence'].includes(CUR))||(id==='more'&&['analysis','owners','trust','directory','explorer','storage','settings','profile'].includes(CUR));return `<button data-v="${id}" aria-current="${cur}">${icon(v?v.ico:'M4 6h12M4 10h12M4 14h12',20)}<span>${t(k)}</span></button>`;}).join('');
+  $('bnav').innerHTML=bn.map(([id,k])=>{const v=VIEWS.find(x=>x.id===id);const cur=id===CUR||(id==='inventory'&&['desk','inventory','check','cbam','evidence'].includes(CUR))||(id==='more'&&['analysis','owners','trust','directory','explorer','storage','settings','profile'].includes(CUR));return `<button data-v="${id}" aria-current="${cur}">${icon(v?v.ico:'M4 6h12M4 10h12M4 14h12',20)}<span>${t(k)}</span></button>`;}).join('');
   $('hambLbl').textContent=t('catalog');$('homeLbl').textContent=t('sp.btn');$('palLbl').textContent=t('search');
   document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===LANG));
   $('curSel').value=S.cur;
@@ -2000,7 +2057,8 @@ function THEMES(){
      ['th.trust.def',()=>openDrill('def',L),t('th.trust.defH')],
      ['th.trust.imp',()=>openDrill('implaus',L),t('th.trust.impH')],
      ['th.trust.ev',()=>show('evidence'),t('nav.evidence.d')]]},
-   {id:'tools',ico:'M5 3h10v14H5zM8 7h4M8 10h4M8 13h2',k:'th.tools',go:()=>show('inventory'),items:[
+   {id:'tools',ico:'M5 3h10v14H5zM8 7h4M8 10h4M8 13h2',k:'th.tools',go:()=>show('desk'),items:[
+     ['nav.desk',()=>show('desk'),t('nav.desk.d')],
      ['nav.inventory',()=>show('inventory'),t('nav.inventory.d')],
      ['nav.check',()=>show('check'),t('nav.check.d')],
      ['nav.cbam',()=>show('cbam'),t('nav.cbam.d')],
@@ -2051,7 +2109,7 @@ const _rs=renderStatic;renderStatic=function(){_rs();const l=$('thLbl');if(l)l.t
 
 // ---------- page arrows (back / forward, previous / next) ----------
 const HIST={s:[],i:-1,nav:false};
-const V_THEME={home:'em',analysis:'em',explorer:'em',list:'site',owners:'site',directory:'site',profile:'site',trust:'trust',evidence:'trust',inventory:'tools',check:'tools',cbam:'tools',lookup:'ref',storage:'ref',settings:'ref'};
+const V_THEME={home:'em',analysis:'em',explorer:'em',list:'site',owners:'site',directory:'site',profile:'site',trust:'trust',evidence:'trust',desk:'tools',inventory:'tools',check:'tools',cbam:'tools',lookup:'ref',storage:'ref',settings:'ref'};
 const keyTitle=k=>{if(k.startsWith('p:')){const a=byId(k.slice(2));return a?shortName(a.n):t('nav.directory');}const v=VIEWS.find(x=>x.id===k);return v?t(v.k):k;};
 function histGo(d){const j=HIST.i+d;if(j<0||j>=HIST.s.length)return;HIST.i=j;HIST.nav=true;const k=HIST.s[j];if(k.startsWith('p:'))openProfile(k.slice(2));else show(k);}
 function drawPg(){
@@ -2120,6 +2178,103 @@ function openHelp(tab){
 (function(){const b=document.createElement('button');b.className='helpfab';b.id='helpFab';b.innerHTML=`<svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 9a6 6 0 1112 0v3a2 2 0 01-2 2h-1V9h3M4 9h3v5H6a2 2 0 01-2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span id="helpLbl"></span>`;b.onclick=()=>openHelp();document.body.appendChild(b);
   const h=document.createElement('div');h.id='helpHost';document.body.appendChild(h);})();
 const _rs2=renderStatic;renderStatic=function(){_rs2();const l=$('helpLbl');if(l)l.textContent=t('hp.btn');if($('pgnav'))drawPg();};
+
+// ---------- company desk: benchmark, obligations, quota scenario, actions ----------
+VIEWS.splice(VIEWS.findIndex(v=>v.id==='inventory'),0,{id:'desk',g:'tools',k:'nav.desk',ico:'M3 5h14v9H3zM7 17h6M10 14v3M6 9l2 2 4-4'});
+const DK_LEGAL='25/10/2026';
+const pT=v=>{const c=S.cur;const x=vndTo(v,c);return c==='VND'?nf(x,0)+(LANG==='en'?' VND/t':' đ/t'):nfx(x,2)+' '+c+'/t';};
+function dkState(){const s=store.get('ct.desk')||{};s.f=s.f||{};s.P=Object.assign({hn:133000,tc:null,cr:0,pct:95},s.P||{});return s;}
+function dkSave(s){store.set('ct.desk',s);}
+function dkPeers(a){let p=DATA.assets.filter(b=>b.s===a.s&&b.t===a.t&&b.ef>0&&b.act>0);let scope='type';if(p.length<5){p=DATA.assets.filter(b=>b.s===a.s&&b.ef>0&&b.act>0);scope='sector';}return {p,scope};}
+const qtl=(arr,q)=>{const s=arr.slice().sort((x,y)=>x-y);if(!s.length)return null;const i=(s.length-1)*q,lo=Math.floor(i),hi=Math.ceil(i);return s[lo]+(s[hi]-s[lo])*(i-lo);};
+function dkBench(a){const {p,scope}=dkPeers(a);const efs=p.map(b=>b.ef);if(!(a.ef>0)||efs.length<3)return null;
+  const med=qtl(efs,.5),q25=qtl(efs,.25);const better=efs.filter(v=>v>a.ef).length/efs.length;
+  const gapMed=a.ef>med?(a.ef-med)*a.act:0,gapQ=a.ef>q25?(a.ef-q25)*a.act:0;return {p,scope,med,q25,better,gapMed,gapQ,unit:a.s==='electricity-generation'?'t CO2e/MWh':'t CO2e/'+t('u.tonne')};}
+function dkStrip(a,B){const W=640,H=96,L=14,R=14;const efs=B.p.map(b=>b.ef);const mn=Math.min(...efs,a.ef),mx=Math.max(...efs,a.ef),rg=mx-mn||1;const X=v=>L+(W-L-R)*(v-mn)/rg;
+  const dots=B.p.filter(b=>b.id!==a.id).map((b,i)=>`<circle cx="${X(b.ef).toFixed(1)}" cy="${46+((i*37)%21)-10}" r="4" fill="var(--muted)" fill-opacity=".45"><title>${esc(b.n)}: ${nfx(b.ef,3)}</title></circle>`).join('');
+  const ln=(v,c,lab,y)=>`<line x1="${X(v)}" x2="${X(v)}" y1="18" y2="76" stroke="${c}" stroke-width="1.5" stroke-dasharray="4 3"/><text x="${Math.min(W-R,Math.max(L,X(v)))}" y="${y}" text-anchor="middle" font-size="11" fill="${c}">${lab}</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(t('dk.stripA'))}" style="max-width:100%;height:auto;display:block">${ln(B.q25,'var(--ok)',t('dk.q25'),12)}${ln(B.med,'var(--muted)',t('dk.med'),90)}${dots}<circle cx="${X(a.ef)}" cy="46" r="8" fill="var(--accent)" stroke="var(--panel)" stroke-width="2"/><text x="${Math.min(W-30,Math.max(30,X(a.ef)))}" y="${a.ef>B.med?30:68}" text-anchor="middle" font-size="12" font-weight="700" fill="var(--accent)">${esc(t('dk.you'))}</text><text x="${L}" y="${H-2}" font-size="10.5" fill="var(--muted)">${nfx(mn,3)}</text><text x="${W-R}" y="${H-2}" font-size="10.5" fill="var(--muted)" text-anchor="end">${nfx(mx,3)}</text></svg>`;}
+function dkDeadlines(a,f){const now=new Date();const y=now.getFullYear();const next313=new Date((now>new Date(y,2,31,23,59)?y+1:y)+'-03-31');const ex=a.s!=='electricity-generation';
+  const L=[
+   {id:'plan',d:new Date('2025-12-31'),k:'dk.d.plan',ref:'Điều 13.4',on:f.inList!==false,cond:'list'},
+   {id:'inv',d:next313,k:'dk.d.inv',ref:'Điều 11.4',on:f.inList!==false,cond:'list'},
+   {id:'mit',d:new Date(Math.max(2027,next313.getFullYear())+'-03-31'),k:'dk.d.mit',ref:'Điều 10.3',on:f.inList!==false,cond:'list'},
+   {id:'ver',d:new Date('2027-12-01'),k:'dk.d.ver',ref:'Điều 11.6a',on:f.quota!==false,cond:'quota'},
+   ...(ex?[{id:'cb1',d:new Date('2027-02-01'),k:'dk.d.cb1',ref:'(EU) 2025/2083',on:true,cond:'eu'},{id:'cb2',d:new Date('2027-09-30'),k:'dk.d.cb2',ref:'(EU) 2025/2083',on:true,cond:'eu'}]:[])];
+  return L.filter(x=>x.on).map(x=>Object.assign(x,{days:Math.ceil((x.d-now)/864e5)})).sort((p,q)=>p.d-q.d);}
+function dkQuota(E,A,P){const k=.3;const gap=E-A;const Ptc=P.tc??P.hn;if(gap<=0)return {gap,O:0,buy:0,cost:0,surplus:-gap,sv:-gap*P.hn,borrow:.15*A};
+  const O=Math.min(gap,k*A,Math.max(0,P.cr||0));const buy=gap-O;return {gap,O,buy,cost:buy*P.hn+O*Ptc,surplus:0,sv:0,borrow:.15*A,omax:k*A};}
+function dkActions(a,B,f,Q,T0,dl){const L=[];const fl=k=>T0.fl.find(x=>x.k===k);const has=(INV.fac===a.id&&INV.last)||Object.keys(WS.kk).some(k=>k.startsWith(a.id+'|'));
+  if(f.inList==null)L.push({id:'chk42',p:1,k:'dk.a.chk42',go:null});
+  if(f.quota==null&&a.e>=3000)L.push({id:'chk263',p:1,k:'dk.a.chk263',go:null});
+  const due=dl.find(x=>x.days>=0);if(due)L.push({id:'due',p:due.days<120?1:2,k:'dk.a.due',v:{t:t(due.k),n:due.days},go:null});
+  if(!has)L.push({id:'inv',p:1,k:'dk.a.inv',go:()=>{INV.fac=a.id;show('inventory');}});
+  if(fl('defAct')||fl('defEf'))L.push({id:'def',p:2,k:'dk.a.def',go:()=>{INV.fac=a.id;show('inventory');}});
+  if(fl('efRange')||fl('util'))L.push({id:'phys',p:1,k:'dk.a.phys',go:()=>show('check')});
+  if(T0.g==='C'||T0.g==='D')L.push({id:'grade',p:2,k:'dk.a.grade',v:{g:T0.g},go:()=>show('trust')});
+  if(B&&B.gapMed>0)L.push({id:'eff',p:2,k:'dk.a.eff',v:{t:fmtE(B.gapMed)+' '+uL()},go:()=>{LOOK.tab='method';show('lookup');}});
+  if(Q&&Q.gap>0)L.push({id:'buy',p:1,k:'dk.a.buy',v:{t:nf(Q.gap,0)},go:null});
+  if(a.s!=='electricity-generation')L.push({id:'cbam',p:2,k:'dk.a.cbam',go:()=>{CB.fac=a.id;show('cbam');}});
+  L.push({id:'ev',p:3,k:'dk.a.ev',go:()=>show('evidence')});
+  return L.sort((x,y)=>x.p-y.p);}
+RENDER.desk=function(){
+  const st=dkState();if(!st.id||!byId(st.id))st.id=(WS.stars.size?[...WS.stars][0]:null)||DATA.assets.filter(a=>a.e>0).sort((x,y)=>y.e-x.e)[0].id;
+  const a=byId(st.id);if(!TRUST)trustAll();const T0=TRUST[a.id];const f=st.f[a.id]=st.f[a.id]||{inList:null,quota:null,A:null,done:{}};dkSave(st);
+  const L=LAST();const E0=emis(a,L)||a.e;const E=f.E??E0;const B=dkBench(a);
+  const likely=a.s==='electricity-generation'||E0>=3000;
+  const A=f.A!=null?f.A:E*st.P.pct/100;const Q=f.quota===false?null:dkQuota(E,A,st.P);
+  const dl=dkDeadlines(a,f);const nextD=dl.find(x=>x.days>=0);
+  const acts=dkActions(a,B,f,Q,T0,dl);const done=f.done||{};
+  const opts=Object.keys(SECTORS).map(k=>`<optgroup label="${esc(secN(k))}">${DATA.assets.filter(b=>b.s===k).sort((x,y)=>x.n.localeCompare(y.n)).map(b=>`<option value="${b.id}" ${b.id===a.id?'selected':''}>${esc(b.n)}</option>`).join('')}</optgroup>`).join('');
+  const yn=(key,val)=>`<div class="seg" data-f="${key}" role="group">${[['1',t('dk.yes')],['0',t('dk.no')],['',t('dk.unk')]].map(([v,l])=>`<button data-v="${v}" aria-pressed="${(val===true&&v==='1')||(val===false&&v==='0')||(val==null&&v==='')}">${l}</button>`).join('')}</div>`;
+  const mx=[.9,1,1.1].map(e=>[.5,1,2].map(p=>{const P=Object.assign({},st.P,{hn:st.P.hn*p,tc:(st.P.tc??st.P.hn)*p});return dkQuota(E*e,A,P);}));
+  $('v-desk').innerHTML=vhead(t('grp.tools'),t('nav.desk'),t('dk.lede'))+`
+  <div class="card dkpick"><label for="dkSel">${t('dk.pick')}</label><div class="dkrow"><select id="dkSel">${opts}</select><button class="btn" id="dkProf">${t('pf.open')}</button><button class="btn" id="dkDl">${t('dk.dl')}</button></div><p class="note">${t('dk.pickH')}</p></div>
+  <div class="dsum">
+   <div><span>${t('emisY',{y:L})}</span><b>${fmtE(E0)}</b><small>${uL()} · ${t('dk.est')}</small></div>
+   <div><span>${t('tr.score')}</span><b>${T0.g} · ${T0.sc}/100</b><small>${t('tr.g'+T0.g)}</small></div>
+   <div><span>${t('dk.pos')}</span><b>${B?nfx(B.better*100,0)+'%':t('na')}</b><small>${B?t('dk.posH',{n:B.p.length}):t('dk.noBench')}</small></div>
+   <div><span>${t('dk.next')}</span><b>${nextD?(nextD.days+' '+t('dk.days')):t('na')}</b><small>${nextD?esc(t(nextD.k))+' · '+nextD.d.toLocaleDateString(LOC()):''}</small></div></div>
+  <div class="dkgrid">
+   <div class="card"><h2>1. ${t('dk.s1')}</h2><p class="cap">${B?t(B.scope==='type'?'dk.s1Ct':'dk.s1Cs',{n:B.p.length,k:esc(kind(a)),s:secN(a.s)}):t('dk.noBench')}</p>
+    ${B?`${dkStrip(a,B)}<div class="dkkv"><div><span>${t('dk.yours')}</span><b>${nfx(a.ef,3)}</b></div><div><span>${t('dk.med')}</span><b>${nfx(B.med,3)}</b></div><div><span>${t('dk.q25')}</span><b>${nfx(B.q25,3)}</b></div><div><span>${t('dk.unit')}</span><b style="font-size:13px">${B.unit}</b></div></div>
+    <ul class="dkgap"><li>${B.gapMed>0?t('dk.gapMed',{t:fmtE(B.gapMed)+' '+uL(),c:money(B.gapMed*st.P.hn)}):t('dk.atMed')}</li><li>${B.gapQ>0?t('dk.gapQ',{t:fmtE(B.gapQ)+' '+uL(),c:money(B.gapQ*st.P.hn)}):t('dk.atQ')}</li></ul>`:''}
+    <p class="note">${t('dk.s1N')}</p></div>
+   <div class="card"><h2>2. ${t('dk.s2')}</h2><p class="cap">${t(likely?'dk.likely':'dk.unlikely')}</p>
+    <div class="dkq"><span>${t('dk.q42')}</span>${yn('inList',f.inList)}</div><div class="dkq"><span>${t('dk.q263')}</span>${yn('quota',f.quota)}</div>
+    <ol class="dkdl">${dl.map(x=>`<li class="${x.days<0?'past':x.days<120?'soon':''}"><div class="dd"><b>${x.d.toLocaleDateString(LOC())}</b><small>${x.days<0?t('dk.past'):t('dk.in',{n:x.days})}</small></div><div><b>${t(x.k)}</b><small>${x.cond==='eu'?t('dk.euN'):t('dk.legalRef',{r:x.ref})}${(x.cond==='list'&&f.inList==null)||(x.cond==='quota'&&f.quota==null)?' · '+t('dk.ifYes'):''}</small></div></li>`).join('')}</ol>
+    <p class="note">${t('dk.s2N',{d:DK_LEGAL})}</p></div></div>
+  <div class="card"><h2>3. ${t('dk.s3')}</h2><p class="cap">${t('dk.s3C')}</p>
+   ${f.quota===false?`<div class="empty">${t('dk.noQuota')}</div>`:`<div class="dkin">
+    <label>${t('dk.E')}<input type="number" id="dkE" value="${Math.round(E)}" min="0" step="1000"><small>${t('dk.Eh',{y:L})}</small></label>
+    <label>${t('dk.A')}<input type="number" id="dkA" value="${f.A!=null?Math.round(f.A):''}" placeholder="${esc(t('dk.Ap',{p:st.P.pct}))}" min="0" step="1000"><small>${f.A!=null?t('dk.Ah'):t('dk.Aass',{p:st.P.pct,v:nf(A,0)})}</small></label>
+    <label>${t('dk.pct')}<input type="number" id="dkPct" value="${st.P.pct}" min="0" max="200" step="1"><small>${t('dk.pctH')}</small></label>
+    <label>${t('dk.Phn')}<input type="number" id="dkPhn" value="${st.P.hn}" min="0" step="1000"><small>${t('dk.PhnH')}</small></label>
+    <label>${t('dk.Ptc')}<input type="number" id="dkPtc" value="${st.P.tc??''}" placeholder="${st.P.hn}" min="0" step="1000"><small>${t('dk.PtcH')}</small></label>
+    <label>${t('dk.Cr')}<input type="number" id="dkCr" value="${st.P.cr||0}" min="0" step="1000"><small>${t('dk.CrH',{m:nf(.3*A,0)})}</small></label></div>
+    <div class="dkres">${Q.gap>0?`<div class="bad"><span>${t('dk.short')}</span><b>${nf(Q.gap,0)} t</b></div><div><span>${t('dk.useO')}</span><b>${nf(Q.O,0)} t</b><small>${t('dk.oMax',{m:nf(Q.omax,0)})}</small></div><div><span>${t('dk.buy')}</span><b>${nf(Q.buy,0)} t</b></div><div class="hl"><span>${t('dk.cost')}</span><b>${money(Q.cost)}</b><small>${t('dk.borrow',{b:nf(Q.borrow,0)})}</small></div>`:`<div class="ok"><span>${t('dk.surplus')}</span><b>${nf(Q.surplus,0)} t</b></div><div class="hl"><span>${t('dk.sv')}</span><b>${money(Q.sv)}</b><small>${t('dk.svH')}</small></div>`}</div>
+    <div class="dkf"><code>C = max(0, E − A − O) × P<sub>hn</sub> + O × P<sub>tc</sub>, O ≤ 0,3 × A</code></div>
+    <h3 class="dkh3">${t('dk.mx')}</h3><div class="tablewrap"><table class="dkmx"><thead><tr><th>${t('dk.mxE')} \\ ${t('dk.mxP')}</th>${[LANG==='en'?'×0.5':'×0,5','×1','×2'].map(x=>`<th>${x} (${pT(st.P.hn*(/0[,.]5/.test(x)?.5:x==='×1'?1:2))})</th>`).join('')}</tr></thead><tbody>${mx.map((row,i)=>`<tr><th>${['−10%','±0','+10%'][i]} (${nf(E*[.9,1,1.1][i],0)} t)</th>${row.map(q=>`<td class="${q.gap>0?'neg':'pos'}">${q.gap>0?money(q.cost):'+'+money(q.sv)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+    <p class="note">${t('dk.mxN')}</p>`}</div>
+  <div class="card"><h2>4. ${t('dk.s4')}</h2><p class="cap">${t('dk.s4C',{n:acts.filter(x=>!done[x.id]).length})}</p>
+   <ul class="dkact">${acts.map(x=>`<li class="p${x.p} ${done[x.id]?'done':''}"><label><input type="checkbox" data-act="${x.id}" ${done[x.id]?'checked':''}><span>${t(x.k,x.v||{})}</span></label>${x.go?`<button class="drill-link" data-go-act="${x.id}">${t('dk.goAct')} →</button>`:''}<em>${t('dk.p'+x.p)}</em></li>`).join('')}</ul></div>`;
+  const re=()=>RENDER.desk();const S2=dkState();
+  $('dkSel').onchange=e=>{const s=dkState();s.id=e.target.value;dkSave(s);re();};
+  $('dkProf').onclick=()=>openProfile(a.id);
+  $('v-desk').querySelectorAll('.seg').forEach(g=>g.onclick=e=>{const b=e.target.closest('button');if(!b)return;const s=dkState();const ff=s.f[a.id];ff[g.dataset.f]=b.dataset.v===''?null:b.dataset.v==='1';dkSave(s);re();});
+  const num=id=>{const el=$(id);return el&&el.value!==''?+el.value:null;};
+  const bind=(id,fn)=>{const el=$(id);if(el)el.onchange=()=>{const s=dkState();fn(s,num(id));dkSave(s);re();};};
+  bind('dkE',(s,v)=>{s.f[a.id].E=v;});bind('dkA',(s,v)=>{s.f[a.id].A=v;});bind('dkPct',(s,v)=>{s.P.pct=v??95;});bind('dkPhn',(s,v)=>{s.P.hn=v??0;});bind('dkPtc',(s,v)=>{s.P.tc=v;});bind('dkCr',(s,v)=>{s.P.cr=v||0;});
+  $('v-desk').querySelector('.dkact').onclick=e=>{const c=e.target.closest('[data-act]');if(c){const s=dkState();s.f[a.id].done=s.f[a.id].done||{};s.f[a.id].done[c.dataset.act]=c.checked;dkSave(s);c.closest('li').classList.toggle('done',c.checked);return;}
+    const g=e.target.closest('[data-go-act]');if(g){const x=acts.find(z=>z.id===g.dataset.goAct);x&&x.go&&x.go();}};
+  $('dkDl').onclick=()=>{const lines=[t('nav.desk')+': '+a.n,t('dk.gen')+': '+new Date().toLocaleString(LOC()),'',
+    t('emisY',{y:L})+': '+nf(E0,0)+' t CO2e ('+t('dk.est')+')',t('tr.score')+': '+T0.sc+'/100 ('+T0.g+')',
+    B?t('dk.yours')+': '+nfx(a.ef,3)+' '+B.unit+'; '+t('dk.med')+': '+nfx(B.med,3)+'; '+t('dk.q25')+': '+nfx(B.q25,3)+' ('+B.p.length+')':'',
+    '',t('dk.s2')+':',...dl.map(x=>'- '+x.d.toLocaleDateString(LOC())+': '+t(x.k)+' ('+(x.cond==='eu'?'EU':x.ref)+')'),
+    '',Q?t('dk.s3')+': E='+nf(E,0)+' t, A='+nf(A,0)+' t'+(f.A==null?' ('+t('dk.assumed')+')':'')+', '+(Q.gap>0?t('dk.cost')+' '+money(Q.cost):t('dk.sv')+' '+money(Q.sv)):'',
+    '',t('dk.s4')+':',...acts.map(x=>'['+(done[x.id]?'x':' ')+'] '+t(x.k,x.v||{})),'',t('dk.disc'),t('footR')].filter(x=>x!=null);
+    saveFile('ban-lam-viec-'+a.id+'.txt',lines.join('\n'),'text/plain');};
+};
 
 // ---------- splash launcher ----------
 function openSplash(step){
@@ -2290,7 +2445,7 @@ function lkFactors(){const g=GWP[S.gwp];
 function lkMethod(){const m=DATA.meta;$('lkBody').innerHTML=`<div class="card prose">${t('meth.html')}<h3>${t('meth.own')}</h3><p>${esc(t('meth.ownD'))}</p><h3>${t('meth.upd')}</h3><p>${esc(t('meth.src',{s:m.source||'Climate TRACE API v6',f:m.fetched||t('unknown'),n:DATA.assets.length,b:BASE(),y0:years()[0],y1:LAST()}))}</p></div>`;}
 
 // ---------- STORAGE ----------
-const CT_KEYS=['ct.stars','ct.notes','ct.kk','ct.saved','ct.cmps','ct.ev','ct.fb','ct.settings','ct.lang','ct.view','ct.data'];
+const CT_KEYS=['ct.stars','ct.notes','ct.kk','ct.saved','ct.cmps','ct.ev','ct.fb','ct.desk','ct.settings','ct.lang','ct.view','ct.data'];
 RENDER.storage=function(){
   const stars=[...WS.stars].map(byId).filter(Boolean),notes=WS.notes,kk=WS.kk,saved=WS.saved,cmps=WS.cmps;
   const size=CT_KEYS.reduce((s,k)=>{try{return s+(localStorage.getItem(k)||'').length;}catch(e){return s;}},0);
@@ -2317,7 +2472,7 @@ RENDER.storage=function(){
   $('stExp').onclick=()=>{const o={app:'emissions-monitor',v:3,exported:new Date().toISOString(),data:{}};CT_KEYS.filter(k=>k!=='ct.data').forEach(k=>{const v=store.get(k);if(v!=null)o.data[k]=v;});saveFile('backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(o,null,1),'application/json');};
   $('stImp').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const o=JSON.parse(rd.result);if(!o||!o.data)throw 0;let n=0;Object.entries(o.data).forEach(([k,v])=>{if(CT_KEYS.includes(k)&&k!=='ct.data'){store.set(k,v);n++;}});S=mergeS(store.get('ct.settings'));const L=store.get('ct.lang');if(L==='vi'||L==='en')LANG=L;applyTheme();refreshAll();toast(t('st.impOk',{n}));}catch(err){$('stMsg').textContent=t('st.impErr');}};rd.readAsText(f);};
   $('stClr').onclick=()=>{$('stConfirm').innerHTML=`<div class="callout bad" style="margin-top:12px"><div class="t">${t('st.clrQ')}</div>${t('st.clrD')}<div class="toolbar" style="margin-top:10px"><button class="btn pri" id="stClrYes">${t('st.clrYes')}</button><button class="btn" id="stClrNo">${t('cancel')}</button></div></div>`;
-    $('stClrNo').onclick=()=>{$('stConfirm').innerHTML='';};$('stClrYes').onclick=()=>{['ct.stars','ct.notes','ct.kk','ct.saved','ct.cmps','ct.ev','ct.fb'].forEach(k=>store.del(k));toast(t('st.cleared'));RENDER.storage();};};
+    $('stClrNo').onclick=()=>{$('stConfirm').innerHTML='';};$('stClrYes').onclick=()=>{['ct.stars','ct.notes','ct.kk','ct.saved','ct.cmps','ct.ev','ct.fb','ct.desk'].forEach(k=>store.del(k));toast(t('st.cleared'));RENDER.storage();};};
 };
 
 // ---------- SETTINGS ----------
