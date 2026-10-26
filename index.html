@@ -604,7 +604,7 @@ const T={
 "palPh":["Tìm nhà máy, chủ sở hữu, thuật ngữ, mục…","Search plants, owners, terms, sections…"],
 "palHint":["↑ ↓ để chọn · Enter để mở · Esc để đóng · phím tắt Ctrl K hoặc /","↑ ↓ to move · Enter to open · Esc to close · shortcut Ctrl K or /"],
 "pal.plants":["Nhà máy","Plants"],"pal.sections":["Mục","Sections"],"pal.terms":["Thuật ngữ","Terms"],"pal.owners":["Chủ sở hữu","Owners"],"pal.ownerH":["Xem trong tab Doanh nghiệp","Open in the Companies tab"],
-"catalog":["Danh mục","Catalog"],"catalogOpen":["Mở danh mục nhà máy","Open plant catalog"],"catalogT":["Danh mục nhà máy","Plant catalog"],
+"catalog":["Nhà máy","Plants"],"tab.trust":["Độ tin cậy","Trust"],"tab.inventory":["Kiểm kê","Inventory"],"catalogOpen":["Mở danh mục nhà máy","Open plant catalog"],"catalogT":["Danh mục nhà máy","Plant catalog"],
 "catalogD":["Phát thải năm {y}, {u}; mũi tên so với {p}. Bấm một nhà máy để xem chi tiết.","{y} emissions, {u}; change versus {p}. Tap a plant for details."],
 "findPlant":["Tìm nhà máy hoặc chủ sở hữu","Find a plant or owner"],
 "starred":["Đã gắn sao","Starred"],"allSections":["Tất cả các mục","All sections"],
@@ -1126,7 +1126,7 @@ const VIEWS=[
 const RENDER={};let CUR='home';
 const icon=(d,s=18)=>`<svg width="${s}" height="${s}" viewBox="0 0 20 20" aria-hidden="true"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 function buildNav(){
-  let last='';$('tabs').innerHTML=VIEWS.map(v=>{let h='';if(v.g!==last){h=`<span class="grp-l">${t('grp.'+v.g)}</span>`;last=v.g;}return h+`<button role="tab" data-v="${v.id}" aria-selected="${v.id===CUR}">${t(v.k)}</button>`;}).join('');
+  const TABS=['home','directory','list','trust','inventory','lookup'];const SHORT={trust:'tab.trust',inventory:'tab.inventory'};$('tabs').innerHTML=VIEWS.filter(v=>TABS.includes(v.id)||v.id===CUR).map(v=>`<button role="tab" data-v="${v.id}" aria-selected="${v.id===CUR}">${t(SHORT[v.id]||v.k)}</button>`).join('');
   const bn=[['home','nav.home'],['list','nav.listS'],['inventory','nav.toolsS'],['lookup','nav.lookup'],['more','nav.more']];
   $('bnav').innerHTML=bn.map(([id,k])=>{const v=VIEWS.find(x=>x.id===id);const cur=id===CUR||(id==='inventory'&&['inventory','check','cbam','evidence'].includes(CUR))||(id==='more'&&['analysis','owners','trust','directory','explorer','storage','settings','profile'].includes(CUR));return `<button data-v="${id}" aria-current="${cur}">${icon(v?v.ico:'M4 6h12M4 10h12M4 14h12',20)}<span>${t(k)}</span></button>`;}).join('');
   $('hambLbl').textContent=t('catalog');$('homeLbl').textContent=t('sp.btn');$('palLbl').textContent=t('search');
@@ -1141,7 +1141,7 @@ function show(v,opts={}){
   if(!opts.noScroll){const n=document.querySelector('nav.tabs');const ab=$('appbar');const top=n&&n.offsetParent?Math.max(0,n.offsetTop-(ab?ab.offsetHeight:0)):(ab?Math.max(0,document.querySelector('main').offsetTop-ab.offsetHeight):0);if(window.scrollY>top)window.scrollTo({top,behavior:'smooth'});}
 }
 $('tabs').addEventListener('click',e=>{const b=e.target.closest('button[data-v]');if(b)show(b.dataset.v);});
-$('tabs').addEventListener('keydown',e=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;const i=VIEWS.findIndex(v=>v.id===CUR);const n=VIEWS[(i+(e.key==='ArrowRight'?1:VIEWS.length-1))%VIEWS.length];show(n.id);const b=$('tabs').querySelector(`[data-v="${n.id}"]`);if(b)b.focus();});
+$('tabs').addEventListener('keydown',e=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;const TV=[...$('tabs').querySelectorAll('[data-v]')].map(b=>b.dataset.v);const i=TV.indexOf(CUR);const n={id:TV[(i+(e.key==='ArrowRight'?1:TV.length-1))%TV.length]};show(n.id);const b=$('tabs').querySelector(`[data-v="${n.id}"]`);if(b)b.focus();});
 $('bnav').addEventListener('click',e=>{const b=e.target.closest('button[data-v]');if(!b)return;if(b.dataset.v==='more')openMore();else show(b.dataset.v);});
 function openMore(){
   const items=VIEWS.map(v=>`<button data-v="${v.id}">${t(v.k)}<small>${t(v.k+'.d')}</small></button>`).join('');
@@ -2046,19 +2046,8 @@ function openThemes(){
 openMore=openThemes;
 (function(){const row=document.querySelector('nav.tabs .navrow');if(!row||$('thBtn'))return;const b=document.createElement('button');b.className='hamb thbtn';b.id='thBtn';b.setAttribute('aria-expanded','false');b.innerHTML=`${icon('M3 4h6v6H3zM11 4h6v6h-6zM3 12h6v5H3zM11 12h6v5h-6z',16)}<span id="thLbl"></span><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>`;row.insertBefore(b,$('tabs'));b.onclick=()=>{$('moreHost').innerHTML?($('moreHost').innerHTML=''):openThemes();};})();
 const _rs=renderStatic;renderStatic=function(){_rs();const l=$('thLbl');if(l)l.textContent=t('th.btn');};
-// side catalog: themes as expandable groups
-(function(){
-  const _os=openSide;
-  openSide=function(){_os();const go=$('sideHost').querySelector('.go');if(!go)return;
-    const TH=THEMES();const close=()=>{$('sideHost').innerHTML='';$('hamb').setAttribute('aria-expanded','false');};
-    const box=document.createElement('div');box.className='sthm';
-    box.innerHTML=`<div class="sthl">${t('th.btn')}</div>`+TH.map(x=>`<details class="sth" data-th="${x.id}"${x.id===THM_CUR?' open':''}><summary>${icon(x.ico,17)}<span>${t(x.k)}</span><svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></summary><div class="sthi"><button class="thi thi-all" data-a="${x.id}:0"><span>${t('th.view')}</span><b aria-hidden="true">→</b></button>${x.items.map((i,n)=>`<button class="thi" data-a="${x.id}:${n+1}"><span>${esc(i[3]?i[0]:t(i[0]))}</span><small>${esc(i[2]||'')}</small></button>`).join('')}</div></details>`).join('')+`<div class="sthl" style="margin-top:14px">${t('th.plants')}</div>`;
-    go.remove();$('sBody').prepend(box);const q=$('sQ');if(q)q.addEventListener('input',()=>{box.hidden=!!q.value.trim();});
-    box.addEventListener('toggle',e=>{const d=e.target;if(d.open){THM_CUR=d.dataset.th;store.set('ct.thm',THM_CUR);box.querySelectorAll('details.sth').forEach(o=>{if(o!==d)o.open=false;});}},true);
-    box.onclick=e=>{const b=e.target.closest('.thi');if(!b)return;const [id,n]=b.dataset.a.split(':');const x=TH.find(z=>z.id===id);const f=+n?x.items[+n-1][1]:x.go;close();f&&f();};
-  };
-  $('hamb').onclick=openSide;
-})();
+// side catalog: plants only (themes live in the Themes menu)
+(function(){const _os=openSide;openSide=function(){_os();const go=$('sideHost').querySelector('.go');if(go)go.remove();};$('hamb').onclick=openSide;})();
 
 // ---------- page arrows (back / forward, previous / next) ----------
 const HIST={s:[],i:-1,nav:false};
