@@ -594,6 +594,9 @@ body.int .appbar{box-shadow:inset 0 -2px 0 rgba(242,190,92,.6),0 4px 18px rgba(0
 .vfl li{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:10px;border:1px solid var(--line);font-size:13.5px}.vfi{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-weight:800;flex:none;font-size:12px;color:#fff;background:var(--muted)}
 .vfl li.ok .vfi{background:var(--ok)}.vfl li.bad .vfi{background:var(--bad)}.vfl li.warn .vfi{background:var(--warn)}.vfl li.bad{border-color:var(--bad)}
 .vfdoc{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
+.splash .sptools{display:flex;align-items:center;gap:8px}
+.splash .modebtn span{display:inline}
+.splash .modebtn{padding:7px 10px}
 </style></head><body><div class="appbar" id="appbar">
     <div class="in topbar">
       <div class="brand"><span class="logo"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="3.2" fill="#5fe0b8"/><ellipse cx="9" cy="9" rx="8" ry="3.4" fill="none" stroke="#9ee6cf" stroke-width="1.2" transform="rotate(-25 9 9)"/></svg></span><span id="brandName"></span></div><div class="abnav"><button class="pga ab" id="abBack" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="pga ab" id="abFwd" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="abtitle" id="abTitle"></span></div>
@@ -2450,6 +2453,11 @@ RENDER.verify=function(){
   $('vfExt').oninput=()=>{if(VER.o)out();};
   if(VER.o)out();
 };
+// mode switch on the launcher screen too
+(function(){const _os=openSplash;openSplash=function(step){const r=_os(step);const lg=$('spLang');if(lg&&!$('spMode')){const b=document.createElement('button');b.id='spMode';b.className='hbtn modebtn '+MODE;b.innerHTML=$('modeBtn')?$('modeBtn').innerHTML:'';b.title=t('md.pick');b.onclick=()=>openModeSheet(true);lg.parentNode.insertBefore(b,lg);const w=document.createElement('div');w.className='sptools';lg.parentNode.insertBefore(w,b);w.appendChild(b);w.appendChild(lg);}return r;};
+  const hb=$('homeBtn');if(hb)hb.onclick=()=>openSplash();
+  const _ms=openModeSheet;openModeSheet=function(fromSplash){_ms();const sh=document.querySelector('.mdsheet'),sc=$('mdScrim');if(fromSplash||$('splash')){if(sh)sh.style.zIndex=96;if(sc)sc.style.zIndex=95;
+    const g=document.querySelector('.mdg');if(g)g.addEventListener('click',()=>setTimeout(()=>{if($('splash'))openSplash();},0));}};})();
 
 // ---------- splash launcher ----------
 function openSplash(step){
