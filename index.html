@@ -572,6 +572,28 @@ main [id]{scroll-margin-top:calc(var(--abh,52px) + 60px)}
 .dkact li.p1{border-left-color:var(--bad)}.dkact li.p2{border-left-color:var(--warn)}
 .dkact label{display:flex;gap:10px;align-items:flex-start;flex:1;min-width:220px;font-size:13.5px;cursor:pointer}.dkact input{margin-top:3px}
 .dkact li.done span{text-decoration:line-through;color:var(--muted)}.dkact em{font-style:normal;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+/* ---- modes ---- */
+.modebtn.int{border-color:rgba(242,190,92,.55);color:#ffd892}.modebtn.pub{border-color:rgba(95,224,184,.55);color:#9ee6cf}
+@media (max-width:860px){.modebtn span{display:none}.appbar .homebtn{display:none}}
+.mdsheet{position:fixed;z-index:41;left:50%;top:50%;transform:translate(-50%,-50%);width:min(720px,calc(100vw - 24px));max-height:calc(100vh - 40px);overflow:auto;background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.mdg{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px 18px}@media (max-width:600px){.mdg{grid-template-columns:1fr}}
+.mdc{position:relative;text-align:left;border:1.5px solid var(--line);background:var(--panel2);border-radius:14px;padding:16px;font:inherit;color:var(--fg);cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.mdc:hover{border-color:var(--accent)}.mdc.on{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}.mdc b{font-size:17px}.mdc>span{font-size:13px;color:var(--muted)}.mdc ul{margin:4px 0 0;padding-left:18px;font-size:13px;line-height:1.55}
+.mdc em{position:absolute;top:12px;right:12px;font-style:normal;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em}
+body.int .appbar{box-shadow:inset 0 -2px 0 rgba(242,190,92,.6),0 4px 18px rgba(0,0,0,.18)}
+/* ---- disclosure ---- */
+.dcwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:16px;align-items:start}@media (max-width:1000px){.dcwrap{grid-template-columns:1fr}}
+.dcstep{display:flex;align-items:center;gap:10px;font-weight:700;margin:14px 0 4px}.dcstep b{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:12.5px;flex:none}
+.dcform textarea{font:inherit;width:100%;box-sizing:border-box}.dcchk{display:flex;flex-direction:column;gap:6px;font-size:13.5px}.dcchk label{display:flex;gap:8px;align-items:flex-start}
+.dcbtns{display:flex;gap:8px;flex-wrap:wrap}.dcprev{position:sticky;top:calc(var(--abh,52px) + 64px);background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;max-height:calc(100vh - var(--abh,52px) - 90px);overflow:auto}
+@media (max-width:1000px){.dcprev{position:static;max-height:none}}.dcpl{font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:#5b6b66;margin-bottom:10px}
+.vfdrop{position:relative;border:2px dashed var(--line);border-radius:14px;padding:26px 16px;text-align:center;display:flex;flex-direction:column;gap:4px}.vfdrop.over{border-color:var(--accent);background:var(--accent-soft)}.vfdrop span{font-size:12.5px;color:var(--muted)}
+.vfdrop input{position:absolute;inset:0;opacity:0;cursor:pointer}.vfext{display:flex;flex-direction:column;gap:4px;margin-top:12px;font-size:13px;font-weight:600}.vfext input{font:inherit;font-family:var(--mono)}
+#vfOut{margin-top:14px;display:flex;flex-direction:column;gap:14px}.vfl{list-style:none;padding:0;margin:8px 0;display:flex;flex-direction:column;gap:6px}
+.vfl li{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:10px;border:1px solid var(--line);font-size:13.5px}.vfi{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-weight:800;flex:none;font-size:12px;color:#fff;background:var(--muted)}
+.vfl li.ok .vfi{background:var(--ok)}.vfl li.bad .vfi{background:var(--bad)}.vfl li.warn .vfi{background:var(--warn)}.vfl li.bad{border-color:var(--bad)}
+.vfdoc{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
 </style></head><body><div class="appbar" id="appbar">
     <div class="in topbar">
       <div class="brand"><span class="logo"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="3.2" fill="#5fe0b8"/><ellipse cx="9" cy="9" rx="8" ry="3.4" fill="none" stroke="#9ee6cf" stroke-width="1.2" transform="rotate(-25 9 9)"/></svg></span><span id="brandName"></span></div><div class="abnav"><button class="pga ab" id="abBack" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="pga ab" id="abFwd" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="abtitle" id="abTitle"></span></div>
@@ -606,6 +628,8 @@ main [id]{scroll-margin-top:calc(var(--abh,52px) + 60px)}
   <section id="v-explorer" class="view" hidden></section>
   <section id="v-profile" class="view" hidden></section>
   <section id="v-desk" class="view" hidden></section>
+  <section id="v-disclose" class="view" hidden></section>
+  <section id="v-verify" class="view" hidden></section>
   <section id="v-inventory" class="view" hidden></section>
   <section id="v-check" class="view" hidden></section>
   <section id="v-cbam" class="view" hidden></section>
@@ -786,6 +810,35 @@ const T={
 "dk.a.phys":["Có chỉ số bất thường về vật lý: đối chiếu nhanh số kê khai với ước tính","Physically unusual figures: run a quick cross-check"],"dk.a.grade":["Điểm tin cậy hạng {g}: cần số liệu riêng để nâng hạng trước khi dùng cho báo cáo","Trust grade {g}: add plant data to raise it before using it in reports"],
 "dk.a.eff":["Rà soát hiệu suất: khoảng cách tới mức trung vị khoảng {t}/năm","Review efficiency: gap to the median is about {t} per year"],"dk.a.buy":["Lập phương án cho {t} t thiếu hạn ngạch: tín chỉ, mua thêm hay vay kỳ sau","Plan for the {t} t shortfall: credits, purchase or borrowing"],"dk.a.cbam":["Chuẩn bị số liệu phát thải gắn trong sản phẩm cho khách hàng EU","Prepare embedded-emission data for EU customers"],"dk.a.ev":["Ghi lại các lần đối chiếu vệ tinh với thực tế vào sổ kiểm chứng","Log satellite checks against reality in the evidence log"],
 "dk.gen":["Tạo lúc","Generated"],"dk.assumed":["giả định","assumed"],"dk.disc":["Số liệu ước tính và kịch bản, không thay báo cáo kiểm kê chính thức hay tư vấn pháp lý.","Estimates and scenarios; not an official inventory report or legal advice."],
+"nav.disclose":["Tạo báo cáo công bố","Disclosure builder"],"nav.disclose.d":["Xuất trang công bố phát thải có mã kiểm tra để đăng lên website doanh nghiệp","Export a fingerprinted emissions disclosure page for your company website"],
+"nav.verify":["Xác minh báo cáo công bố","Verify a disclosure"],"nav.verify.d":["Tải lên báo cáo doanh nghiệp đã công bố để kiểm tra có bị sửa và đối chiếu với vệ tinh","Upload a published company report to check it is unaltered and compare with satellite data"],"dir.short":["Danh bạ","Directory"],
+"md.int":["Nội bộ","Internal"],"md.pub":["Công bố","Public"],"md.pick":["Chọn chế độ sử dụng","Choose a mode"],"md.cur":["Đang dùng","Current"],
+"md.intD":["Không gian làm việc riêng của doanh nghiệp.","The company's private workspace."],"md.intL":["Kiểm kê theo tháng, bàn làm việc, đối chiếu, CBAM|Ghi chú, sổ kiểm chứng, lưu trữ|Tạo báo cáo công bố từ số liệu của bạn|Mọi số liệu nhập chỉ lưu trên máy này","Monthly inventory, desk, cross-check, CBAM|Notes, evidence log, storage|Build a disclosure from your data|Everything you enter stays on this device"],
+"md.pubD":["Phần dành cho người xem bên ngoài: ngân hàng, khách hàng, cơ quan, báo chí.","For outside viewers: banks, customers, agencies, press."],"md.pubL":["Số liệu công khai và hồ sơ từng nhà máy|Điểm tin cậy và nguồn có ngày cập nhật|Xác minh báo cáo doanh nghiệp đã công bố|Ẩn toàn bộ công cụ và số liệu nội bộ","Public data and plant profiles|Trust scores and dated sources|Verify company disclosures|All internal tools and data hidden"],
+"md.note":["Chế độ chỉ đổi những gì hiển thị trên máy này; số liệu nội bộ không bao giờ tự gửi đi đâu. Muốn công khai, hãy dùng Tạo báo cáo công bố rồi tự đăng tệp đó.","The mode only changes what this device shows; internal data is never sent anywhere. To go public, use the disclosure builder and post the file yourself."],
+"md.toPub":["Đã chuyển sang chế độ Công bố","Switched to Public mode"],"md.toInt":["Đã chuyển sang chế độ Nội bộ","Switched to Internal mode"],"md.intOnly":["Phần này chỉ có ở chế độ Nội bộ","This section is only available in Internal mode"],
+"dc.lede":["Biến số liệu kiểm kê nội bộ thành một trang công bố gọn, có mã kiểm tra SHA-256, để doanh nghiệp đăng lên website. Ai cũng có thể xác minh trang đó tại mục Xác minh báo cáo công bố.","Turn internal inventory data into a clean disclosure page with a SHA-256 fingerprint for your website. Anyone can verify it under Verify a disclosure."],
+"dc.st1":["Chọn nhà máy và năm","Pick plant and year"],"dc.st2":["Số liệu công bố","Figures to disclose"],"dc.st3":["Chọn phần đối chiếu độc lập","Pick independent checks"],"dc.st4":["Xuất và đăng","Export and post"],
+"dc.fromInv":["Đã có kiểm kê tháng ({n}/12 tháng, phạm vi 1 ≈ {s1} t): ô để trống sẽ lấy số này.","Monthly inventory found ({n}/12 months, scope 1 ≈ {s1} t): blank fields use it."],"dc.noInv":["Chưa có kiểm kê tháng cho năm này: nhập số trực tiếp, hoặc làm Kiểm kê theo tháng trước để có biểu đồ từng tháng.","No monthly inventory for this year: type figures directly, or run the monthly inventory first to include a monthly chart."],
+"dc.kicker":["Công bố phát thải khí nhà kính","Greenhouse gas emissions disclosure"],"dc.year":["Năm","Year"],"dc.s1":["Phát thải trực tiếp (phạm vi 1)","Direct emissions (scope 1)"],"dc.s2":["Phát thải gián tiếp từ điện (phạm vi 2)","Indirect from electricity (scope 2)"],"dc.prod":["Sản lượng","Output"],"dc.int":["Cường độ phát thải","Emission intensity"],
+"dc.how":["Cách tính và thẩm định","Method and verification"],"dc.method":["Phương pháp","Method"],"dc.m.ipcc":["IPCC 2006, hệ số mặc định","IPCC 2006, default factors"],"dc.m.sector":["Theo thông tư hướng dẫn của bộ quản lý ngành","Per the sector ministry's guidance circular"],"dc.m.other":["Phương pháp khác (xem ghi chú)","Other method (see note)"],
+"dc.src":["Nguồn số liệu","Data source"],"dc.srcInv":["Kiểm kê theo tháng của doanh nghiệp","Company monthly inventory"],"dc.srcMan":["Doanh nghiệp nhập trực tiếp","Entered directly by the company"],"dc.ver":["Tình trạng thẩm định","Verification status"],"dc.vNone":["Chưa thẩm định","Not verified"],"dc.vSelf":["Tự kiểm tra nội bộ","Internal review"],"dc.vThird":["Đã thẩm định độc lập","Independently verified"],
+"dc.vby":["Đơn vị thẩm định","Verifier"],"dc.vbyP":["Tên tổ chức thẩm định","Verification body"],"dc.vdate":["Ngày thẩm định","Verification date"],"dc.tpct":["Mục tiêu giảm (%)","Reduction target (%)"],"dc.tyear":["Năm đạt mục tiêu","Target year"],"dc.target":["Mục tiêu","Target"],"dc.targetV":["Giảm {p}% vào năm {y}","Cut {p}% by {y}"],
+"dc.contact":["Liên hệ","Contact"],"dc.contactP":["Phòng môi trường, email hoặc điện thoại","Environment team, email or phone"],"dc.note":["Ghi chú","Note"],"dc.months":["Phát thải phạm vi 1 theo tháng (t CO2e)","Monthly scope 1 emissions (t CO2e)"],
+"dc.inSat":["So với ước tính vệ tinh độc lập (Climate TRACE)","Compare with independent satellite estimate (Climate TRACE)"],"dc.inPeer":["Vị trí cường độ so với nhà máy cùng loại","Intensity position against similar plants"],"dc.inTrust":["Điểm tin cậy số liệu vệ tinh của nhà máy","Plant's satellite data trust score"],"dc.inMonths":["Biểu đồ 12 tháng (cần kiểm kê tháng)","12-month chart (needs monthly inventory)"],
+"dc.indep":["Đối chiếu độc lập","Independent checks"],"dc.satV":["Ước tính vệ tinh cùng năm: {e} t CO2e; số công bố lệch {d} (Climate TRACE, tải {f})","Satellite estimate for the same year: {e} t CO2e; disclosed figure differs by {d} (Climate TRACE, downloaded {f})"],"dc.satNone":["Chưa có ước tính vệ tinh cho năm này","No satellite estimate for this year"],
+"dc.peerV":["Cường độ công bố sạch hơn {p}% trong {n} nhà máy cùng loại ở Việt Nam","Disclosed intensity is cleaner than {p}% of {n} similar plants in Vietnam"],"dc.trustV":["Điểm tin cậy số liệu vệ tinh: {s}/100, hạng {g}","Satellite data trust score: {s}/100, grade {g}"],"dc.indepN":["Ước tính vệ tinh có sai số và có thể dùng giá trị mặc định; chênh lệch là tín hiệu để xem lại, không tự nó chứng minh số công bố sai.","Satellite estimates carry error and may use defaults; a gap is a prompt to review, not proof the disclosure is wrong."],
+"dc.fp":["Mã kiểm tra SHA-256","SHA-256 fingerprint"],"dc.fpN":["Tạo lúc {d}. Đổi bất kỳ con số nào trong tệp sẽ làm mã không còn khớp khi xác minh.","Created {d}. Changing any figure in the file breaks the match on verification."],"dc.disc":["Số liệu do doanh nghiệp tự công bố; trang này không phải báo cáo kiểm kê nộp cơ quan nhà nước. Tạo bằng nền tảng Giám sát phát thải © Lê Hồng Anh.","Self-disclosed by the company; not the inventory report filed with authorities. Made with the Emissions Monitor platform © Le Hong Anh."],
+"dc.dl":["Tải trang công bố (.html)","Download disclosure page (.html)"],"dc.json":["Tải dữ liệu (.json)","Download data (.json)"],"dc.copyFp":["Sao chép mã kiểm tra","Copy fingerprint"],"dc.st4N":["Đăng tệp .html lên website doanh nghiệp. Nên in thêm mã kiểm tra ở nơi khác (báo cáo thường niên, thông cáo) để người xem đối chiếu hai nơi.","Post the .html file on your website. Also print the fingerprint elsewhere (annual report, press release) so readers can match the two."],
+"dc.preview":["Xem trước trang công bố","Disclosure preview"],"dc.needS1":["Cần có số phát thải phạm vi 1 để xuất.","Scope 1 emissions are needed to export."],"dc.noHash":["Trình duyệt không hỗ trợ tính mã SHA-256","This browser cannot compute SHA-256"],
+"vf.lede":["Dành cho ngân hàng, khách hàng, cơ quan: tải lên tệp công bố của doanh nghiệp để kiểm tra tệp có bị sửa sau khi tạo không, và đối chiếu số liệu với ước tính vệ tinh độc lập.","For banks, customers, agencies: upload a company's disclosure file to check it was not altered after creation and compare it with independent satellite estimates."],
+"vf.drop":["Kéo thả hoặc chọn tệp công bố (.html hoặc .json)","Drop or choose a disclosure file (.html or .json)"],"vf.dropH":["Tệp chỉ được đọc trên máy bạn, không tải lên đâu cả","The file is read on your device only, never uploaded"],"vf.ext":["Mã kiểm tra doanh nghiệp in ở nơi khác (không bắt buộc)","Fingerprint published elsewhere by the company (optional)"],"vf.extP":["Dán ít nhất 16 ký tự đầu","Paste at least the first 16 characters"],
+"vf.none":["Chưa có tệp nào. Tạo thử một tệp ở mục Tạo báo cáo công bố (chế độ Nội bộ).","No file yet. Create one in the disclosure builder (Internal mode) to try it."],"vf.bad":["Không đọc được: tệp không phải báo cáo công bố tạo từ nền tảng này.","Unreadable: not a disclosure created with this platform."],"vf.res":["Kết quả xác minh","Verification result"],
+"vf.c1ok":["Nội dung khớp mã kiểm tra trong tệp: số liệu chưa bị sửa kể từ khi tạo","Content matches the file's fingerprint: figures unchanged since creation"],"vf.c1bad":["Nội dung KHÔNG khớp mã kiểm tra trong tệp: tệp đã bị sửa sau khi tạo","Content does NOT match the file's fingerprint: the file was edited after creation"],
+"vf.c2none":["Chưa nhập mã in ở nơi khác; nhập để chắc chắn tệp đúng là bản doanh nghiệp đã công bố","No external fingerprint entered; add it to confirm this is the version the company published"],"vf.c2ok":["Khớp với mã doanh nghiệp in ở nơi khác","Matches the fingerprint the company published elsewhere"],"vf.c2bad":["Không khớp với mã in ở nơi khác: đây có thể không phải bản đã công bố","Does not match the externally published fingerprint: this may not be the published version"],
+"vf.c3none":["Không có ước tính vệ tinh để đối chiếu cho nhà máy, năm này","No satellite estimate to compare for this plant and year"],"vf.c3ok":["Lệch {d} so với ước tính vệ tinh {e} t, trong ngưỡng ±{m}% (dữ liệu tải {f})","Differs by {d} from the satellite estimate of {e} t, within ±{m}% (data downloaded {f})"],"vf.c3warn":["Lệch {d} so với ước tính vệ tinh {e} t, ngoài ngưỡng ±{m}%: nên hỏi doanh nghiệp giải thích","Differs by {d} from the satellite estimate of {e} t, outside ±{m}%: ask the company to explain"],
+"vf.c4ok":["Doanh nghiệp khai đã thẩm định độc lập bởi {b}; hãy xin chứng nhận để đối chiếu","Company states independent verification by {b}; request the certificate to confirm"],"vf.c4warn":["Chưa thẩm định độc lập: số liệu là doanh nghiệp tự khai","Not independently verified: figures are self-reported"],"vf.c5":["Tạo ngày {d} ({n} ngày trước)","Created {d} ({n} days ago)"],
+"vf.note":["Mã kiểm tra chứng minh tệp không bị sửa sau khi tạo, không chứng minh số liệu đúng. Độ tin cậy cao nhất khi có đủ: mã khớp hai nơi, thẩm định độc lập, và chênh lệch với vệ tinh nhỏ.","The fingerprint proves the file was not edited after creation, not that the figures are right. Confidence is highest when the fingerprint matches in two places, there is independent verification, and the satellite gap is small."],
 // ---- nav ----
 "grp.explore":["Khám phá","Explore"],"grp.tools":["Công cụ","Tools"],"grp.ref":["Tra cứu","Reference"],
 "nav.home":["Tổng quan","Overview"],"nav.home.d":["Bản đồ, số liệu chính, nhận định nhanh","Map, key figures, quick insights"],
@@ -1183,7 +1236,7 @@ const VIEWS=[
 const RENDER={};let CUR='home';
 const icon=(d,s=18)=>`<svg width="${s}" height="${s}" viewBox="0 0 20 20" aria-hidden="true"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 function buildNav(){
-  const TABS=['home','desk','directory','list','trust','inventory'];const SHORT={trust:'tab.trust',inventory:'tab.inventory'};$('tabs').innerHTML=VIEWS.filter(v=>TABS.includes(v.id)||v.id===CUR).map(v=>`<button role="tab" data-v="${v.id}" aria-selected="${v.id===CUR}">${t(SHORT[v.id]||v.k)}</button>`).join('');
+  const TABS=MODE==='pub'?['home','directory','list','trust','explorer','verify']:['home','desk','directory','list','trust','inventory'];const SHORT={trust:'tab.trust',inventory:'tab.inventory'};$('tabs').innerHTML=VIEWS.filter(v=>TABS.includes(v.id)||v.id===CUR).map(v=>`<button role="tab" data-v="${v.id}" aria-selected="${v.id===CUR}">${t(SHORT[v.id]||v.k)}</button>`).join('');
   const bn=[['home','nav.home'],['list','nav.listS'],['inventory','nav.toolsS'],['lookup','nav.lookup'],['more','nav.more']];
   $('bnav').innerHTML=bn.map(([id,k])=>{const v=VIEWS.find(x=>x.id===id);const cur=id===CUR||(id==='inventory'&&['desk','inventory','check','cbam','evidence'].includes(CUR))||(id==='more'&&['analysis','owners','trust','directory','explorer','storage','settings','profile'].includes(CUR));return `<button data-v="${id}" aria-current="${cur}">${icon(v?v.ico:'M4 6h12M4 10h12M4 14h12',20)}<span>${t(k)}</span></button>`;}).join('');
   $('hambLbl').textContent=t('catalog');$('homeLbl').textContent=t('sp.btn');$('palLbl').textContent=t('search');
@@ -1192,6 +1245,7 @@ function buildNav(){
 }
 function show(v,opts={}){
   const ALLV=[...VIEWS,{id:'profile'}];if(!ALLV.find(x=>x.id===v))v='home';CUR=v;
+  document.querySelectorAll('main section.view, main section[id^="v-"]').forEach(el=>{if(el.id!=='v-'+v)el.hidden=true;});
   ALLV.forEach(x=>{const el=$('v-'+x.id);if(x.id===v){el.hidden=false;el.classList.remove('view');void el.offsetWidth;el.classList.add('view');}else el.hidden=true;});
   buildNav();store.set('ct.view',v);try{if(v!=='profile')history.replaceState(null,'','#'+v)}catch(e){}
   (RENDER[v]||(()=>{}))();
@@ -2274,6 +2328,127 @@ RENDER.desk=function(){
     '',Q?t('dk.s3')+': E='+nf(E,0)+' t, A='+nf(A,0)+' t'+(f.A==null?' ('+t('dk.assumed')+')':'')+', '+(Q.gap>0?t('dk.cost')+' '+money(Q.cost):t('dk.sv')+' '+money(Q.sv)):'',
     '',t('dk.s4')+':',...acts.map(x=>'['+(done[x.id]?'x':' ')+'] '+t(x.k,x.v||{})),'',t('dk.disc'),t('footR')].filter(x=>x!=null);
     saveFile('ban-lam-viec-'+a.id+'.txt',lines.join('\n'),'text/plain');};
+};
+
+// ---------- two modes: internal workspace vs public disclosure ----------
+const MODE_DEFAULT='pub';
+let MODE=store.get('ct.mode')||MODE_DEFAULT;
+VIEWS.splice(VIEWS.findIndex(v=>v.id==='evidence')+1,0,{id:'disclose',g:'tools',k:'nav.disclose',ico:'M4 3h9l3 3v11H4zM7 9h6M7 12h6M7 15h3'});
+VIEWS.splice(VIEWS.findIndex(v=>v.id==='explorer')+1,0,{id:'verify',g:'explore',k:'nav.verify',ico:'M10 2l6 3v5c0 4-3 7-6 8-3-1-6-4-6-8V5zM7 10l2 2 4-4'});
+const ALLV=VIEWS.slice();
+const INT_ONLY=['desk','inventory','check','cbam','evidence','storage','settings','disclose'];
+function applyMode(m,silent){MODE=m;store.set('ct.mode',m);VIEWS.splice(0,VIEWS.length,...ALLV.filter(v=>m==='int'||!INT_ONLY.includes(v.id)));
+  document.body.classList.toggle('pub',m==='pub');document.body.classList.toggle('int',m==='int');
+  if(!silent){if(INT_ONLY.includes(CUR))show('home');else refreshAll();toast(t(m==='pub'?'md.toPub':'md.toInt'));}drawModeBtn();}
+function drawModeBtn(){const b=$('modeBtn');if(!b)return;const pub=MODE==='pub';b.innerHTML=icon(pub?'M10 2a8 8 0 100 16 8 8 0 000-16zM2 10h16M10 2c2.5 2.5 2.5 13.5 0 16M10 2c-2.5 2.5-2.5 13.5 0 16':'M5 9h10v8H5zM7 9V6a3 3 0 016 0v3',15)+`<span>${t(pub?'md.pub':'md.int')}</span>`;b.className='hbtn modebtn '+(pub?'pub':'int');b.title=t('md.pick');b.setAttribute('aria-label',t('md.pick')+': '+t(pub?'md.pub':'md.int'));}
+function openModeSheet(){
+  const card=(m,ic)=>`<button class="mdc ${MODE===m?'on':''}" data-m="${m}">${icon(ic,22)}<b>${t('md.'+m)}</b><span>${t('md.'+m+'D')}</span><ul>${t('md.'+m+'L').split('|').map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${MODE===m?`<em>${t('md.cur')}</em>`:''}</button>`;
+  $('moreHost').innerHTML=`<div class="scrim" id="mdScrim"></div><div class="mdsheet" role="dialog" aria-label="${esc(t('md.pick'))}"><div class="thh"><b>${t('md.pick')}</b><button class="close" id="mdClose" aria-label="${esc(t('close'))}">×</button></div>
+   <div class="mdg">${card('int','M5 9h10v8H5zM7 9V6a3 3 0 016 0v3')}${card('pub','M10 2a8 8 0 100 16 8 8 0 000-16zM2 10h16M10 2c2.5 2.5 2.5 13.5 0 16M10 2c-2.5 2.5-2.5 13.5 0 16')}</div><p class="note" style="padding:0 18px 16px;margin:0">${t('md.note')}</p></div>`;
+  const close=()=>{$('moreHost').innerHTML='';};$('mdScrim').onclick=close;$('mdClose').onclick=close;
+  $('moreHost').querySelector('.mdg').onclick=e=>{const b=e.target.closest('[data-m]');if(!b)return;close();if(b.dataset.m!==MODE)applyMode(b.dataset.m);};}
+(function(){
+  const tools=document.querySelector('.appbar .tools');const lang=tools&&tools.querySelector('.lang');
+  if(tools){const b=document.createElement('button');b.id='modeBtn';b.onclick=openModeSheet;tools.insertBefore(b,lang);}
+  const logo=document.querySelector('.appbar .brand');if(logo){logo.style.cursor='pointer';logo.title=t('sp.btn');logo.onclick=()=>openSplash();}
+  const _show=show;show=function(v,o){if(MODE==='pub'&&INT_ONLY.includes(v)){toast(t('md.intOnly'));v='home';}return _show(v,o);};
+  const _bn=buildNav;buildNav=function(){_bn();if(MODE==='pub'){const b=$('bnav').querySelector('[data-v="inventory"]');if(b){b.dataset.v='directory';b.querySelector('span').textContent=t('dir.short');b.setAttribute('aria-current',String(['directory','profile'].includes(CUR)));}}};
+  const _T=THEMES;THEMES=function(){let T=_T();const tr=T.find(x=>x.id==='trust');if(tr)tr.items.splice(tr.items.length-1,0,['nav.verify',()=>show('verify'),t('nav.verify.d')]);
+    const tl=T.find(x=>x.id==='tools');if(tl)tl.items.push(['nav.disclose',()=>show('disclose'),t('nav.disclose.d')]);
+    if(MODE==='pub'){T=T.filter(x=>x.id!=='tools');const HIDE=['th.trust.ev','th.site.star','nav.storage','nav.settings','nav.evidence'];T.forEach(x=>{x.items=x.items.filter(i=>!HIDE.includes(i[0]));});}return T;};
+  const _rs=renderStatic;renderStatic=function(){_rs();drawModeBtn();};
+  applyMode(MODE,true);
+})();
+V_THEME.disclose='tools';V_THEME.verify='trust';
+// ---------- disclosure model ----------
+const DISC={fac:null,year:null,last:null};
+async function sha256(txt){if(!(window.crypto&&crypto.subtle))return null;const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(txt));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');}
+const fpShow=h=>h?h.slice(0,32).match(/.{4}/g).join(' '):'';
+function discBuild(a,y,f){const kk=WS.kk[a.id+'|'+y];const R=kk&&kk.rows?kCalc(a,kk.rows):null;
+  const s1=f.s1!==''&&f.s1!=null?+f.s1:(R?Math.round(R.s1):null);const s2=f.s2!==''&&f.s2!=null?+f.s2:(R?Math.round(R.s2):null);const prod=f.prod!==''&&f.prod!=null?+f.prod:(R&&R.prod?Math.round(R.prod):null);
+  const isP=a.s==='electricity-generation';const unit=isP?'MWh':'t';const inten=s1&&prod?s1/prod:null;
+  const o={v:1,created:new Date().toISOString(),fac:{id:a.id,name:a.n,sector:a.s,type:a.t,owner:a.o||''},year:y,scope1:s1,scope2:s2,prod,prodUnit:unit,intensity:inten!=null?+inten.toFixed(4):null,
+    method:f.method||'ipcc',verify:{status:f.vs||'none',by:f.vby||'',date:f.vdate||''},target:f.tpct?{pct:+f.tpct,year:+f.tyear||null}:null,contact:f.contact||'',note:f.note||'',source:R?'inventory':'manual'};
+  if(f.inMonths&&R)o.months=R.months.map(m=>Math.round(m.s1));
+  if(f.inSat){const est=emis(a,y);o.sat={src:'Climate TRACE API v6',fetched:DATA.meta.fetched||'',est:est?Math.round(est):null};}
+  if(f.inPeer&&inten!=null){const {p}=dkPeers(a);const efs=p.map(b=>b.ef);if(efs.length>=3)o.peer={n:efs.length,better:+(efs.filter(v=>v>inten).length/efs.length).toFixed(3)};}
+  if(f.inTrust&&TRUST&&TRUST[a.id])o.trust={sc:TRUST[a.id].sc,g:TRUST[a.id].g};
+  return o;}
+function discBody(o,fp){const a=o.fac;const L=x=>t(x);const n0=v=>v==null?'—':nf(v,0);const isP=a.sector==='electricity-generation';
+  const vs={none:'dc.vNone',self:'dc.vSelf',third:'dc.vThird'}[o.verify.status]||'dc.vNone';
+  const diff=o.sat&&o.sat.est&&o.scope1?(o.scope1-o.sat.est)/o.sat.est*100:null;
+  const mx=o.months?Math.max(...o.months,1):1;
+  return `<header class="dch"><div class="dck">${L('dc.kicker')}</div><h1>${esc(a.name)}</h1><p>${esc(secN(a.sector))}${a.type?' · '+esc(tv(a.type)):''}${a.owner?' · '+esc(a.owner):''}</p><div class="dcy">${L('dc.year')} ${o.year}</div></header>
+   <section class="dcg"><div><span>${L('dc.s1')}</span><b>${n0(o.scope1)}</b><small>t CO2e</small></div><div><span>${L('dc.s2')}</span><b>${n0(o.scope2)}</b><small>t CO2e</small></div><div><span>${L('dc.prod')}</span><b>${n0(o.prod)}</b><small>${o.prodUnit==='MWh'?'MWh':L('u.tonne')}</small></div><div><span>${L('dc.int')}</span><b>${o.intensity!=null?nfx(o.intensity,3):'—'}</b><small>t CO2e/${o.prodUnit==='MWh'?'MWh':L('u.tonne')}</small></div></section>
+   <section class="dcs"><h2>${L('dc.how')}</h2><dl><dt>${L('dc.method')}</dt><dd>${L('dc.m.'+o.method)}</dd><dt>${L('dc.src')}</dt><dd>${L(o.source==='inventory'?'dc.srcInv':'dc.srcMan')}</dd><dt>${L('dc.ver')}</dt><dd><span class="dcb ${o.verify.status}">${L(vs)}</span>${o.verify.by?' '+esc(o.verify.by):''}${o.verify.date?' · '+esc(o.verify.date):''}</dd>${o.target?`<dt>${L('dc.target')}</dt><dd>${t('dc.targetV',{p:nf(o.target.pct,0),y:o.target.year||'—'})}</dd>`:''}</dl></section>
+   ${o.months?`<section class="dcs"><h2>${L('dc.months')}</h2><div class="dcm">${o.months.map((v,i)=>`<div title="${n0(v)} t"><i style="height:${Math.max(2,v/mx*100)}%"></i><span>${i+1}</span></div>`).join('')}</div></section>`:''}
+   ${o.sat||o.peer||o.trust?`<section class="dcs"><h2>${L('dc.indep')}</h2><ul class="dcl">${o.sat?`<li>${o.sat.est?t('dc.satV',{e:n0(o.sat.est),d:diff!=null?sgn(diff):'—',f:esc(o.sat.fetched)}):L('dc.satNone')}</li>`:''}${o.peer?`<li>${t('dc.peerV',{p:nf(o.peer.better*100,0),n:o.peer.n})}</li>`:''}${o.trust?`<li>${t('dc.trustV',{s:o.trust.sc,g:o.trust.g})}</li>`:''}</ul><p class="dcn">${L('dc.indepN')}</p></section>`:''}
+   ${o.note||o.contact?`<section class="dcs">${o.note?`<h2>${L('dc.note')}</h2><p>${esc(o.note)}</p>`:''}${o.contact?`<p><b>${L('dc.contact')}:</b> ${esc(o.contact)}</p>`:''}</section>`:''}
+   <footer class="dcf"><div><span>${L('dc.fp')}</span><code>${fp?fpShow(fp):'—'}</code></div><p>${t('dc.fpN',{d:new Date(o.created).toLocaleString(LOC())})}</p><p>${L('dc.disc')}</p></footer>`;}
+const DC_CSS=`.dc{--fg:#14201d;--mu:#5b6b66;--ln:#d9e2de;--ac:#0f6b55;font-family:"Be Vietnam Pro",system-ui,sans-serif;color:var(--fg);max-width:820px;margin:0 auto;line-height:1.5}
+.dc .dch{background:linear-gradient(150deg,#0b2e2a,#123f38);color:#eef6f2;border-radius:16px;padding:24px}.dc .dck{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#9ee6cf;font-weight:700}.dc h1{margin:6px 0 4px;font-size:28px;line-height:1.2}.dc .dch p{margin:0;color:#b9d2c9}.dc .dcy{margin-top:12px;display:inline-block;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:3px 12px;font-weight:600}
+.dc .dcg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}@media(max-width:620px){.dc .dcg{grid-template-columns:1fr 1fr}}.dc .dcg div{border:1px solid var(--ln);border-radius:12px;padding:12px}.dc .dcg span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);font-weight:700}.dc .dcg b{display:block;font-size:22px;font-family:"IBM Plex Mono",monospace}.dc .dcg small{color:var(--mu)}
+.dc .dcs{border:1px solid var(--ln);border-radius:12px;padding:14px 16px;margin:10px 0}.dc h2{font-size:16px;margin:0 0 8px}.dc dl{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:6px 12px;margin:0}.dc dt{color:var(--mu)}.dc dd{margin:0}
+.dc .dcb{display:inline-block;border-radius:999px;padding:1px 10px;font-size:12.5px;font-weight:700;background:#f3e3c4;color:#7a4b00}.dc .dcb.third{background:#cdeedd;color:#0f6b55}.dc .dcb.self{background:#e3ecf7;color:#22507f}
+.dc .dcm{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;height:110px;align-items:end}.dc .dcm div{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:2px}.dc .dcm i{display:block;width:100%;background:var(--ac);border-radius:3px 3px 0 0}.dc .dcm span{font-size:10px;color:var(--mu)}
+.dc .dcl{margin:0;padding-left:18px}.dc .dcn{font-size:12.5px;color:var(--mu);margin:8px 0 0}.dc .dcf{margin-top:14px;padding:14px 16px;border-radius:12px;background:#f2f6f4;font-size:12.5px;color:var(--mu)}.dc .dcf div{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.dc .dcf code{font-family:"IBM Plex Mono",monospace;font-size:14px;color:var(--fg);font-weight:600;word-break:break-all}.dc .dcf p{margin:6px 0 0}`;
+function discFile(o,json,fp){return `<!doctype html><html lang="${LANG}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(t('dc.kicker')+': '+o.fac.name+' '+o.year)}</title><style>body{margin:0;padding:24px 16px;background:#fff}${DC_CSS}</style></head><body><main class="dc">${discBody(o,fp)}</main><script type="application/json" id="disclosure" data-fp="${fp||''}">${json.replace(/</g,'\\u003c')}<\/script></body></html>`;}
+(function(){const st=document.createElement('style');st.textContent=DC_CSS;document.head.appendChild(st);})();
+RENDER.disclose=function(){
+  if(DISC.fac==null||!byId(DISC.fac))DISC.fac=(dkState().id)||DATA.assets.filter(a=>a.e>0).sort((x,y)=>y.e-x.e)[0].id;const a=byId(DISC.fac);
+  const ys=years();if(DISC.year==null)DISC.year=ys.at(-1);const y=DISC.year;
+  const D=store.get('ct.discf')||{};const key=a.id+'|'+y;const f=Object.assign({method:'ipcc',vs:'none',inSat:true,inPeer:true,inTrust:false,inMonths:true},D[key]||{});
+  const kk=WS.kk[key];if(!TRUST)trustAll();
+  const opts=Object.keys(SECTORS).map(k=>`<optgroup label="${esc(secN(k))}">${DATA.assets.filter(b=>b.s===k).sort((x,z)=>x.n.localeCompare(z.n)).map(b=>`<option value="${b.id}" ${b.id===a.id?'selected':''}>${esc(b.n)}</option>`).join('')}</optgroup>`).join('');
+  const inp=(k,lab,type='number',ph='')=>`<label>${lab}<input data-k="${k}" type="${type}" value="${esc(f[k]??'')}" placeholder="${esc(ph)}"></label>`;
+  const R=kk&&kk.rows?kCalc(a,kk.rows):null;
+  $('v-disclose').innerHTML=vhead(t('grp.tools'),t('nav.disclose'),t('dc.lede'))+`<div class="dcwrap"><div class="card dcform">
+   <div class="dcstep"><b>1</b> ${t('dc.st1')}</div><div class="dkin"><label style="grid-column:1/-1">${t('facility')}<select id="dcFac">${opts}</select></label><label>${t('year')}<select id="dcYear">${ys.map(v=>`<option ${v==y?'selected':''}>${v}</option>`).join('')}</select></label></div>
+   <p class="note">${R?t('dc.fromInv',{n:kk.n,s1:nf(R.s1,0)}):t('dc.noInv')}</p>
+   <div class="dcstep"><b>2</b> ${t('dc.st2')}</div><div class="dkin">${inp('s1',t('dc.s1')+' (t)','number',R?nf(R.s1,0):'')}${inp('s2',t('dc.s2')+' (t)','number',R?nf(R.s2,0):'')}${inp('prod',t('dc.prod')+' ('+(a.s==='electricity-generation'?'MWh':t('u.tonne'))+')','number',R&&R.prod?nf(R.prod,0):'')}
+    <label>${t('dc.method')}<select data-k="method">${['ipcc','sector','other'].map(m=>`<option value="${m}" ${f.method===m?'selected':''}>${t('dc.m.'+m)}</option>`).join('')}</select></label>
+    <label>${t('dc.ver')}<select data-k="vs">${[['none','dc.vNone'],['self','dc.vSelf'],['third','dc.vThird']].map(([v,k])=>`<option value="${v}" ${f.vs===v?'selected':''}>${t(k)}</option>`).join('')}</select></label>
+    ${inp('vby',t('dc.vby'),'text',t('dc.vbyP'))}${inp('vdate',t('dc.vdate'),'date')}${inp('tpct',t('dc.tpct'),'number','')}${inp('tyear',t('dc.tyear'),'number','2030')}${inp('contact',t('dc.contact'),'text',t('dc.contactP'))}
+    <label style="grid-column:1/-1">${t('dc.note')}<textarea data-k="note" rows="2">${esc(f.note||'')}</textarea></label></div>
+   <div class="dcstep"><b>3</b> ${t('dc.st3')}</div><div class="dcchk">${[['inSat','dc.inSat'],['inPeer','dc.inPeer'],['inTrust','dc.inTrust'],['inMonths','dc.inMonths']].map(([k,l])=>`<label><input type="checkbox" data-k="${k}" ${f[k]?'checked':''} ${k==='inMonths'&&!R?'disabled':''}> ${t(l)}</label>`).join('')}</div>
+   <div class="dcstep"><b>4</b> ${t('dc.st4')}</div><div class="dcbtns"><button class="btn pri" id="dcDl">${t('dc.dl')}</button><button class="btn" id="dcJson">${t('dc.json')}</button><button class="btn" id="dcFp">${t('dc.copyFp')}</button></div><p class="note">${t('dc.st4N')}</p></div>
+   <div class="dcprev"><div class="dcpl">${t('dc.preview')}</div><div class="dc" id="dcPrev"></div></div></div>`;
+  const save=()=>{const S2=store.get('ct.discf')||{};S2[key]=f;store.set('ct.discf',S2);};
+  const draw=async()=>{const o=discBuild(a,y,f);const json=JSON.stringify(o);const fp=await sha256(json);DISC.last={o,json,fp};$('dcPrev').innerHTML=discBody(o,fp);
+    const ok=o.scope1!=null;['dcDl','dcJson','dcFp'].forEach(id=>{$(id).disabled=!ok;});if(!ok)$('dcPrev').insertAdjacentHTML('afterbegin',`<div class="empty" style="margin-bottom:10px">${t('dc.needS1')}</div>`);};
+  $('v-disclose').querySelector('.dcform').addEventListener('input',e=>{const el=e.target.closest('[data-k]');if(!el)return;f[el.dataset.k]=el.type==='checkbox'?el.checked:el.value;save();clearTimeout(draw._t);draw._t=setTimeout(draw,250);});
+  $('v-disclose').querySelector('.dcform').addEventListener('change',e=>{const el=e.target.closest('select[data-k]');if(el){f[el.dataset.k]=el.value;save();draw();}});
+  $('dcFac').onchange=e=>{DISC.fac=e.target.value;RENDER.disclose();};$('dcYear').onchange=e=>{DISC.year=+e.target.value;RENDER.disclose();};
+  $('dcDl').onclick=()=>{const L2=DISC.last;if(!L2)return;saveFile('cong-bo-phat-thai-'+a.id+'-'+y+'.html',discFile(L2.o,L2.json,L2.fp),'text/html');};
+  $('dcJson').onclick=()=>{const L2=DISC.last;if(!L2)return;saveFile('cong-bo-phat-thai-'+a.id+'-'+y+'.json',JSON.stringify({fingerprint:L2.fp,data:L2.o},null,1),'application/json');};
+  $('dcFp').onclick=()=>{const L2=DISC.last;if(!L2||!L2.fp)return toast(t('dc.noHash'));navigator.clipboard.writeText(L2.fp).then(()=>toast(t('copied'))).catch(()=>toast(L2.fp));};
+  draw();
+};
+// ---------- verify a published disclosure ----------
+const VER={o:null,json:null,fpFile:null,fpCalc:null,name:''};
+RENDER.verify=function(){
+  $('v-verify').innerHTML=vhead(t('grp.explore'),t('nav.verify'),t('vf.lede'))+`<div class="card vfin"><div class="vfdrop" id="vfDrop"><b>${t('vf.drop')}</b><span>${t('vf.dropH')}</span><input type="file" id="vfFile" accept=".html,.htm,.json,text/html,application/json"></div>
+   <label class="vfext">${t('vf.ext')}<input id="vfExt" placeholder="${esc(t('vf.extP'))}" autocomplete="off"></label></div><div id="vfOut"></div>`;
+  const out=()=>{const o=VER.o;if(!o){$('vfOut').innerHTML=`<div class="empty">${t('vf.none')}</div>`;return;}
+    const a=byId(o.fac&&o.fac.id);const ext=($('vfExt').value||'').replace(/\s/g,'').toLowerCase();
+    const okFile=VER.fpFile&&VER.fpCalc&&VER.fpFile===VER.fpCalc;const okExt=ext.length>=16?VER.fpCalc&&VER.fpCalc.startsWith(ext):null;
+    const est=a?emis(a,o.year):null;const diff=est&&o.scope1?(o.scope1-est)/est*100:null;const inTol=diff!=null&&Math.abs(diff)<=S.match;
+    const ageD=Math.floor((Date.now()-Date.parse(o.created))/864e5);
+    const chk=[[okFile?'ok':'bad',okFile?t('vf.c1ok'):VER.fpCalc?t('vf.c1bad'):t('dc.noHash')],
+      [okExt==null?'info':okExt?'ok':'bad',okExt==null?t('vf.c2none'):okExt?t('vf.c2ok'):t('vf.c2bad')],
+      [diff==null?'info':inTol?'ok':'warn',diff==null?t('vf.c3none'):t(inTol?'vf.c3ok':'vf.c3warn',{d:sgn(diff),m:S.match,e:nf(est,0),f:DATA.meta.fetched||''})],
+      [o.verify&&o.verify.status==='third'?'ok':'warn',t(o.verify&&o.verify.status==='third'?'vf.c4ok':'vf.c4warn',{b:esc((o.verify&&o.verify.by)||'')})],
+      [ageD>400?'warn':'ok',t('vf.c5',{d:new Date(o.created).toLocaleDateString(LOC()),n:ageD})]];
+    $('vfOut').innerHTML=`<div class="card"><h2>${t('vf.res')}</h2><p class="cap">${esc(VER.name)}</p><ul class="vfl">${chk.map(([lv,tx])=>`<li class="${lv}"><span class="vfi">${lv==='ok'?'✓':lv==='bad'?'✕':lv==='warn'?'!':'i'}</span><span>${tx}</span></li>`).join('')}</ul><p class="note">${t('vf.note')}</p></div><div class="dc vfdoc">${discBody(o,VER.fpCalc)}</div>`;};
+  const load=async file=>{if(!file)return;const txt=await file.text();VER.name=file.name;VER.o=null;VER.fpFile=null;let json=null;
+    try{if(/^\s*</.test(txt)){const m=txt.match(/<script type="application\/json" id="disclosure" data-fp="([0-9a-f]*)">([\s\S]*?)<\/script>/);if(m){VER.fpFile=m[1]||null;json=m[2].replace(/\\u003c/g,'<');}}
+      else{const j=JSON.parse(txt);if(j&&j.data){VER.fpFile=j.fingerprint||null;json=JSON.stringify(j.data);}}
+      if(json){VER.o=JSON.parse(json);VER.json=json;VER.fpCalc=await sha256(json);}}catch(e){}
+    if(!VER.o){$('vfOut').innerHTML=`<div class="empty">${t('vf.bad')}</div>`;return;}out();};
+  $('vfFile').onchange=e=>load(e.target.files[0]);
+  const d=$('vfDrop');['dragover','dragenter'].forEach(k=>d.addEventListener(k,e=>{e.preventDefault();d.classList.add('over');}));['dragleave','drop'].forEach(k=>d.addEventListener(k,e=>{e.preventDefault();d.classList.remove('over');}));d.addEventListener('drop',e=>load(e.dataTransfer.files[0]));
+  $('vfExt').oninput=()=>{if(VER.o)out();};
+  if(VER.o)out();
 };
 
 // ---------- splash launcher ----------
