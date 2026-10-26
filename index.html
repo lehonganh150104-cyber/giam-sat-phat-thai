@@ -570,7 +570,6 @@ main [id]{scroll-margin-top:calc(var(--abh,52px) + 60px)}
   <section id="v-lookup" class="view" hidden></section>
   <section id="v-storage" class="view" hidden></section>
   <section id="v-settings" class="view" hidden></section>
-  <nav id="pgfoot" class="pgfoot" aria-label="pager"></nav>
 </div></main>
 <footer class="foot"><div class="in"><span id="footL"></span><span id="footR"></span></div></footer>
 <nav class="bnav" id="bnav"></nav>
@@ -2035,21 +2034,15 @@ const _rs=renderStatic;renderStatic=function(){_rs();const l=$('thLbl');if(l)l.t
 const HIST={s:[],i:-1,nav:false};
 const V_THEME={home:'em',analysis:'em',explorer:'em',list:'site',owners:'site',directory:'site',profile:'site',trust:'trust',evidence:'trust',inventory:'tools',check:'tools',cbam:'tools',lookup:'ref',storage:'ref',settings:'ref'};
 const keyTitle=k=>{if(k.startsWith('p:')){const a=byId(k.slice(2));return a?shortName(a.n):t('nav.directory');}const v=VIEWS.find(x=>x.id===k);return v?t(v.k):k;};
-const azList=()=>DATA.assets.slice().sort((a,b)=>a.n.localeCompare(b.n,'vi'));
 function histGo(d){const j=HIST.i+d;if(j<0||j>=HIST.s.length)return;HIST.i=j;HIST.nav=true;const k=HIST.s[j];if(k.startsWith('p:'))openProfile(k.slice(2));else show(k);}
 function drawPg(){
-  const nav=$('pgnav'),ft=$('pgfoot');if(!nav||!ft)return;
+  const nav=$('pgnav');if(!nav)return;
   const back=HIST.i>0?HIST.s[HIST.i-1]:null,fwd=HIST.i<HIST.s.length-1?HIST.s[HIST.i+1]:null;
   const th=V_THEME[CUR]||'em';const here=CUR==='profile'?keyTitle('p:'+PROF.id):keyTitle(CUR);
   const arr=(d,dis,lab)=>`<button class="pga" data-h="${d}" ${dis?'disabled':''} aria-label="${esc(lab)}" title="${esc(lab)}"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="${d<0?'M10 3L5 8l5 5':'M6 3l5 5-5 5'}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
   nav.innerHTML=`<div class="pgcrumb"><button class="pgth" data-th="${th}">${t('th.'+th)}</button><span aria-hidden="true">›</span>${CUR==='profile'?`<button class="pgth" data-go="directory">${t('nav.directory')}</button><span aria-hidden="true">›</span>`:''}<b>${esc(here)}</b></div>
     ${back?`<button class="pgback" data-h="-1">← ${esc(t('pg.backTo',{p:keyTitle(back)}))}</button>`:''}`;
   const ab=$('abBack'),af=$('abFwd');if(ab){const lb=back?t('pg.backTo',{p:keyTitle(back)}):t('pg.back'),lf=fwd?t('pg.fwdTo',{p:keyTitle(fwd)}):t('pg.fwd');ab.disabled=!back;af.disabled=!fwd;ab.title=lb;ab.setAttribute('aria-label',lb);af.title=lf;af.setAttribute('aria-label',lf);$('abTitle').textContent=here;}
-  let prev,next,pl,nl;
-  if(CUR==='profile'){const L=azList();const i=L.findIndex(a=>a.id===PROF.id);const p=L[(i-1+L.length)%L.length],n=L[(i+1)%L.length];prev=()=>openProfile(p.id);next=()=>openProfile(n.id);pl=[t('pg.prevSite'),shortName(p.n)];nl=[t('pg.nextSite'),shortName(n.n)];}
-  else{const i=VIEWS.findIndex(v=>v.id===CUR);const p=VIEWS[(i-1+VIEWS.length)%VIEWS.length],n=VIEWS[(i+1)%VIEWS.length];prev=()=>show(p.id);next=()=>show(n.id);pl=[t('pg.prev'),t(p.k)];nl=[t('pg.next'),t(n.k)];}
-  ft.innerHTML=`<button class="pgc prev" id="pgPrev"><span class="pgi" aria-hidden="true">←</span><span><small>${esc(pl[0])}</small><b>${esc(pl[1])}</b></span></button><button class="pgc next" id="pgNext"><span><small>${esc(nl[0])}</small><b>${esc(nl[1])}</b></span><span class="pgi" aria-hidden="true">→</span></button>`;
-  $('pgPrev').onclick=prev;$('pgNext').onclick=next;
 }
 (function(){
   const _show=show;
