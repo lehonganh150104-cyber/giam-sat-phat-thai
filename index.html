@@ -453,6 +453,60 @@ th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--accent
 .bench .bl{position:relative;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--ok-soft),var(--warn-soft),var(--bad-soft));margin:8px 0 4px}
 .bench .me,.bench .md{position:absolute;top:-4px;width:3px;height:16px;border-radius:2px;transform:translateX(-50%)}.bench .me{background:var(--fg)}.bench .md{background:var(--muted);opacity:.6}
 .trl{margin:4px 0 0;padding-left:18px;font-size:12.5px}.trl li.bad{color:var(--bad)}.trl li.warn{color:var(--warn)}.trl li.info{color:var(--muted)}
+
+/* ---- theme menu ---- */
+.thbtn span{white-space:nowrap}
+@media (max-width:760px){.thbtn{display:none}}
+.thm{position:fixed;z-index:41;background:var(--panel);color:var(--fg);display:flex;flex-direction:column}
+.thm.pop{left:50%;transform:translateX(-50%);width:min(860px,calc(100vw - 32px));max-height:min(620px,calc(100vh - 120px));border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.thm.sheet{left:0;right:0;bottom:0;max-height:86vh;border-radius:18px 18px 0 0;border-top:1px solid var(--line);box-shadow:0 -10px 40px rgba(0,0,0,.2);padding-bottom:env(safe-area-inset-bottom,0px)}
+.thh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding:16px max(18px,env(safe-area-inset-left,0px)) 10px;border-bottom:1px solid var(--line2);position:relative}
+.thh b{font-size:18px}.thh .note{font-size:12.5px;padding-right:36px}.thh .close{position:absolute;right:12px;top:10px}
+.thg{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);min-height:0;flex:1;overflow:hidden}
+.thl{overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--line2)}
+.thl-b{display:flex;align-items:center;gap:10px;border:2px solid transparent;background:none;font:inherit;font-weight:600;font-size:15px;color:var(--accent);padding:11px 10px;border-radius:10px;cursor:pointer;text-align:left}
+.thl-b span{flex:1;min-width:0}.thl-b svg:first-child{flex:none;opacity:.8}.thl-b .chev{flex:none}
+.thl-b[aria-expanded="true"]{border-color:var(--accent);background:var(--panel2);color:var(--fg)}
+.thr{overflow-y:auto;background:var(--panel2);padding:14px 14px 20px;display:flex;flex-direction:column;gap:2px}
+.thr-h{font-weight:700;font-size:16px}.thr-d{margin:2px 0 8px;font-size:12.5px;color:var(--muted)}
+.thi{display:block;width:100%;border:0;background:none;font:inherit;text-align:left;padding:10px 10px;border-radius:9px;cursor:pointer;color:var(--fg);font-size:14.5px}
+.thi:hover,.thi:focus-visible{background:var(--panel)}
+.thi small{display:block;color:var(--muted);font-size:12px;margin-top:1px}
+.thi-all{display:flex;justify-content:space-between;align-items:center;font-weight:700;color:var(--accent);border-bottom:1px solid var(--line);border-radius:9px 9px 0 0;margin-bottom:4px}
+@media (max-width:420px){.thl-b{font-size:14px;padding:10px 8px;gap:8px}.thl-b svg:first-child{display:none}.thr{padding:12px 10px 18px}.thi{font-size:14px;padding:9px 8px}}
+
+/* ---- page arrows ---- */
+.pgnav{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 0 2px;font-size:13.5px}
+.pgarrows{display:flex;gap:4px}
+.pga{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:50%;cursor:pointer}
+.pga:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}.pga:disabled{opacity:.35;cursor:default}
+.pgcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0;color:var(--muted)}.pgcrumb b{color:var(--fg)}
+.pgth{border:0;background:none;font:inherit;color:var(--accent);cursor:pointer;padding:0}.pgth:hover{text-decoration:underline}
+.pgback{margin-left:auto;border:0;background:none;font:inherit;font-size:12.5px;color:var(--muted);cursor:pointer}.pgback:hover{color:var(--accent)}
+@media (max-width:600px){.pgback{display:none}}
+.pgfoot{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px 0 8px}
+.pgc{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:14px 16px;font:inherit;color:var(--fg);cursor:pointer;text-align:left;min-width:0}
+.pgc.next{justify-content:flex-end;text-align:right}.pgc:hover{border-color:var(--accent)}
+.pgc span{min-width:0}.pgc small{display:block;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}.pgc b{display:block;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pgi{font-size:20px;color:var(--accent);flex:none}
+/* ---- help ---- */
+.helpfab{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:29;display:flex;align-items:center;gap:8px;border:0;background:var(--accent);color:#fff;font:inherit;font-weight:600;font-size:13.5px;padding:10px 16px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer}
+@media (max-width:860px){.helpfab{bottom:calc(78px + env(safe-area-inset-bottom,0px));padding:10px 12px}.helpfab span{display:none}}
+.helpp{position:fixed;top:0;right:0;bottom:0;width:min(460px,100%);z-index:42;background:var(--panel);color:var(--fg);border-left:1px solid var(--line);box-shadow:-12px 0 40px rgba(0,0,0,.2);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-right:env(safe-area-inset-right,0px)}
+.helpp.sheet{top:auto;left:0;width:auto;max-height:88vh;border-left:0;border-top:1px solid var(--line);border-radius:18px 18px 0 0;padding-bottom:env(safe-area-inset-bottom,0px)}
+.hph{padding:16px 18px 0;border-bottom:1px solid var(--line2);position:relative}.hph>b{font-size:18px}.hph .close{position:absolute;right:12px;top:10px}
+.hptabs{display:flex;gap:4px;margin-top:12px}.hptabs button{border:0;background:none;font:inherit;font-weight:600;font-size:14px;color:var(--muted);padding:9px 12px;border-bottom:2px solid transparent;cursor:pointer}
+.hptabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+.hpb{overflow-y:auto;padding:14px 18px 28px;flex:1}
+.hlist{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.hq{border:1px solid var(--line);border-radius:10px;padding:0 12px;background:var(--panel2)}
+.hq summary{cursor:pointer;font-weight:600;padding:11px 0;font-size:14px}.hq p{margin:0 0 8px;font-size:13.5px;line-height:1.55}.hq .drill-link{margin-bottom:10px}
+.hpmore{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:16px;padding-top:12px;border-top:1px solid var(--line2);font-size:13.5px;color:var(--muted)}
+.hform{display:flex;flex-direction:column;gap:12px}.hform label{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:600}
+.hform input,.hform select,.hform textarea{font:inherit;font-weight:400;width:100%;box-sizing:border-box}.hform .btn{align-self:flex-start}
+#fErr{color:var(--bad);margin:0;min-height:1em}
+.hdone{display:flex;flex-direction:column;gap:10px;align-items:flex-start}.hdone p{margin:0;font-size:13.5px}
+.hpre{white-space:pre-wrap;font-size:12.5px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px;width:100%;box-sizing:border-box;margin:0;max-height:200px;overflow:auto}
 </style></head><body><header class="hero">
   <svg class="orbit" viewBox="0 0 620 620" aria-hidden="true"><g fill="none" stroke="#7fdcc0" stroke-opacity=".35"><ellipse cx="310" cy="310" rx="300" ry="120" transform="rotate(-24 310 310)"/><ellipse cx="310" cy="310" rx="240" ry="90" transform="rotate(-24 310 310)" stroke-dasharray="3 6"/><circle cx="310" cy="310" r="150" stroke-opacity=".18"/></g><circle cx="560" cy="200" r="4" fill="#9ee6cf"/><circle cx="120" cy="420" r="3" fill="#9ee6cf" fill-opacity=".6"/></svg>
   <div class="in">
@@ -475,6 +529,7 @@ th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--accent
 <nav class="tabs"><div class="in navrow"><button class="hamb" id="hamb" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 4.5h14M2 9h14M2 13.5h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span id="hambLbl"></span></button><div class="tabsrow" id="tabs" role="tablist"></div></div></nav>
 
 <main><div class="in">
+  <div id="pgnav" class="pgnav"></div>
   <section id="v-home" class="view" hidden></section>
   <section id="v-analysis" class="view" hidden></section>
   <section id="v-owners" class="view" hidden></section>
@@ -490,6 +545,7 @@ th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--accent
   <section id="v-lookup" class="view" hidden></section>
   <section id="v-storage" class="view" hidden></section>
   <section id="v-settings" class="view" hidden></section>
+  <nav id="pgfoot" class="pgfoot" aria-label="pager"></nav>
 </div></main>
 <footer class="foot"><div class="in"><span id="footL"></span><span id="footR"></span></div></footer>
 <nav class="bnav" id="bnav"></nav>
@@ -603,6 +659,38 @@ const T={
 "pf.uCf":["Điện thực phát so với tối đa","Actual versus maximum generation"],"pf.uUtil":["Sản lượng so với công suất","Output versus capacity"],"pf.uCost":["Kịch bản {u} USD/t, miễn phí {f}%","Scenario {u} USD/t, {f}% free"],
 "pf.no2None":["Sẽ có khi kết nối khóa Copernicus trên GitHub.","Available once the Copernicus key is set on GitHub."],
 "pf.srcC":["Trang này dùng {n} nguồn; danh sách đầy đủ của nền tảng bên dưới.","This page uses {n} sources; the platform's full list is below."],"pf.peerC":["Cùng ngành {s}, phát thải gần nhất với cơ sở này.","Same {s} sector, closest in emissions."],
+"th.btn":["Mảng dữ liệu","Themes"],"th.hint":["Chọn một mảng bên trái, rồi chọn mục nhỏ bên phải","Pick a theme on the left, then a topic on the right"],"th.view":["Xem toàn bộ mảng này","View theme overview"],"th.n":["{n} cơ sở","{n} sites"],
+"th.em":["Phát thải","Emissions"],"th.em.d":["Tổng lượng, xu hướng và các cơ sở phát thải lớn nhất.","Totals, trends and the largest emitters."],
+"th.em.map":["Bản đồ và số liệu chính","Map and key figures"],"th.em.mapH":["Tổng quan một trang","One-page overview"],"th.em.trend":["Xu hướng theo năm","Trend by year"],"th.em.trendH":["Mức tập trung, hiệu quả công nghệ","Concentration, technology efficiency"],
+"th.em.top":["10 cơ sở phát thải lớn nhất","Top 10 emitters"],"th.em.chg":["Thay đổi so năm trước","Change on previous year"],"th.em.chgH":["{y} so với {p}","{y} versus {p}"],"th.em.exp":["Tự lọc và tải số liệu","Filter and download data"],"th.em.expH":["Kho dữ liệu kiểu OECD","OECD-style data explorer"],
+"th.sec":["Theo ngành","Sectors"],"th.sec.d":["Nhiệt điện, thép, xi măng; mỗi ngành mở ra danh sách cơ sở.","Power, steel, cement; each opens its list of sites."],"th.sec.coal":["Riêng nhiệt điện than","Coal power only"],"th.sec.dir":["Danh bạ chia theo ngành","Directory by sector"],"th.sec.dirH":["Tên xếp A đến Z trong từng ngành","Names A to Z within each sector"],
+"th.site":["Cơ sở và doanh nghiệp","Sites and companies"],"th.site.d":["Tra từng nhà máy, từng chủ sở hữu và tập đoàn.","Look up each plant, owner and group."],"th.site.az":["Danh bạ A đến Z","Directory A to Z"],"th.site.azH":["Mỗi cơ sở có trang hồ sơ","Each site has a profile"],
+"th.site.list":["Bảng đầy đủ các nhà máy","Full plant table"],"th.site.own":["Gộp theo doanh nghiệp","Grouped by company"],"th.site.ownH":["Tổng phát thải của từng chủ sở hữu","Totals per owner"],"th.site.grp":["Danh bạ theo tập đoàn","Directory by group"],"th.site.grpH":["EVN, PVN, TKV, Hòa Phát và các nhóm khác","EVN, PVN, TKV, Hoa Phat and others"],"th.site.star":["Nhà máy đã gắn sao","Starred plants"],
+"th.reg":["Theo vùng","Regions"],"th.reg.d":["Miền Bắc, Trung, Nam; chia gần đúng theo vĩ độ.","North, Central, South; approximated by latitude."],"th.regT":["{r}: các cơ sở, năm {y}","{r}: sites, {y}"],"th.reg.dir":["Danh bạ chia theo vùng","Directory by region"],"th.reg.dirH":["Tên xếp A đến Z trong từng vùng","Names A to Z within each region"],
+"th.trust":["Độ tin cậy và kiểm chứng","Trust and verification"],"th.trust.d":["Số liệu nào chắc, số liệu nào cần kiểm tra thêm.","Which figures are solid and which need checking."],"th.trust.score":["Điểm tin cậy từng nhà máy","Trust score per plant"],"th.trust.scoreH":["Thang 0 đến 100, bản đồ ưu tiên","0 to 100 scale, priority map"],
+"th.trust.g":["Hạng {g}","Grade {g}"],"th.trust.def":["Dùng giá trị mặc định","Using default values"],"th.trust.defH":["Sản lượng hoặc hệ số giống nhiều nhà máy khác","Output or factor shared with many plants"],"th.trust.imp":["Bất thường về vật lý","Physically implausible"],"th.trust.impH":["Hệ số ngoài khoảng hợp lý","Factor outside plausible range"],
+"th.tools":["Công cụ cho doanh nghiệp","Company tools"],"th.tools.d":["Tự kiểm kê, đối chiếu và ước tính chi phí carbon.","Run your own inventory, cross-check and estimate carbon cost."],"th.tools.evH":["Lưu từng lần đối chiếu với thực tế","Log each check against reality"],
+"th.ref":["Tham khảo và cài đặt","Reference and settings"],"th.ref.d":["Thuật ngữ, quy đổi, hệ số, phương pháp, nguồn dữ liệu.","Terms, conversions, factors, method, data sources."],"th.ref.glossH":["Giải thích khái niệm","Concepts explained"],"th.ref.convH":["Năng lượng, khối lượng, khí","Energy, mass, gases"],"th.ref.facH":["Hệ số IPCC, lưới điện","IPCC and grid factors"],"th.ref.methH":["Cách tính trên nền tảng","How the platform calculates"],"th.ref.src":["Nguồn dữ liệu và ngày cập nhật","Data sources and update dates"],"th.ref.srcH":["Giấy phép từng nguồn","Licence of each source"],
+"pg.back":["Quay lại","Back"],"pg.fwd":["Đi tiếp","Forward"],"pg.backTo":["Quay lại: {p}","Back to {p}"],"pg.fwdTo":["Đi tiếp: {p}","Forward to {p}"],"pg.prev":["Trang trước","Previous page"],"pg.next":["Trang sau","Next page"],"pg.prevSite":["Cơ sở trước (A đến Z)","Previous site (A to Z)"],"pg.nextSite":["Cơ sở sau (A đến Z)","Next site (A to Z)"],
+"hp.btn":["Hỏi đáp, trợ giúp","Help, feedback"],"hp.T":["Hỏi đáp và trợ giúp","Help and feedback"],"hp.faq":["Câu hỏi thường gặp","Common questions"],"hp.contact":["Liên hệ hỗ trợ","Contact support"],"hp.q":["Gõ câu hỏi, ví dụ: điểm tin cậy","Type a question, e.g. trust score"],
+"hp.notFound":["Chưa thấy câu trả lời?","No answer yet?"],"hp.go":["Mở phần này","Open this section"],"hp.toContact":["Viết cho chúng tôi","Write to us"],
+"hp.title":["Tiêu đề tin nhắn","Message title"],"hp.titleP":["Ví dụ: số liệu nhà máy X chưa khớp","E.g. plant X figures do not match"],"hp.cat":["Chủ đề","Category"],"hp.msg":["Làm sao chúng tôi giúp bạn?","How can we help you?"],"hp.msgP":["Mô tả câu hỏi, số liệu hoặc lỗi bạn gặp","Describe your question, data issue or bug"],"hp.mail":["Địa chỉ email","Email address"],"hp.opt":["(không bắt buộc)","(optional)"],
+"hp.send":["Gửi tin nhắn","Send message"],"hp.need":["Cần có tiêu đề và nội dung.","Title and message are required."],"hp.badMail":["Email chưa đúng định dạng.","Email format is not valid."],"hp.page":["Trang đang xem","Page"],
+"hp.saved":["Đã lưu tin nhắn trên máy bạn","Message saved on your device"],"hp.savedD":["Bước cuối: bấm nút dưới để chuyển tin nhắn tới chủ nền tảng qua GitHub, nội dung đã điền sẵn. Hoặc sao chép để gửi cách khác.","Last step: press the button to pass it to the platform owner via GitHub, already filled in. Or copy it to send another way."],
+"hp.gh":["Gửi qua GitHub","Send via GitHub"],"hp.copy":["Sao chép nội dung","Copy text"],"hp.ghNote":["Cần tài khoản GitHub; tin nhắn gửi qua GitHub sẽ công khai, đừng ghi thông tin nhạy cảm.","Needs a GitHub account; messages sent via GitHub are public, so leave out sensitive details."],"hp.new":["Viết tin nhắn khác","Write another message"],
+"hc.data":["Số liệu chưa đúng","Data looks wrong"],"hc.feat":["Góp ý tính năng","Feature suggestion"],"hc.pilot":["Hợp tác thử nghiệm","Pilot partnership"],"hc.use":["Xin phép sử dụng","Permission to use"],"hc.bug":["Lỗi kỹ thuật","Technical bug"],"hc.other":["Khác","Other"],
+"fq.src":["Số liệu phát thải lấy từ đâu, cập nhật khi nào?","Where do the emission figures come from and when were they updated?"],"fa.src":["Từ Climate TRACE API v6: ước tính dựa trên ảnh vệ tinh và mô hình, không phải số kiểm kê do nhà máy kê khai. Lần tải gần nhất: {d}. Mỗi trang hồ sơ ghi rõ nguồn và ngày cập nhật của từng chỉ tiêu.","From the Climate TRACE API v6: estimates built from satellite imagery and models, not plant-reported inventories. Last download: {d}. Each profile page shows the source and update date of every indicator."],
+"fq.legal":["Có dùng số liệu này để nộp báo cáo kiểm kê chính thức được không?","Can I use these figures for an official inventory report?"],"fa.legal":["Không thay thế được. Báo cáo kiểm kê theo Nghị định 06/2022 (sửa đổi bởi Nghị định 119/2025) do chính cơ sở lập theo hướng dẫn của Bộ và phải qua thẩm định. Nền tảng dùng để tham khảo, đối chiếu và phát hiện chỗ cần kiểm tra trước khi nộp.","No. Inventories under Decree 06/2022 (amended by Decree 119/2025) are prepared by the facility under ministry guidance and must be verified. The platform is for reference, cross-checking and spotting what to check before filing."],
+"fq.trust":["Điểm tin cậy nghĩa là gì?","What does the trust score mean?"],"fa.trust":["Thang 0 đến 100 gồm 5 phần: độ tin cậy của nguồn (30), số liệu riêng hay giá trị mặc định (25), hợp lý về vật lý (20), chuỗi thời gian (15), có kiểm kê doanh nghiệp đối chiếu (10). Hạng A từ 75, B từ 55, C từ 35, còn lại D.","A 0 to 100 scale with 5 parts: source confidence (30), plant-specific versus default values (25), physical plausibility (20), time series (15), company inventory check (10). Grade A from 75, B from 55, C from 35, otherwise D."],
+"fq.def":["Vì sao nhiều nhà máy có hệ số giống hệt nhau?","Why do many plants share the exact same factor?"],"fa.def":["Khi thiếu dữ liệu riêng, nguồn ước tính dùng giá trị mặc định cho cả nhóm. Nền tảng đánh dấu những nhà máy này để bạn biết số nào cần kiểm chứng thêm.","When plant data is missing, the estimate uses a group default. The platform flags these plants so you know which figures need checking."],
+"fq.inv":["Doanh nghiệp tự kiểm kê trên web thế nào?","How does a company run its own inventory here?"],"fa.inv":["Vào Kiểm kê theo tháng, nhập nhiên liệu, điện, sản lượng của 12 tháng hoặc tải tệp CSV. Web tự tính theo hệ số IPCC, gắn cờ tháng bất thường, ghi nhật ký mọi lần sửa và xuất báo cáo.","Open Monthly inventory, enter 12 months of fuel, power and output or upload a CSV. The web calculates with IPCC factors, flags unusual months, logs every edit and exports a report."],
+"fq.priv":["Dữ liệu tôi nhập có bị gửi đi đâu không?","Is the data I enter sent anywhere?"],"fa.priv":["Không. Số liệu kiểm kê, ghi chú, nhà máy gắn sao chỉ lưu trong trình duyệt trên máy bạn. Bạn sao lưu hoặc xóa ở mục Lưu trữ.","No. Inventory figures, notes and starred plants stay in your browser on this device. Back them up or clear them under Storage."],
+"fq.cbam":["Chi phí CBAM được tính ra sao?","How is the CBAM cost estimated?"],"fa.cbam":["Lấy lượng phát thải gắn trong hàng xuất sang EU nhân giá chứng chỉ CBAM, trừ phần được miễn theo lộ trình. Đây là kịch bản tham khảo; số phải nộp thật phụ thuộc số liệu đã thẩm định của nhà nhập khẩu EU.","Embedded emissions in goods exported to the EU times the CBAM certificate price, minus the free share under the phase-in. It is a reference scenario; the real amount depends on verified data from the EU importer."],
+"fq.no2":["NO2 vệ tinh là gì, sao có nhà máy chưa có?","What is satellite NO2 and why is it missing for some plants?"],"fa.no2":["Sentinel-5P đo mật độ NO2, dấu hiệu của quá trình đốt nhiên liệu; nó không đo trực tiếp CO2. Chuỗi số liệu chỉ có khi đã kết nối khóa Copernicus để chạy tải dữ liệu hằng tuần.","Sentinel-5P measures NO2 columns, a sign of combustion; it does not measure CO2 directly. The series appears once the Copernicus key is connected for the weekly download."],
+"fq.reg":["Miền Bắc, Trung, Nam được chia thế nào?","How are North, Central and South defined?"],"fa.reg":["Chia gần đúng theo vĩ độ của nhà máy vì dữ liệu gốc không ghi tỉnh: Bắc từ 19,8°B, Trung từ 12,4° đến 19,8°B, Nam dưới 12,4°B.","Approximated by plant latitude since the source has no province: North from 19.8°N, Central 12.4 to 19.8°N, South below 12.4°N."],
+"fq.set":["Đổi ngôn ngữ, tiền tệ, hệ số lưới điện ở đâu?","Where do I change language, currency or the grid factor?"],"fa.set":["Ở mục Cài đặt. Ngôn ngữ và tiền tệ cũng đổi nhanh được ở góc trên trang.","Under Settings. Language and currency can also be switched at the top of the page."],
+"fq.use":["Tôi có được dùng lại nội dung trang này không?","May I reuse content from this site?"],"fa.use":["Số liệu Climate TRACE dùng theo giấy phép CC BY 4.0, cần ghi nguồn. Giao diện, mã nguồn, cách chấm điểm và phân tích của nền tảng thuộc bản quyền Lê Hồng Anh; muốn sử dụng cần xin phép trước.","Climate TRACE data is under CC BY 4.0 with attribution. The interface, code, scoring and analysis belong to Le Hong Anh; ask for permission before using them."],
+"fq.pilot":["Doanh nghiệp muốn thử nghiệm cùng nền tảng thì làm sao?","How can a company join a pilot?"],"fa.pilot":["Gửi tin nhắn ở mục Liên hệ hỗ trợ, chọn chủ đề Hợp tác thử nghiệm, nêu ngành, quy mô và loại số liệu có thể chia sẻ.","Send a message under Contact support, choose Pilot partnership, and state your sector, size and the data you could share."],
 // ---- nav ----
 "grp.explore":["Khám phá","Explore"],"grp.tools":["Công cụ","Tools"],"grp.ref":["Tra cứu","Reference"],
 "nav.home":["Tổng quan","Overview"],"nav.home.d":["Bản đồ, số liệu chính, nhận định nhanh","Map, key figures, quick insights"],
@@ -1840,6 +1928,160 @@ RENDER.profile=function(){
   $('pOpen').onclick=()=>openDetail(a.id);$('pDl').onclick=()=>downloadProfile(a);
 };
 
+// ---------- theme menu (World Bank style: themes > sub-areas) ----------
+function THEMES(){
+  const L=LAST();if(!TRUST)trustAll();
+  const live=DATA.assets.filter(a=>(emis(a,L)||0)>0);const cnt=f=>live.filter(f).length;
+  const dir=(by)=>()=>{DIR.by=by;DIR.letter='';show('directory');};
+  const look=(tab)=>()=>{LOOK.tab=tab;show('lookup');};
+  const reg=r=>()=>openList({title:t('th.regT',{r:t('reg.'+r),y:L}),sub:t('reg.note'),y:L,list:DATA.assets.filter(a=>REG_OF(a)===r),cols:['chg','cap','int']});
+  const grade=g=>live.filter(a=>TRUST[a.id]&&TRUST[a.id].g===g).length;
+  return [
+   {id:'em',ico:'M3 17V9M8 17V4M13 17v-6M18 17V7',k:'th.em',go:()=>show('home'),items:[
+     ['th.em.map',()=>show('home'),t('th.em.mapH')],
+     ['th.em.trend',()=>show('analysis'),t('th.em.trendH')],
+     ['th.em.top',()=>openDrill('top10',L),t('th.n',{n:10})],
+     ['th.em.chg',()=>openDrill('vs',L),t('th.em.chgH',{y:L,p:L-1})],
+     ['th.em.exp',()=>show('explorer'),t('th.em.expH')]]},
+   {id:'sec',ico:'M3 17h14M5 17V8l4 3V8l4 3V5h2v12',k:'th.sec',go:dir('sec'),items:[
+     ...Object.keys(SECTORS).map(k=>[secN(k),()=>openDrill('sec:'+k,L),t('th.n',{n:cnt(a=>a.s===k)}),1]),
+     ['th.sec.coal',()=>openDrill('coal',L),t('th.n',{n:cnt(a=>a.s==='electricity-generation'&&/coal/.test(a.t))})],
+     ['th.sec.dir',dir('sec'),t('th.sec.dirH')]]},
+   {id:'site',ico:'M4 3h10a2 2 0 012 2v12H6a2 2 0 01-2-2zM7 7h6M7 10h6M7 13h4',k:'th.site',go:dir('name'),items:[
+     ['th.site.az',dir('name'),t('th.site.azH')],
+     ['th.site.list',()=>show('list'),t('th.n',{n:DATA.assets.length})],
+     ['th.site.own',()=>show('owners'),t('th.site.ownH')],
+     ['th.site.grp',dir('grp'),t('th.site.grpH')],
+     ['th.site.star',()=>show('storage'),t('th.n',{n:WS.stars.size})]]},
+   {id:'reg',ico:'M10 2c3 0 6 2.5 6 6 0 4.5-6 10-6 10S4 12.5 4 8c0-3.5 3-6 6-6zM10 6v4',k:'th.reg',go:dir('reg'),items:[
+     ...['n','c','s'].map(r=>[t('reg.'+r),reg(r),t('th.n',{n:cnt(a=>REG_OF(a)===r)}),1]),
+     ['th.reg.dir',dir('reg'),t('th.reg.dirH')]]},
+   {id:'trust',ico:'M10 2l6 3v5c0 4-3 7-6 8-3-1-6-4-6-8V5zM7 10l2 2 4-4',k:'th.trust',go:()=>show('trust'),items:[
+     ['th.trust.score',()=>show('trust'),t('th.trust.scoreH')],
+     ...['A','B','C','D'].map(g=>[t('th.trust.g',{g}),()=>openDrill('grade:'+g,L),t('th.n',{n:grade(g)}),1]),
+     ['th.trust.def',()=>openDrill('def',L),t('th.trust.defH')],
+     ['th.trust.imp',()=>openDrill('implaus',L),t('th.trust.impH')],
+     ['th.trust.ev',()=>show('evidence'),t('nav.evidence.d')]]},
+   {id:'tools',ico:'M5 3h10v14H5zM8 7h4M8 10h4M8 13h2',k:'th.tools',go:()=>show('inventory'),items:[
+     ['nav.inventory',()=>show('inventory'),t('nav.inventory.d')],
+     ['nav.check',()=>show('check'),t('nav.check.d')],
+     ['nav.cbam',()=>show('cbam'),t('nav.cbam.d')],
+     ['nav.evidence',()=>show('evidence'),t('th.tools.evH')]]},
+   {id:'ref',ico:'M4 4h9l3 3v9H4zM7 9h6M7 12h6',k:'th.ref',go:()=>show('lookup'),items:[
+     ['lk.gloss',look('gloss'),t('th.ref.glossH')],
+     ['lk.convert',look('convert'),t('th.ref.convH')],
+     ['lk.factors',look('factors'),t('th.ref.facH')],
+     ['lk.method',look('method'),t('th.ref.methH')],
+     ['th.ref.src',()=>{DIR.by='name';show('directory');setTimeout(()=>{const e=$('dirSrc');if(e)e.scrollIntoView({behavior:'smooth',block:'start'});},80);},t('th.ref.srcH')],
+     ['nav.storage',()=>show('storage'),t('nav.storage.d')],
+     ['nav.settings',()=>show('settings'),t('nav.settings.d')]]}];
+}
+let THM_CUR=store.get('ct.thm')||'em';
+function openThemes(){
+  const TH=THEMES();if(!TH.find(x=>x.id===THM_CUR))THM_CUR='em';
+  const mob=matchMedia('(max-width:760px)').matches;
+  const left=TH.map(x=>`<button class="thl-b" data-th="${x.id}" aria-expanded="${x.id===THM_CUR}">${icon(x.ico,18)}<span>${t(x.k)}</span><svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>`).join('');
+  const nav=document.querySelector('nav.tabs');const top=nav?nav.getBoundingClientRect().bottom:0;
+  $('moreHost').innerHTML=`<div class="scrim" id="moreScrim"></div><div class="thm ${mob?'sheet':'pop'}" role="dialog" aria-label="${esc(t('allSections'))}" ${mob?'':`style="top:${Math.max(8,top+6)}px"`}>
+    <div class="thh"><b>${t('allSections')}</b><span class="note">${t('th.hint')}</span><button class="close" id="thClose" aria-label="${esc(t('close'))}">×</button></div>
+    <div class="thg"><div class="thl" role="tablist">${left}</div><div class="thr" id="thR"></div></div></div>`;
+  const close=()=>{$('moreHost').innerHTML='';document.removeEventListener('keydown',esc_);const b=$('thBtn');if(b)b.setAttribute('aria-expanded','false');};
+  const esc_=e=>{if(e.key==='Escape')close();};document.addEventListener('keydown',esc_);
+  const tb=$('thBtn');if(tb)tb.setAttribute('aria-expanded','true');
+  let acts=[];
+  const draw=()=>{const x=TH.find(z=>z.id===THM_CUR);acts=[x.go,...x.items.map(i=>i[1])];
+    $('moreHost').querySelectorAll('.thl-b').forEach(b=>b.setAttribute('aria-expanded',b.dataset.th===THM_CUR));
+    $('thR').innerHTML=`<div class="thr-h">${t(x.k)}</div><p class="thr-d">${t(x.k+'.d')}</p>
+      <button class="thi thi-all" data-a="0"><span>${t('th.view')}</span><b aria-hidden="true">→</b></button>
+      ${x.items.map((i,n)=>`<button class="thi" data-a="${n+1}"><span>${esc(i[3]?i[0]:t(i[0]))}</span><small>${esc(i[2]||'')}</small></button>`).join('')}`;};
+  draw();
+  const l=$('moreHost').querySelector('.thl');
+  const pick=b=>{if(!b||b.dataset.th===THM_CUR)return;THM_CUR=b.dataset.th;store.set('ct.thm',THM_CUR);draw();};
+  l.onclick=e=>pick(e.target.closest('.thl-b'));
+  if(!mob)l.addEventListener('mouseover',e=>pick(e.target.closest('.thl-b')));
+  $('thR').onclick=e=>{const b=e.target.closest('.thi');if(!b)return;const f=acts[+b.dataset.a];close();f&&f();};
+  $('moreScrim').onclick=close;$('thClose').onclick=close;
+}
+openMore=openThemes;
+(function(){const row=document.querySelector('nav.tabs .navrow');if(!row||$('thBtn'))return;const b=document.createElement('button');b.className='hamb thbtn';b.id='thBtn';b.setAttribute('aria-expanded','false');b.innerHTML=`${icon('M3 4h6v6H3zM11 4h6v6h-6zM3 12h6v5H3zM11 12h6v5h-6z',16)}<span id="thLbl"></span><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>`;row.insertBefore(b,$('tabs'));b.onclick=()=>{$('moreHost').innerHTML?($('moreHost').innerHTML=''):openThemes();};})();
+const _rs=renderStatic;renderStatic=function(){_rs();const l=$('thLbl');if(l)l.textContent=t('th.btn');};
+
+// ---------- page arrows (back / forward, previous / next) ----------
+const HIST={s:[],i:-1,nav:false};
+const V_THEME={home:'em',analysis:'em',explorer:'em',list:'site',owners:'site',directory:'site',profile:'site',trust:'trust',evidence:'trust',inventory:'tools',check:'tools',cbam:'tools',lookup:'ref',storage:'ref',settings:'ref'};
+const keyTitle=k=>{if(k.startsWith('p:')){const a=byId(k.slice(2));return a?shortName(a.n):t('nav.directory');}const v=VIEWS.find(x=>x.id===k);return v?t(v.k):k;};
+const azList=()=>DATA.assets.slice().sort((a,b)=>a.n.localeCompare(b.n,'vi'));
+function histGo(d){const j=HIST.i+d;if(j<0||j>=HIST.s.length)return;HIST.i=j;HIST.nav=true;const k=HIST.s[j];if(k.startsWith('p:'))openProfile(k.slice(2));else show(k);}
+function drawPg(){
+  const nav=$('pgnav'),ft=$('pgfoot');if(!nav||!ft)return;
+  const back=HIST.i>0?HIST.s[HIST.i-1]:null,fwd=HIST.i<HIST.s.length-1?HIST.s[HIST.i+1]:null;
+  const th=V_THEME[CUR]||'em';const here=CUR==='profile'?keyTitle('p:'+PROF.id):keyTitle(CUR);
+  const arr=(d,dis,lab)=>`<button class="pga" data-h="${d}" ${dis?'disabled':''} aria-label="${esc(lab)}" title="${esc(lab)}"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="${d<0?'M10 3L5 8l5 5':'M6 3l5 5-5 5'}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+  nav.innerHTML=`<div class="pgarrows">${arr(-1,!back,back?t('pg.backTo',{p:keyTitle(back)}):t('pg.back'))}${arr(1,!fwd,fwd?t('pg.fwdTo',{p:keyTitle(fwd)}):t('pg.fwd'))}</div>
+    <div class="pgcrumb"><button class="pgth" data-th="${th}">${t('th.'+th)}</button><span aria-hidden="true">›</span>${CUR==='profile'?`<button class="pgth" data-go="directory">${t('nav.directory')}</button><span aria-hidden="true">›</span>`:''}<b>${esc(here)}</b></div>
+    ${back?`<button class="pgback" data-h="-1">← ${esc(t('pg.backTo',{p:keyTitle(back)}))}</button>`:''}`;
+  let prev,next,pl,nl;
+  if(CUR==='profile'){const L=azList();const i=L.findIndex(a=>a.id===PROF.id);const p=L[(i-1+L.length)%L.length],n=L[(i+1)%L.length];prev=()=>openProfile(p.id);next=()=>openProfile(n.id);pl=[t('pg.prevSite'),shortName(p.n)];nl=[t('pg.nextSite'),shortName(n.n)];}
+  else{const i=VIEWS.findIndex(v=>v.id===CUR);const p=VIEWS[(i-1+VIEWS.length)%VIEWS.length],n=VIEWS[(i+1)%VIEWS.length];prev=()=>show(p.id);next=()=>show(n.id);pl=[t('pg.prev'),t(p.k)];nl=[t('pg.next'),t(n.k)];}
+  ft.innerHTML=`<button class="pgc prev" id="pgPrev"><span class="pgi" aria-hidden="true">←</span><span><small>${esc(pl[0])}</small><b>${esc(pl[1])}</b></span></button><button class="pgc next" id="pgNext"><span><small>${esc(nl[0])}</small><b>${esc(nl[1])}</b></span><span class="pgi" aria-hidden="true">→</span></button>`;
+  $('pgPrev').onclick=prev;$('pgNext').onclick=next;
+}
+(function(){
+  const _show=show;
+  show=function(v,opts){_show(v,opts);const k=CUR==='profile'?'p:'+PROF.id:CUR;
+    if(!HIST.nav&&HIST.s[HIST.i]!==k){HIST.s=HIST.s.slice(0,HIST.i+1);HIST.s.push(k);if(HIST.s.length>60)HIST.s.shift();HIST.i=HIST.s.length-1;}
+    HIST.nav=false;drawPg();};
+  document.addEventListener('click',e=>{const b=e.target.closest('#pgnav [data-h]');if(b&&!b.disabled){histGo(+b.dataset.h);return;}
+    const g=e.target.closest('#pgnav .pgth');if(g){if(g.dataset.go)show(g.dataset.go);else{THM_CUR=g.dataset.th;openThemes();}}});
+  document.addEventListener('keydown',e=>{if(e.altKey&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){e.preventDefault();histGo(e.key==='ArrowLeft'?-1:1);}});
+})();
+// ---------- help & feedback ----------
+const REPO='https://github.com/lehonganh150104-cyber/giam-sat-phat-thai';
+const FAQ=[['src',()=>{DIR.by='name';show('directory');setTimeout(()=>{const e=$('dirSrc');if(e)e.scrollIntoView({behavior:'smooth'});},80);}],['legal',null],['trust',()=>show('trust')],['def',()=>openDrill('def',LAST())],['inv',()=>show('inventory')],['priv',()=>show('storage')],['cbam',()=>show('cbam')],['no2',null],['reg',()=>{DIR.by='reg';show('directory');}],['set',()=>show('settings')],['use','contact'],['pilot','contact']];
+const HELP={tab:'faq',q:''};
+function openHelp(tab){
+  if(tab)HELP.tab=tab;const mob=matchMedia('(max-width:760px)').matches;
+  $('helpHost').innerHTML=`<div class="scrim" id="hScrim"></div><aside class="helpp ${mob?'sheet':''}" role="dialog" aria-label="${esc(t('hp.T'))}">
+    <div class="hph"><b>${t('hp.T')}</b><button class="close" id="hClose" aria-label="${esc(t('close'))}">×</button>
+    <div class="hptabs" role="tablist"><button data-ht="faq" aria-selected="${HELP.tab==='faq'}">${t('hp.faq')}</button><button data-ht="contact" aria-selected="${HELP.tab==='contact'}">✉ ${t('hp.contact')}</button></div></div><div class="hpb" id="hpB"></div></aside>`;
+  const close=()=>{$('helpHost').innerHTML='';document.removeEventListener('keydown',k);};const k=e=>{if(e.key==='Escape')close();};document.addEventListener('keydown',k);
+  $('hScrim').onclick=close;$('hClose').onclick=close;
+  $('helpHost').querySelector('.hptabs').onclick=e=>{const b=e.target.closest('[data-ht]');if(b){HELP.tab=b.dataset.ht;openHelp();}};
+  if(HELP.tab==='faq'){
+    $('hpB').innerHTML=`<input type="search" id="hQ" placeholder="${esc(t('hp.q'))}" value="${esc(HELP.q)}" style="width:100%"><div id="hList" class="hlist"></div>
+      <div class="hpmore"><span>${t('hp.notFound')}</span><button class="btn" id="hToC">✉ ${t('hp.contact')}</button></div>`;
+    const draw=()=>{const s=fold(HELP.q.trim());const L=FAQ.filter(([id])=>!s||fold(t('fq.'+id)+' '+t('fa.'+id)).includes(s));
+      $('hList').innerHTML=L.length?L.map(([id,go])=>`<details class="hq"${s&&L.length<4?' open':''}><summary>${esc(t('fq.'+id))}</summary><p>${t('fa.'+id,{d:fd(DATA.meta.fetched)})}</p>${go?`<button class="drill-link" data-fg="${id}">${t(go==='contact'?'hp.toContact':'hp.go')} →</button>`:''}</details>`).join(''):`<p class="empty">${t('noResult')}</p>`;};
+    draw();$('hQ').oninput=e=>{HELP.q=e.target.value;draw();};
+    $('hList').onclick=e=>{const b=e.target.closest('[data-fg]');if(!b)return;const go=FAQ.find(x=>x[0]===b.dataset.fg)[1];if(go==='contact'){HELP.tab='contact';HELP.cat=b.dataset.fg==='pilot'?'pilot':'use';openHelp();}else{close();go();}};
+    $('hToC').onclick=()=>{HELP.tab='contact';openHelp();};
+  }else{
+    const cats=['data','feat','pilot','use','bug','other'];
+    $('hpB').innerHTML=`<form id="hForm" class="hform" novalidate>
+      <label>${t('hp.title')}<input id="fT" required maxlength="140" placeholder="${esc(t('hp.titleP'))}"></label>
+      <label>${t('hp.cat')}<select id="fC">${cats.map(c=>`<option value="${c}" ${HELP.cat===c?'selected':''}>${t('hc.'+c)}</option>`).join('')}</select></label>
+      <label>${t('hp.msg')}<textarea id="fM" rows="5" required placeholder="${esc(t('hp.msgP'))}"></textarea></label>
+      <label>${t('hp.mail')} <span class="note">${t('hp.opt')}</span><input id="fE" type="email" placeholder="ten@congty.vn"></label>
+      <p class="note" id="fErr" role="alert"></p>
+      <button class="btn pri" type="submit">${t('hp.send')}</button></form><div id="fDone"></div>`;
+    $('hForm').onsubmit=e=>{e.preventDefault();const T=$('fT').value.trim(),C=$('fC').value,M=$('fM').value.trim(),E=$('fE').value.trim();
+      if(!T||!M){$('fErr').textContent=t('hp.need');return;}if(E&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(E)){$('fErr').textContent=t('hp.badMail');return;}
+      const ctx=CUR==='profile'?'p:'+PROF.id:CUR;const rec={at:new Date().toISOString(),T,C,M,E,ctx};
+      const l=store.get('ct.fb')||[];l.push(rec);store.set('ct.fb',l.slice(-50));
+      const body=`${t('hc.'+C)}\n\n${M}\n\n${E?t('hp.mail')+': '+E+'\n':''}${t('hp.page')}: ${keyTitle(ctx)}`;
+      const url=`${REPO}/issues/new?title=${encodeURIComponent('['+t('hc.'+C)+'] '+T)}&body=${encodeURIComponent(body)}`;
+      $('hForm').hidden=true;
+      $('fDone').innerHTML=`<div class="hdone"><b>${t('hp.saved')}</b><p>${t('hp.savedD')}</p>
+        <a class="btn pri" href="${url}" target="_blank" rel="noopener">${t('hp.gh')} ↗</a> <button class="btn" id="fCopy">${t('hp.copy')}</button>
+        <p class="note">${t('hp.ghNote')}</p><pre class="hpre" id="fTxt">${esc(T+'\n\n'+body)}</pre><button class="drill-link" id="fNew">${t('hp.new')}</button></div>`;
+      $('fCopy').onclick=()=>{navigator.clipboard.writeText(T+'\n\n'+body).then(()=>toast(t('copied'))).catch(()=>{const r=document.createRange();r.selectNodeContents($('fTxt'));const s=getSelection();s.removeAllRanges();s.addRange(r);toast(t('copyFail'));});};
+      $('fNew').onclick=()=>openHelp('contact');};
+  }
+}
+(function(){const b=document.createElement('button');b.className='helpfab';b.id='helpFab';b.innerHTML=`<svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 9a6 6 0 1112 0v3a2 2 0 01-2 2h-1V9h3M4 9h3v5H6a2 2 0 01-2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span id="helpLbl"></span>`;b.onclick=()=>openHelp();document.body.appendChild(b);
+  const h=document.createElement('div');h.id='helpHost';document.body.appendChild(h);})();
+const _rs2=renderStatic;renderStatic=function(){_rs2();const l=$('helpLbl');if(l)l.textContent=t('hp.btn');if($('pgnav'))drawPg();};
+
 // ---------- splash launcher ----------
 function openSplash(step){
   if(step==='welcome')return openWelcome();stopGlobe();
@@ -1879,7 +2121,7 @@ function openWelcome(){
     <div class="lang" role="group" aria-label="Language" id="wLang"><button data-lang="vi" aria-pressed="${LANG==='vi'}">VI</button><button data-lang="en" aria-pressed="${LANG==='en'}">EN</button></div></div>
    <div class="wgrid"><div class="wglobe"><canvas id="wGlobe" aria-label="${esc(t('w.globe'))}" role="img"></canvas><div class="wtag" id="wTag"><i></i>${t('w.tag',{n})}</div></div>
     <div class="wbox"><div class="hi"><span class="dot"></span><span id="wHi">${t('w.hi')}</span></div><h1>${t('w.title')}</h1><p>${t('w.lede')}</p>
-     <div class="wstats"><div data-drill="all" role="button" tabindex="0"><b data-to="${tot/1e6}" data-d="1">0</b><span>${t('u.Mt')}, ${L}</span></div><div data-drill="n" role="button" tabindex="0"><b data-to="${n}" data-d="0">0</b><span>${t('w.plants')}</span></div><div><b data-to="${years().length}" data-d="0">0</b><span>${t('w.years')}</span></div></div>
+     <div class="wstats"><div><b data-to="${tot/1e6}" data-d="1">0</b><span>${t('u.Mt')}, ${L}</span></div><div><b data-to="${n}" data-d="0">0</b><span>${t('w.plants')}</span></div><div><b data-to="${years().length}" data-d="0">0</b><span>${t('w.years')}</span></div></div>
      <div class="wact"><button class="cta" id="wGo"><span>${t('w.go')}</span><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h11M10 4.5L14.5 9 10 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="kb">${t('w.kb')}</span></div></div></div>
    <div class="wcopy">${t('copyS')}</div><div class="marq" aria-hidden="true"><div>${chipRow}${chipRow}</div></div></div></div>`;
   document.documentElement.style.overflow='hidden';
@@ -2009,7 +2251,7 @@ function lkFactors(){const g=GWP[S.gwp];
 function lkMethod(){const m=DATA.meta;$('lkBody').innerHTML=`<div class="card prose">${t('meth.html')}<h3>${t('meth.own')}</h3><p>${esc(t('meth.ownD'))}</p><h3>${t('meth.upd')}</h3><p>${esc(t('meth.src',{s:m.source||'Climate TRACE API v6',f:m.fetched||t('unknown'),n:DATA.assets.length,b:BASE(),y0:years()[0],y1:LAST()}))}</p></div>`;}
 
 // ---------- STORAGE ----------
-const CT_KEYS=['ct.stars','ct.notes','ct.kk','ct.saved','ct.cmps','ct.ev','ct.settings','ct.lang','ct.view','ct.data'];
+const CT_KEYS=['ct.stars','ct.notes','ct.kk','ct.saved','ct.cmps','ct.ev','ct.fb','ct.settings','ct.lang','ct.view','ct.data'];
 RENDER.storage=function(){
   const stars=[...WS.stars].map(byId).filter(Boolean),notes=WS.notes,kk=WS.kk,saved=WS.saved,cmps=WS.cmps;
   const size=CT_KEYS.reduce((s,k)=>{try{return s+(localStorage.getItem(k)||'').length;}catch(e){return s;}},0);
@@ -2036,7 +2278,7 @@ RENDER.storage=function(){
   $('stExp').onclick=()=>{const o={app:'emissions-monitor',v:3,exported:new Date().toISOString(),data:{}};CT_KEYS.filter(k=>k!=='ct.data').forEach(k=>{const v=store.get(k);if(v!=null)o.data[k]=v;});saveFile('backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(o,null,1),'application/json');};
   $('stImp').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const o=JSON.parse(rd.result);if(!o||!o.data)throw 0;let n=0;Object.entries(o.data).forEach(([k,v])=>{if(CT_KEYS.includes(k)&&k!=='ct.data'){store.set(k,v);n++;}});S=mergeS(store.get('ct.settings'));const L=store.get('ct.lang');if(L==='vi'||L==='en')LANG=L;applyTheme();refreshAll();toast(t('st.impOk',{n}));}catch(err){$('stMsg').textContent=t('st.impErr');}};rd.readAsText(f);};
   $('stClr').onclick=()=>{$('stConfirm').innerHTML=`<div class="callout bad" style="margin-top:12px"><div class="t">${t('st.clrQ')}</div>${t('st.clrD')}<div class="toolbar" style="margin-top:10px"><button class="btn pri" id="stClrYes">${t('st.clrYes')}</button><button class="btn" id="stClrNo">${t('cancel')}</button></div></div>`;
-    $('stClrNo').onclick=()=>{$('stConfirm').innerHTML='';};$('stClrYes').onclick=()=>{['ct.stars','ct.notes','ct.kk','ct.saved','ct.cmps','ct.ev'].forEach(k=>store.del(k));toast(t('st.cleared'));RENDER.storage();};};
+    $('stClrNo').onclick=()=>{$('stConfirm').innerHTML='';};$('stClrYes').onclick=()=>{['ct.stars','ct.notes','ct.kk','ct.saved','ct.cmps','ct.ev','ct.fb'].forEach(k=>store.del(k));toast(t('st.cleared'));RENDER.storage();};};
 };
 
 // ---------- SETTINGS ----------
