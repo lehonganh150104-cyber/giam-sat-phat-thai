@@ -1,16 +1,23 @@
 #!/usr/bin/env python3
-"""Tải lại dữ liệu phát thải từng cơ sở của Việt Nam từ Climate TRACE API v6.
+"""Tải lại dữ liệu phát thải từng cơ sở của Việt Nam từ Climate TRACE API (thử v7 trước, lỗi thì dùng v6).
 
 Cách chạy:  python3 scripts/update_climatetrace.py
 Kết quả:    data/assets.json (năm gốc) và data/yearly.json (chuỗi nhiều năm)
 Chỉ dùng thư viện chuẩn của Python 3.9 trở lên, không cần cài thêm gì.
 Chỉnh danh sách ngành, quốc gia, các năm trong config/settings.json (khóa "data").
+Khóa "data.api" là danh sách phiên bản API thử lần lượt, mặc định ["v7", "v6"].
+Phiên bản thực dùng được ghi vào meta.source để trang web hiển thị đúng.
+
+LƯU Ý (01/11/2026): API v7 công bố cùng bộ dữ liệu v5.11.0 (24/09/2026). Cấu trúc trả về của v7
+chưa được kiểm tra trực tiếp. Script chỉ nhận v7 khi kết quả có đủ các trường như v6
+(Id, Name, EmissionsSummary, Centroid); nếu không, tự quay về v6 và in cảnh báo.
 """
 import json, os, sys, time, urllib.parse, urllib.request
 from datetime import date
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-API = "https://api.climatetrace.org/v6/assets"
+BASE = "https://api.climatetrace.org/{v}/assets"
+API = BASE.format(v="v6")
 PAGE = 100
 
 
@@ -25,6 +32,7 @@ def cfg():
         "subsectors": d.get("subsectors", ["electricity-generation", "iron-and-steel", "cement"]),
         "baseYear": int(d.get("baseYear", 2024)),
         "years": [int(y) for y in d.get("years", [2021, 2022, 2023, 2024, 2025])],
+        "api": d.get("api", ["v7", "v6"]),
     }
 
 
@@ -53,6 +61,31 @@ def fetch_all(country, sub, year):
         off += PAGE
 
 
+def looks_ok(rows):
+    """Kiểm tra kết quả có cấu trúc giống v6 (đủ trường mà script đang đọc)."""
+    if not rows:
+        return False
+    a = rows[0]
+    return isinstance(a, dict) and all(k in a for k in ("Id", "Name", "EmissionsSummary", "Centroid"))
+
+
+def pick_api(c):
+    """Thử lần lượt các phiên bản API, trả về phiên bản đầu tiên cho kết quả đúng cấu trúc."""
+    global API
+    for v in c["api"]:
+        API = BASE.format(v=v)
+        try:
+            rows = fetch_all(c["country"], c["subsectors"][0], c["baseYear"])
+        except Exception as e:
+            print(f"API {v} lỗi: {e}", file=sys.stderr)
+            continue
+        if looks_ok(rows):
+            print(f"Dùng Climate TRACE API {v}", file=sys.stderr)
+            return v
+        print(f"API {v} trả về cấu trúc khác v6, bỏ qua", file=sys.stderr)
+    sys.exit("Không phiên bản API nào dùng được.")
+
+
 def co2e(asset):
     for s in asset.get("EmissionsSummary") or []:
         if s.get("Gas") == "co2e_100yr":
@@ -78,6 +111,7 @@ def num(v):
 
 def main():
     c = cfg()
+    ver = pick_api(c)
     assets, yearly = {}, {}
     for sub in c["subsectors"]:
         for y in c["years"]:
@@ -108,7 +142,7 @@ def main():
     kept = [a for a in assets.values() if (a["emissions_t_co2e"] or 0) > 0 and a["lon"] is not None]
     kept.sort(key=lambda a: -a["emissions_t_co2e"])
     ids = {a["id"] for a in kept}
-    meta = {"source": "Climate TRACE API v6 (api.climatetrace.org)", "fetched": date.today().isoformat(),
+    meta = {"source": f"Climate TRACE API {ver} (api.climatetrace.org)", "fetched": date.today().isoformat(),
             "baseYear": c["baseYear"], "country": c["country"], "sectors": c["subsectors"]}
     os.makedirs(os.path.join(ROOT, "data"), exist_ok=True)
     json.dump({"meta": meta, "assets": kept}, open(os.path.join(ROOT, "data", "assets.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
