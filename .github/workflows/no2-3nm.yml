@@ -1,4 +1,4 @@
-name: Chạy thử NO2 cho 3 nhà máy khảo sát
+name: Thống kê NO2 theo cụm nhà máy (qa_value ≥ 0,75)
 on:
   workflow_dispatch: {}
   push:
@@ -9,7 +9,7 @@ permissions:
 jobs:
   no2:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 150
     env:
       CDSE_CLIENT_ID: ${{ secrets.CDSE_CLIENT_ID }}
       CDSE_CLIENT_SECRET: ${{ secrets.CDSE_CLIENT_SECRET }}
@@ -31,6 +31,6 @@ jobs:
           git config user.name "data-bot"
           git config user.email "data-bot@users.noreply.github.com"
           git add analysis
-          git diff --cached --quiet || git commit -m "Kết quả chạy thử NO2 cho 3 nhà máy $(date +%F)"
+          git diff --cached --quiet || git commit -m "Kết quả thống kê NO2 theo cụm $(date +%F)"
           git pull --rebase -q origin main || true
           git push
