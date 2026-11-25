@@ -617,7 +617,20 @@ body.pub .int-only,body.pub #fStar,body.pub #dStar,body.pub #dKk,body.pub #dChk,
 
 .form label.chk{display:flex;flex-direction:row;gap:8px;align-items:flex-start;font-weight:400}
 .form label.chk input{width:auto;margin-top:3px}
-</style></head><body><div class="appbar" id="appbar">
+</style><style>
+/* clean pass 25/11/2026: big header only on the overview, fewer repeated labels */
+body:not([data-v="home"]) header.hero{display:none}
+body:not([data-v="home"]) main>.in{padding-top:6px}
+.vhead .crumbs{display:none}
+.vhead{margin-bottom:18px}
+.vhead h2{font-size:24px}
+.eyebrow{font-family:inherit;letter-spacing:.04em;font-size:12px}
+.helpfab{padding:12px;width:46px;height:46px;justify-content:center;opacity:.92}
+.helpfab span{display:none}
+.helpfab:hover{opacity:1}
+@media (min-width:761px){#abTitle{display:none}}
+</style>
+</head><body><div class="appbar" id="appbar">
     <div class="in topbar">
       <div class="brand"><span class="logo"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="3.2" fill="#5fe0b8"/><ellipse cx="9" cy="9" rx="8" ry="3.4" fill="none" stroke="#9ee6cf" stroke-width="1.2" transform="rotate(-25 9 9)"/></svg></span><span id="brandName"></span></div><div class="abnav"><button class="pga ab" id="abBack" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="pga ab" id="abFwd" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="abtitle" id="abTitle"></span></div>
       <div class="tools">
@@ -1376,7 +1389,7 @@ const VIEWS=[
 const RENDER={};let CUR='home';
 const icon=(d,s=18)=>`<svg width="${s}" height="${s}" viewBox="0 0 20 20" aria-hidden="true"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 function buildNav(){
-  const TABS=MODE==='pub'?['home','directory','list','trust','explorer','verify']:['home','desk','directory','list','trust','inventory'];const SHORT={trust:'tab.trust',inventory:'tab.inventory'};$('tabs').innerHTML=VIEWS.filter(v=>TABS.includes(v.id)||v.id===CUR).map(v=>`<button role="tab" data-v="${v.id}" aria-selected="${v.id===CUR}">${t(SHORT[v.id]||v.k)}</button>`).join('');
+  const TABS=MODE==='pub'?['home','list','trust','explorer','verify']:['home','desk','list','trust','inventory'];const SHORT={trust:'tab.trust',inventory:'tab.inventory'};$('tabs').innerHTML=VIEWS.filter(v=>TABS.includes(v.id)||v.id===CUR).map(v=>`<button role="tab" data-v="${v.id}" aria-selected="${v.id===CUR}">${t(SHORT[v.id]||v.k)}</button>`).join('');
   const bn=[['home','nav.home'],['list','nav.listS'],['inventory','nav.toolsS'],['lookup','nav.lookup'],['more','nav.more']];
   $('bnav').innerHTML=bn.map(([id,k])=>{const v=VIEWS.find(x=>x.id===id);const cur=id===CUR||(id==='inventory'&&['desk','inventory','check','cbam','evidence'].includes(CUR))||(id==='more'&&['analysis','owners','trust','directory','explorer','storage','settings','profile'].includes(CUR));return `<button data-v="${id}" aria-current="${cur}">${icon(v?v.ico:'M4 6h12M4 10h12M4 14h12',20)}<span>${t(k)}</span></button>`;}).join('');
   $('hambLbl').textContent=t('catalog');$('homeLbl').textContent=t('sp.btn');$('palLbl').textContent=t('search');
@@ -1384,7 +1397,7 @@ function buildNav(){
   $('curSel').value=S.cur;
 }
 function show(v,opts={}){
-  const ALLV=[...VIEWS,{id:'profile'}];if(!ALLV.find(x=>x.id===v))v='home';CUR=v;
+  const ALLV=[...VIEWS,{id:'profile'}];if(!ALLV.find(x=>x.id===v))v='home';CUR=v;document.body.dataset.v=v;
   document.querySelectorAll('main section.view, main section[id^="v-"]').forEach(el=>{if(el.id!=='v-'+v)el.hidden=true;});
   ALLV.forEach(x=>{const el=$('v-'+x.id);if(x.id===v){el.hidden=false;el.classList.remove('view');void el.offsetWidth;el.classList.add('view');}else el.hidden=true;});
   buildNav();store.set('ct.view',v);try{if(v!=='profile')history.replaceState(null,'','#'+v)}catch(e){}
@@ -2405,7 +2418,7 @@ function openHelp(tab){
 }
 (function(){const b=document.createElement('button');b.className='helpfab';b.id='helpFab';b.innerHTML=`<svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 9a6 6 0 1112 0v3a2 2 0 01-2 2h-1V9h3M4 9h3v5H6a2 2 0 01-2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span id="helpLbl"></span>`;b.onclick=()=>openHelp();document.body.appendChild(b);
   const h=document.createElement('div');h.id='helpHost';document.body.appendChild(h);})();
-const _rs2=renderStatic;renderStatic=function(){_rs2();const l=$('helpLbl');if(l)l.textContent=t('hp.btn');if($('pgnav'))drawPg();};
+const _rs2=renderStatic;renderStatic=function(){_rs2();const l=$('helpLbl');if(l)l.textContent=t('hp.btn');const fb=document.querySelector('.helpfab');if(fb){fb.title=t('hp.btn');fb.setAttribute('aria-label',t('hp.btn'));}if($('pgnav'))drawPg();};
 
 // ---------- company desk: benchmark, obligations, quota scenario, actions ----------
 VIEWS.splice(VIEWS.findIndex(v=>v.id==='inventory'),0,{id:'desk',g:'tools',k:'nav.desk',ico:'M3 5h14v9H3zM7 17h6M10 14v3M6 9l2 2 4-4'});
@@ -2566,7 +2579,8 @@ const DC_CSS=`.dc{--fg:#14201d;--mu:#5b6b66;--ln:#d9e2de;--ac:#0f6b55;font-famil
 .dc .dcb{display:inline-block;border-radius:999px;padding:1px 10px;font-size:12.5px;font-weight:700;background:#f3e3c4;color:#7a4b00}.dc .dcb.third{background:#cdeedd;color:#0f6b55}.dc .dcb.self{background:#e3ecf7;color:#22507f}
 .dc .dcm{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;height:110px;align-items:end}.dc .dcm div{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:2px}.dc .dcm i{display:block;width:100%;background:var(--ac);border-radius:3px 3px 0 0}.dc .dcm span{font-size:10px;color:var(--mu)}
 .dc .dcl{margin:0;padding-left:18px}.dc .dcn{font-size:12.5px;color:var(--mu);margin:8px 0 0}.dc .dcf{margin-top:14px;padding:14px 16px;border-radius:12px;background:#f2f6f4;font-size:12.5px;color:var(--mu)}.dc .dcf div{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.dc .dcf code{font-family:"IBM Plex Mono",monospace;font-size:14px;color:var(--fg);font-weight:600;word-break:break-all}.dc .dcf p{margin:6px 0 0}`;
-function discFile(o,json,fp){return `<!doctype html><html lang="${LANG}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(t('dc.kicker')+': '+o.fac.name+' '+o.year)}</title><style>body{margin:0;padding:24px 16px;background:#fff}${DC_CSS}</style></head><body><main class="dc">${discBody(o,fp)}</main><script type="application/json" id="disclosure" data-fp="${fp||''}">${json.replace(/</g,'\\u003c')}<\/script></body></html>`;}
+function discFile(o,json,fp){return `<!doctype html><html lang="${LANG}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(t('dc.kicker')+': '+o.fac.name+' '+o.year)}</title><style>body{margin:0;padding:24px 16px;background:#fff}${DC_CSS}
+</style></head><body><main class="dc">${discBody(o,fp)}</main><script type="application/json" id="disclosure" data-fp="${fp||''}">${json.replace(/</g,'\\u003c')}<\/script></body></html>`;}
 (function(){const st=document.createElement('style');st.textContent=DC_CSS;document.head.appendChild(st);})();
 RENDER.disclose=function(){
   if(DISC.fac==null||!byId(DISC.fac))DISC.fac=(dkState().id)||DATA.assets.filter(a=>a.e>0).sort((x,y)=>y.e-x.e)[0].id;const a=byId(DISC.fac);
@@ -2734,7 +2748,6 @@ function openSplash(step){
      <div class="lang" role="group" aria-label="Language" id="spLang"><button data-lang="vi" aria-pressed="${LANG==='vi'}">VI</button><button data-lang="en" aria-pressed="${LANG==='en'}">EN</button></div></div>
     <div><div class="eyebrow"><span class="live">${t('eyeLive')}</span><span>Climate TRACE · ${years()[0]}${LANG==='en'?' to ':' đến '}${L}</span></div><h1>${t('heroTitle')}</h1><p class="lede">${t('sp.lede')}</p></div>
     <div class="sst"><div data-drill="all" role="button" tabindex="0"><span>${t('hs.total',{y:L})}</span><b>${nfx(tot/1e6,1)}</b><span>${t('u.Mt')}</span></div><div data-drill="n" role="button" tabindex="0"><span>${t('hs.n')}</span><b>${n}</b><span>${t('facilities')}</span></div><div><span>${t('sp.sec')}</span><b>3</b><span>${Object.keys(SECTORS).map(secS).join(', ')}</span></div><div><span>${t('sp.yrs')}</span><b>${years().length}</b><span>${years()[0]}${LANG==='en'?' to ':' đến '}${L}</span></div></div>
-    <div><div class="sgl">${t('sp.pick')}</div></div>
     ${['explore','tools','ref'].filter(g=>VIEWS.some(v=>v.g===g)).map(g=>`<div><div class="sgl">${t('grp.'+g)}</div><div class="tiles">${grp(g)}</div></div>`).join('')}
     <div class="sfoot"><span>${t('footL')}</span><span>${t('copyS')} · ${t('sp.hint')}</span></div>
    </div></div>`;
